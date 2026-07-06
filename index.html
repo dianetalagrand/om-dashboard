@@ -572,10 +572,29 @@ function toggleChip(el){
   applyFilters();
 }
 
+// Replace with your deployed Apps Script Web App URL after setup
+// See Code.gs in the GitHub repo for setup instructions
+const APPS_SCRIPT_URL = ""; // "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec"
+
 function doRefresh(btn){
   btn.classList.add("spinning");
   btn.querySelector(".spin-icon").textContent="↻";
-  setTimeout(()=>{ applyFilters(); btn.classList.remove("spinning"); }, 700);
+  if (APPS_SCRIPT_URL) {
+    fetch(APPS_SCRIPT_URL)
+      .then(r => r.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          streams.length = 0;
+          data.forEach(s => streams.push(s));
+          applyFilters();
+          btn.title = "Last sync: " + new Date().toLocaleTimeString();
+        }
+      })
+      .catch(err => console.warn("Apps Script fetch failed:", err))
+      .finally(() => btn.classList.remove("spinning"));
+  } else {
+    setTimeout(()=>{ applyFilters(); btn.classList.remove("spinning"); }, 600);
+  }
 }
 
 document.addEventListener("click",e=>{ if(!e.target.closest(".dropdown-wrap"))document.querySelectorAll(".dropdown-wrap").forEach(d=>d.classList.remove("open")); });
