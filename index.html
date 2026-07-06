@@ -6,189 +6,187 @@
 <title>OM Governance · Portfolio Dashboard</title>
 <style>
   :root {
-    --pink:    #F2007D;
-    --dark:    #1E0023;
-    --purple:  #441F72;
-    --teal:    #2ABEB9;
-    --blue:    #4a86e8;
-    --yellow:  #FFB511;
-    --bg:      #f2f3f6;
-    --white:   #ffffff;
-    --border:  #e2e2e6;
-    --text:    #1a1a1a;
-    --muted:   #6b7280;
-
-    /* column colours */
-    --col-new:      #441F72;   /* purple aziendale */
-    --col-new-bg:   #faf8ff;
-    --col-ip:       #2ABEB9;   /* teal aziendale */
-    --col-ip-bg:    #f0fffe;
-    --col-closed:   #F2007D;   /* pink aziendale */
-    --col-closed-bg:#fff0f7;
+    --pink:   #F2007D; --dark:  #1E0023; --purple:#441F72;
+    --teal:   #2ABEB9; --blue:  #4a86e8; --yellow:#FFB511;
+    --bg:     #f2f3f6; --white: #ffffff; --border:#e2e2e6;
+    --text:   #1a1a1a; --muted: #6b7280;
+    --col-new:#441F72; --col-ip:#2ABEB9; --col-closed:#F2007D;
   }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); font-size:13px; min-height:100vh; display:flex; flex-direction:column; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;display:flex;flex-direction:column;}
 
   /* ── HEADER ── */
-  .header { background:var(--dark); padding:0 20px; display:flex; align-items:center; justify-content:space-between; height:52px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,0.3); }
-  .header-left { display:flex; align-items:center; gap:10px; }
-  .header-dot  { width:9px; height:9px; background:var(--pink); border-radius:50%; }
-  .header-title{ color:white; font-size:14px; font-weight:600; letter-spacing:0.02em; }
-  .header-sub  { color:rgba(255,255,255,0.4); font-size:12px; margin-left:2px; }
-  .header-right{ display:flex; align-items:center; gap:8px; }
+  .header{background:var(--dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+  .header-left{display:flex;align-items:center;gap:10px;}
+  .header-dot{width:9px;height:9px;background:var(--pink);border-radius:50%;}
+  .header-title{color:white;font-size:14px;font-weight:600;letter-spacing:0.02em;}
+  .header-sub{color:rgba(255,255,255,0.4);font-size:12px;margin-left:2px;}
+  .header-right{display:flex;align-items:center;gap:7px;}
 
-  .kpi-pill { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:4px 14px; color:white; font-size:11px; display:flex; align-items:center; gap:7px; cursor:default; text-decoration:none; }
-  .kpi-num { font-weight:700; font-size:13px; color:white; }
+  /* KPI PILLS — clickable, filter board */
+  .kpi-pills{display:flex;align-items:center;gap:4px;}
+  .kpi-pill{display:flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:600;cursor:pointer;transition:all 0.15s;border:1.5px solid;text-decoration:none;white-space:nowrap;}
+  .kpi-pill:hover{filter:brightness(1.15);}
+  .kpi-pill.active-filter{outline:2px solid white;outline-offset:1px;}
+  .kpi-total {background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:white;}
+  .kpi-new   {background:rgba(68,31,114,0.4);  border-color:rgba(68,31,114,0.7); color:#d8b4fe;}
+  .kpi-ip    {background:rgba(42,190,185,0.25);border-color:rgba(42,190,185,0.6);color:#6ee7e7;}
+  .kpi-closed{background:rgba(242,0,125,0.25); border-color:rgba(242,0,125,0.6); color:#fbcfe8;}
+  .kpi-num{font-weight:800;font-size:13px;}
+  .kpi-sep{color:rgba(255,255,255,0.2);font-size:11px;}
+  .last-updated{font-size:9.5px;color:rgba(255,255,255,0.35);white-space:nowrap;}
 
-  .header-action-btn { display:flex; align-items:center; gap:5px; padding:5px 12px; border-radius:6px; font-size:11.5px; font-weight:600; cursor:pointer; transition:all 0.15s; text-decoration:none; white-space:nowrap; border:none; }
-  .btn-notebooklm { background:linear-gradient(135deg,#1E0023 0%,#441F72 100%); color:white; box-shadow:0 2px 6px rgba(68,31,114,0.4); }
-  .btn-notebooklm:hover { opacity:0.88; transform:translateY(-1px); }
-  .btn-github { background:#2563eb; color:white; }
-  .btn-github:hover { background:#1d4ed8; }
-  .btn-github svg { width:13px; height:13px; fill:white; flex-shrink:0; }
-
-  .refresh-btn { display:flex; align-items:center; gap:5px; padding:5px 10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:6px; color:white; font-size:11px; font-weight:500; cursor:pointer; transition:all 0.15s; }
-  .refresh-btn:hover { background:rgba(255,255,255,0.18); }
-  .refresh-btn.spinning .spin-icon { display:inline-block; animation:spin 0.7s linear infinite; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-  .spin-icon { display:inline-block; }
+  .header-action-btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all 0.15s;text-decoration:none;white-space:nowrap;border:none;}
+  .btn-notebooklm{background:linear-gradient(135deg,#1E0023 0%,#441F72 100%);color:white;box-shadow:0 2px 6px rgba(68,31,114,0.4);}
+  .btn-notebooklm:hover{opacity:0.88;transform:translateY(-1px);}
+  .btn-github{background:#2563eb;color:white;}
+  .btn-github:hover{background:#1d4ed8;}
+  .btn-github svg{width:12px;height:12px;fill:white;flex-shrink:0;}
+  .refresh-btn{display:flex;align-items:center;gap:4px;padding:5px 9px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:white;font-size:10.5px;font-weight:500;cursor:pointer;transition:all 0.15s;}
+  .refresh-btn:hover{background:rgba(255,255,255,0.18);}
+  .refresh-btn.spinning .spin-icon{animation:spin 0.7s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .spin-icon{display:inline-block;}
 
   /* ── FILTER BAR ── */
-  .filter-bar { background:white; border-bottom:1px solid var(--border); padding:8px 20px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-  .search-wrap { position:relative; flex:1; min-width:170px; max-width:280px; }
-  .search-icon { position:absolute; left:9px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:12px; }
-  .search-input { width:100%; padding:6px 10px 6px 29px; border:1px solid var(--border); border-radius:6px; font-size:12px; outline:none; transition:border-color 0.15s; background:var(--bg); color:var(--text); }
-  .search-input:focus { border-color:var(--pink); background:white; }
-  .filter-divider { width:1px; height:22px; background:var(--border); }
-  .filter-btn { display:flex; align-items:center; gap:5px; padding:5px 11px; border:1px solid var(--border); border-radius:6px; background:white; font-size:11.5px; color:var(--text); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
-  .filter-btn:hover { border-color:var(--pink); color:var(--pink); }
-  .filter-btn.active { background:var(--pink); color:white; border-color:var(--pink); }
-  .filter-btn .chevron { font-size:9px; opacity:0.6; }
-  .filter-count { background:var(--pink); color:white; border-radius:10px; padding:1px 5px; font-size:9px; font-weight:700; }
-  .clear-all { font-size:11px; color:var(--pink); cursor:pointer; text-decoration:underline; }
+  .filter-bar{background:white;border-bottom:1px solid var(--border);padding:7px 20px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .search-wrap{position:relative;flex:1;min-width:150px;max-width:260px;}
+  .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:11px;}
+  .search-input{width:100%;padding:5px 10px 5px 28px;border:1px solid var(--border);border-radius:6px;font-size:11.5px;outline:none;transition:border-color 0.15s;background:var(--bg);color:var(--text);}
+  .search-input:focus{border-color:var(--pink);background:white;}
+  .filter-divider{width:1px;height:20px;background:var(--border);}
+  .filter-btn{display:flex;align-items:center;gap:4px;padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:white;font-size:11px;color:var(--text);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+  .filter-btn:hover{border-color:var(--pink);color:var(--pink);}
+  .filter-btn.active{background:var(--pink);color:white;border-color:var(--pink);}
+  .filter-btn .chevron{font-size:8px;opacity:0.6;}
+  .filter-count{background:var(--pink);color:white;border-radius:10px;padding:1px 5px;font-size:9px;font-weight:700;}
+  .clear-all{font-size:10.5px;color:var(--pink);cursor:pointer;text-decoration:underline;}
 
   /* ── DROPDOWN ── */
-  .dropdown-wrap { position:relative; }
-  .dropdown-menu { display:none; position:absolute; top:calc(100% + 5px); left:0; background:white; border:1px solid var(--border); border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.12); min-width:155px; z-index:200; padding:5px 0; }
-  .dropdown-wrap.open .dropdown-menu { display:block; }
-  .dropdown-item { padding:6px 12px; cursor:pointer; display:flex; align-items:center; gap:7px; font-size:11.5px; transition:background 0.1s; }
-  .dropdown-item:hover { background:var(--bg); }
-  .dropdown-item input[type=checkbox] { accent-color:var(--pink); width:12px; height:12px; cursor:pointer; }
-  .dropdown-item label { cursor:pointer; flex:1; }
+  .dropdown-wrap{position:relative;}
+  .dropdown-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:white;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:150px;z-index:200;padding:4px 0;}
+  .dropdown-wrap.open .dropdown-menu{display:block;}
+  .dropdown-item{padding:6px 12px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;transition:background 0.1s;}
+  .dropdown-item:hover{background:var(--bg);}
+  .dropdown-item input[type=checkbox]{accent-color:var(--pink);width:11px;height:11px;cursor:pointer;}
+  .dropdown-item label{cursor:pointer;flex:1;}
 
   /* ── MORE FILTERS ── */
-  .more-filters-panel { display:none; background:white; border-bottom:1px solid var(--border); padding:10px 20px; gap:24px; flex-wrap:wrap; }
-  .more-filters-panel.open { display:flex; }
-  .mf-group { display:flex; flex-direction:column; gap:4px; }
-  .mf-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); }
-  .mf-options { display:flex; flex-wrap:wrap; gap:5px; }
-  .mf-chip { padding:3px 10px; border:1px solid var(--border); border-radius:20px; font-size:11px; cursor:pointer; transition:all 0.15s; background:var(--bg); color:var(--text); }
-  .mf-chip:hover { border-color:var(--pink); color:var(--pink); }
-  .mf-chip.active { background:var(--pink); color:white; border-color:var(--pink); }
+  .more-filters-panel{display:none;background:white;border-bottom:1px solid var(--border);padding:9px 20px;gap:20px;flex-wrap:wrap;align-items:flex-start;}
+  .more-filters-panel.open{display:flex;}
+  .mf-group{display:flex;flex-direction:column;gap:4px;}
+  .mf-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}
+  .mf-options{display:flex;flex-wrap:wrap;gap:4px;}
+  .mf-chip{padding:3px 9px;border:1px solid var(--border);border-radius:20px;font-size:10.5px;cursor:pointer;transition:all 0.15s;background:var(--bg);color:var(--text);}
+  .mf-chip:hover{border-color:var(--pink);color:var(--pink);}
+  .mf-chip.active{background:var(--pink);color:white;border-color:var(--pink);}
 
   /* ── FILTER TAGS ── */
-  .active-filters { padding:5px 20px 0; display:flex; gap:5px; flex-wrap:wrap; min-height:0; }
-  .active-filters:empty { display:none; }
-  .filter-tag { display:flex; align-items:center; gap:4px; background:rgba(242,0,125,0.07); border:1px solid rgba(242,0,125,0.2); border-radius:20px; padding:2px 8px; font-size:10.5px; color:var(--pink); }
-  .filter-tag-remove { cursor:pointer; font-size:11px; opacity:0.65; }
-  .filter-tag-remove:hover { opacity:1; }
+  .active-filters{padding:5px 20px 0;display:flex;gap:4px;flex-wrap:wrap;}
+  .active-filters:empty{display:none;}
+  .filter-tag{display:flex;align-items:center;gap:3px;background:rgba(242,0,125,0.07);border:1px solid rgba(242,0,125,0.2);border-radius:20px;padding:2px 8px;font-size:10px;color:var(--pink);}
+  .filter-tag-remove{cursor:pointer;font-size:11px;opacity:0.65;}
+  .filter-tag-remove:hover{opacity:1;}
 
-  /* ── PAGE BODY ── */
-  .page-body { display:flex; align-items:flex-start; flex:1; }
-  .content-area { flex:1; min-width:0; padding:16px 28px 40px; }
+  /* ── MAIN ── */
+  .content-area{flex:1;min-width:0;padding:14px 24px 40px;}
+  .col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:start;max-width:1200px;margin:0 auto;}
 
-  /* ── 3 COLUMNS ── */
-  .col-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; align-items:start; max-width:1200px; margin:0 auto; }
-
-  .col-wrap { display:flex; flex-direction:column; gap:0; }
-  .col-header { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-radius:8px 8px 0 0; font-size:11.5px; font-weight:700; letter-spacing:0.03em; background:white; border-bottom:2px solid; }
-  .col-header .col-count { font-size:11px; font-weight:700; border-radius:10px; padding:1px 8px; border:1.5px solid; }
-  .col-cards { display:flex; flex-direction:column; gap:6px; padding:8px 0 4px; }
-
-  .col-new    .col-header { border-color:var(--col-new);    color:var(--col-new); }
-  .col-new    .col-header .col-count { color:var(--col-new); border-color:var(--col-new); background:rgba(68,31,114,0.07); }
-  .col-ip     .col-header { border-color:var(--col-ip);     color:var(--col-ip); }
-  .col-ip     .col-header .col-count { color:var(--col-ip); border-color:var(--col-ip); background:rgba(42,190,185,0.1); }
-  .col-closed .col-header { border-color:var(--col-closed); color:var(--col-closed); }
-  .col-closed .col-header .col-count { color:var(--col-closed); border-color:var(--col-closed); background:rgba(242,0,125,0.08); }
+  /* ── COLUMNS ── */
+  .col-wrap{display:flex;flex-direction:column;}
+  .col-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:8px 8px 0 0;font-size:11px;font-weight:700;letter-spacing:0.04em;background:white;border-bottom:2px solid;}
+  .col-header .col-count{font-size:10.5px;font-weight:700;border-radius:10px;padding:1px 7px;border:1.5px solid;}
+  .col-cards{display:flex;flex-direction:column;gap:6px;padding:8px 0 4px;}
+  .col-new    .col-header{border-color:var(--col-new);   color:var(--col-new);}
+  .col-new    .col-header .col-count{color:var(--col-new);   border-color:var(--col-new);   background:rgba(68,31,114,0.07);}
+  .col-ip     .col-header{border-color:var(--col-ip);    color:var(--col-ip);}
+  .col-ip     .col-header .col-count{color:var(--col-ip);    border-color:var(--col-ip);    background:rgba(42,190,185,0.1);}
+  .col-closed .col-header{border-color:var(--col-closed);color:var(--col-closed);}
+  .col-closed .col-header .col-count{color:var(--col-closed);border-color:var(--col-closed);background:rgba(242,0,125,0.08);}
 
   /* ── STREAM CARD ── */
-  .stream-card { background:white; border:1px solid var(--border); border-radius:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.04); transition:box-shadow 0.15s; }
-  .stream-card:hover { box-shadow:0 3px 12px rgba(0,0,0,0.09); }
-  .stream-card.priority-card { border-left:3px solid #dc2626; }
+  .stream-card{background:white;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:box-shadow 0.15s;}
+  .stream-card:hover{box-shadow:0 3px 12px rgba(0,0,0,0.09);}
+  .stream-card.priority-card{border-left:3px solid #dc2626;}
+  .col-new    .stream-card{border-top:2px solid var(--col-new);}
+  .col-ip     .stream-card{border-top:2px solid var(--col-ip);}
+  .col-closed .stream-card{border-top:2px solid var(--col-closed);}
 
-  /* left accent per colonna */
-  .col-new    .stream-card { border-top:2px solid var(--col-new); }
-  .col-ip     .stream-card { border-top:2px solid var(--col-ip); }
-  .col-closed .stream-card { border-top:2px solid var(--col-closed); }
-
-  .card-header { padding:10px 11px 9px; cursor:pointer; user-select:none; }
-
-  .card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:4px; }
-  .card-title-row { display:flex; align-items:center; gap:5px; flex-wrap:wrap; flex:1; min-width:0; }
-  .card-title { font-size:12.5px; font-weight:700; color:var(--text); line-height:1.3; }
-  .card-top-right { display:flex; align-items:center; gap:6px; flex-shrink:0; }
-  .requester-top { display:flex; align-items:center; gap:4px; }
-  .requester-label { font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); }
-  .card-chevron { font-size:9px; color:var(--muted); transition:transform 0.2s; }
-  .stream-card.open .card-chevron { transform:rotate(180deg); }
+  .card-header{padding:10px 11px 9px;cursor:pointer;user-select:none;}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px;}
+  .card-title-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;flex:1;min-width:0;}
+  .card-title{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.3;}
+  .card-top-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+  .requester-top{display:flex;align-items:center;gap:3px;}
+  .requester-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);}
+  .card-chevron{font-size:9px;color:var(--muted);transition:transform 0.2s;}
+  .stream-card.open .card-chevron{transform:rotate(180deg);}
 
   /* PRIORITY BULLET */
-  .priority-indicator { display:flex; align-items:center; gap:3px; font-size:10px; font-weight:700; color:#dc2626; white-space:nowrap; }
-  .priority-dot { width:6px; height:6px; border-radius:50%; background:#dc2626; flex-shrink:0; animation:pulse 1.5s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .priority-indicator{display:flex;align-items:center;gap:3px;font-size:9.5px;font-weight:700;color:#dc2626;white-space:nowrap;}
+  .priority-dot{width:6px;height:6px;border-radius:50%;background:#dc2626;flex-shrink:0;animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
 
-  /* META */
-  .card-meta { font-size:10.5px; color:var(--muted); margin-bottom:7px; }
+  /* AGING CHIP */
+  .aging-chip{display:inline-flex;align-items:center;gap:3px;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:600;border:1px solid;}
+  .aging-ok    {background:#f0fdf4;color:#15803d;border-color:#bbf7d0;}
+  .aging-warn  {background:#fef9c3;color:#a16207;border-color:#fde047;}
+  .aging-danger{background:#fef2f2;color:#dc2626;border-color:#fca5a5;}
 
-  /* FOOTER */
-  .card-footer { display:flex; align-items:center; justify-content:space-between; gap:6px; }
-  .card-badges { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
-  .card-funcs  { display:flex; align-items:center; gap:2px; flex-shrink:0; }
-  .funcs-label { font-size:8.5px; color:var(--muted); margin-right:3px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+  .card-meta{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--muted);margin-bottom:7px;flex-wrap:wrap;}
+  .card-footer{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+  .card-badges{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+  .card-funcs{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+  .funcs-label{font-size:8px;color:var(--muted);margin-right:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
 
   /* BADGES */
-  .badge { display:inline-flex; align-items:center; padding:2px 7px; border-radius:20px; font-size:10px; font-weight:600; white-space:nowrap; }
-  .badge-2025   { background:rgba(242,0,125,0.1); color:var(--pink); border:1px solid rgba(242,0,125,0.25); font-size:8.5px; padding:1px 5px; }
-  .badge-2026   { background:rgba(37,99,235,0.1); color:#2563eb; border:1px solid rgba(37,99,235,0.25); font-size:8.5px; padding:1px 5px; }
-  .badge-okr    { font-size:9px; padding:1px 6px; border-radius:4px; font-weight:500; }
-  .okr-gov      { background:#fef3c7; color:#92400e; }
-  .okr-cost     { background:#d1fae5; color:#065f46; }
-  .okr-growth   { background:#dbeafe; color:#1e40af; }
-  .okr-ops      { background:#f3e8ff; color:#6b21a8; }
-  .p-urgent  { background:rgba(220,38,38,0.08);  color:#dc2626; }
-  .p-medium  { background:rgba(234,179,8,0.1);   color:#a16207; }
-  .p-low     { background:rgba(34,197,94,0.1);   color:#15803d; }
-  .req-pill  { font-size:9px; padding:2px 7px; border-radius:10px; font-weight:600; }
-  .rq-business  { background:rgba(42,190,185,0.1);  color:#0d7377; }
-  .rq-corporate { background:rgba(255,181,17,0.12); color:#b5810a; }
-  .rq-om        { background:rgba(242,0,125,0.09);  color:var(--pink); }
-  .stream-init  { display:inline-block; background:var(--purple); color:white; font-size:8.5px; padding:1px 5px; border-radius:3px; font-weight:600; }
+  .badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap;}
+  .badge-2026{background:rgba(37,99,235,0.1);color:#2563eb;border:1px solid rgba(37,99,235,0.25);font-size:8.5px;padding:1px 5px;}
+  .badge-okr{font-size:9px;padding:1px 6px;border-radius:4px;font-weight:500;}
+  .okr-gov  {background:#fef3c7;color:#92400e;}
+  .okr-cost {background:#d1fae5;color:#065f46;}
+  .okr-growth{background:#dbeafe;color:#1e40af;}
+  .okr-ops  {background:#f3e8ff;color:#6b21a8;}
+  .req-pill{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:600;}
+  .rq-business {background:rgba(42,190,185,0.1); color:#0d7377;}
+  .rq-corporate{background:rgba(255,181,17,0.12);color:#b5810a;}
+  .rq-om       {background:rgba(242,0,125,0.09);  color:var(--pink);}
+  .stream-init{display:inline-block;background:var(--purple);color:white;font-size:8.5px;padding:1px 5px;border-radius:3px;font-weight:600;}
 
   /* FUNC ICONS */
-  .func-icon { width:21px; height:21px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10.5px; position:relative; }
-  .fi-legal   { background:rgba(68,31,114,0.12); }
-  .fi-finance { background:rgba(42,190,185,0.12); }
-  .fi-dpo     { background:rgba(74,134,232,0.12); }
-  .fi-corp    { background:rgba(255,181,17,0.15); }
-  .fi-it      { background:rgba(242,0,125,0.09); }
-  .fi-hr      { background:rgba(107,114,128,0.12); }
+  .func-icon{width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;position:relative;}
+  .fi-legal  {background:rgba(68,31,114,0.12);}
+  .fi-finance{background:rgba(42,190,185,0.12);}
+  .fi-dpo    {background:rgba(74,134,232,0.12);}
+  .fi-corp   {background:rgba(255,181,17,0.15);}
+  .fi-it     {background:rgba(242,0,125,0.09);}
+  .fi-hr     {background:rgba(107,114,128,0.12);}
 
   /* EXPANDABLE BODY */
-  .card-body { display:none; border-top:1px solid var(--border); padding:10px 11px 12px; }
-  .stream-card.open .card-body { display:block; }
-  .card-section { margin-bottom:8px; }
-  .card-section:last-child { margin-bottom:0; }
-  .card-section-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:2px; }
-  .card-section-text  { font-size:11.5px; color:var(--text); line-height:1.5; }
-  .jira-link { display:inline-flex; align-items:center; gap:3px; margin-top:6px; font-size:10.5px; color:var(--blue); text-decoration:none; opacity:0.8; }
-  .jira-link:hover { opacity:1; text-decoration:underline; }
+  .card-body{display:none;border-top:1px solid var(--border);padding:10px 11px 12px;}
+  .stream-card.open .card-body{display:block;}
+  .card-section{margin-bottom:8px;}
+  .card-section:last-child{margin-bottom:0;}
+  .card-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:2px;}
+  .card-section-text{font-size:11.5px;color:var(--text);line-height:1.5;}
+  .conclusion-text{font-size:11px;color:#374151;background:#f9fafb;border-left:3px solid var(--teal);padding:6px 9px;border-radius:0 4px 4px 0;line-height:1.5;}
+  .jira-link{display:inline-flex;align-items:center;gap:3px;margin-top:6px;font-size:10.5px;color:var(--blue);text-decoration:none;opacity:0.8;}
+  .jira-link:hover{opacity:1;text-decoration:underline;}
 
-  /* EMPTY COL */
-  .empty-col { text-align:center; padding:24px 12px; color:var(--muted); font-size:11px; background:white; border-radius:8px; border:1px dashed var(--border); }
+  /* EMPTY */
+  .empty-col{text-align:center;padding:24px 12px;color:var(--muted);font-size:11px;background:white;border-radius:8px;border:1px dashed var(--border);}
 
-  ::-webkit-scrollbar { width:4px; height:4px; }
-  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  /* MOBILE — single column with tabs */
+  @media(max-width:768px){
+    .col-grid{grid-template-columns:1fr;}
+    .header-title{font-size:12px;}
+    .kpi-pills{display:none;}
+    .last-updated{display:none;}
+    .btn-notebooklm span:last-child,.btn-github span{display:none;}
+  }
+
+  ::-webkit-scrollbar{width:4px;height:4px;}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 </style>
 </head>
 <body>
@@ -201,17 +199,28 @@
     <span class="header-sub">/ Portfolio</span>
   </div>
   <div class="header-right">
-    <div class="kpi-pill">
-      <span>Total streams</span><span class="kpi-num" id="kpi-total">—</span>
+    <div class="kpi-pills">
+      <span class="kpi-pill kpi-total" onclick="clearAllFilters()" title="All streams">
+        Total <span class="kpi-num" id="kpi-total">—</span>
+      </span>
+      <span class="kpi-sep">·</span>
+      <span class="kpi-pill kpi-new" onclick="filterByStatus('New')" title="New streams">
+        🆕 <span class="kpi-num" id="kpi-new">—</span>
+      </span>
+      <span class="kpi-pill kpi-ip" onclick="filterByStatus('In Progress')" title="In Progress + Paused">
+        ⚡ <span class="kpi-num" id="kpi-ip">—</span>
+      </span>
+      <span class="kpi-pill kpi-closed" onclick="filterByStatus('Closed')" title="Closed streams">
+        ✅ <span class="kpi-num" id="kpi-closed">—</span>
+      </span>
     </div>
-    <a class="header-action-btn btn-notebooklm" href="https://notebooklm.google.com/notebook/0961c629-39fe-4129-8c27-299e9787fc91" target="_blank" rel="noopener noreferrer">
-      🧠 AI Assistant
-    </a>
+    <span class="last-updated" id="last-updated"></span>
+    <a class="header-action-btn btn-notebooklm" href="https://notebooklm.google.com/notebook/0961c629-39fe-4129-8c27-299e9787fc91" target="_blank" rel="noopener noreferrer">🧠 <span>AI Assistant</span></a>
     <a class="header-action-btn btn-github" href="https://github.com/dianetalagrand/om-dashboard" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-      Sync to GitHub
+      <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      <span>GitHub</span>
     </a>
-    <button class="refresh-btn" onclick="doRefresh(this)" title="Refresh dashboard data">
+    <button class="refresh-btn" onclick="doRefresh(this)" title="Refresh data">
       <span class="spin-icon">↻</span> Refresh
     </button>
   </div>
@@ -228,10 +237,10 @@
   <div class="dropdown-wrap" id="dd-status">
     <button class="filter-btn" onclick="toggleDropdown('dd-status')">Status <span class="chevron">▾</span></button>
     <div class="dropdown-menu">
-      <div class="dropdown-item"><input type="checkbox" id="s-new"      value="New"         onchange="applyFilters()"><label for="s-new">New</label></div>
-      <div class="dropdown-item"><input type="checkbox" id="s-progress" value="In Progress"  onchange="applyFilters()"><label for="s-progress">In Progress</label></div>
-      <div class="dropdown-item"><input type="checkbox" id="s-paused"   value="Paused"       onchange="applyFilters()"><label for="s-paused">Paused</label></div>
-      <div class="dropdown-item"><input type="checkbox" id="s-closed"   value="Closed"       onchange="applyFilters()"><label for="s-closed">Closed</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="s-new"      value="New"        onchange="applyFilters()"><label for="s-new">New</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="s-progress" value="In Progress" onchange="applyFilters()"><label for="s-progress">In Progress</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="s-paused"   value="Paused"      onchange="applyFilters()"><label for="s-paused">Paused</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="s-closed"   value="Closed"      onchange="applyFilters()"><label for="s-closed">Closed</label></div>
     </div>
   </div>
 
@@ -243,6 +252,17 @@
     </div>
   </div>
 
+  <!-- OKR in main bar -->
+  <div class="dropdown-wrap" id="dd-okr">
+    <button class="filter-btn" onclick="toggleDropdown('dd-okr')">Strategic Pillar <span class="chevron">▾</span></button>
+    <div class="dropdown-menu" style="min-width:200px;">
+      <div class="dropdown-item"><input type="checkbox" id="okr-gov"    value="Governance & Compliance" onchange="applyFiltersOKR()"><label for="okr-gov">🛡️ Governance & Compliance</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="okr-cost"   value="Cost Optimisation"       onchange="applyFiltersOKR()"><label for="okr-cost">💰 Cost Optimisation</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="okr-growth" value="Expansion & Growth"      onchange="applyFiltersOKR()"><label for="okr-growth">🚀 Expansion & Growth</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="okr-ops"    value="OM Maintenance & Review" onchange="applyFiltersOKR()"><label for="okr-ops">⚙️ OM Maintenance</label></div>
+    </div>
+  </div>
+
   <div class="dropdown-wrap" id="dd-year">
     <button class="filter-btn" onclick="toggleDropdown('dd-year')">Year <span class="chevron">▾</span></button>
     <div class="dropdown-menu">
@@ -251,7 +271,7 @@
     </div>
   </div>
 
-  <button class="filter-btn" id="btn-more" onclick="toggleMoreFilters()">More Filters <span class="chevron">▾</span></button>
+  <button class="filter-btn" id="btn-more" onclick="toggleMoreFilters()">More <span class="chevron">▾</span></button>
   <span class="clear-all" id="clear-all-btn" style="display:none" onclick="clearAllFilters()">Clear all</span>
 </div>
 
@@ -266,133 +286,149 @@
     </div>
   </div>
   <div class="mf-group">
-    <div class="mf-label">Strategic Pillar</div>
+    <div class="mf-label">Enabling Function</div>
     <div class="mf-options">
-      <span class="mf-chip" data-filter="okr" data-value="Governance & Compliance" onclick="toggleChip(this)">🛡️ Governance</span>
-      <span class="mf-chip" data-filter="okr" data-value="Cost Optimisation"       onclick="toggleChip(this)">💰 Cost Opt.</span>
-      <span class="mf-chip" data-filter="okr" data-value="Expansion & Growth"      onclick="toggleChip(this)">🚀 Growth</span>
-      <span class="mf-chip" data-filter="okr" data-value="OM Maintenance & Review" onclick="toggleChip(this)">⚙️ OM Ops</span>
+      <span class="mf-chip" data-filter="func" data-value="Legal"             onclick="toggleChip(this)">⚖️ Legal</span>
+      <span class="mf-chip" data-filter="func" data-value="Finance & Tax"     onclick="toggleChip(this)">💰 Finance & Tax</span>
+      <span class="mf-chip" data-filter="func" data-value="DPO"               onclick="toggleChip(this)">🔒 DPO</span>
+      <span class="mf-chip" data-filter="func" data-value="Corporate Affairs" onclick="toggleChip(this)">🏛️ Corporate Affairs</span>
+      <span class="mf-chip" data-filter="func" data-value="IT"                onclick="toggleChip(this)">💻 IT</span>
+      <span class="mf-chip" data-filter="func" data-value="HR"                onclick="toggleChip(this)">👥 HR</span>
     </div>
   </div>
 </div>
 
-<!-- ACTIVE FILTER TAGS -->
+<!-- FILTER TAGS -->
 <div class="active-filters" id="active-filter-tags"></div>
 
-<!-- PAGE BODY -->
+<!-- MAIN -->
 <div class="content-area">
   <div class="col-grid" id="col-grid"></div>
 </div>
 
 <script>
-// ─────────────────────────────────────────────
-// DATA
-// status: "New" | "In Progress" | "Paused" | "Closed"
-// okr: strategic pillar tag
-// ─────────────────────────────────────────────
+// ── DATA ──────────────────────────────────────
+// conclusion field added to each stream
 const streams = [
-  { id:1,  prioritized:false, name:"Acquiring Service Evolution",    init:"LEG-891067", jira:"https://lastminute.atlassian.net/browse/OMG-7",
+  { id:1, prioritized:false, name:"Acquiring Service Evolution", init:"LEG-891067", jira:"https://lastminute.atlassian.net/browse/OMG-7",
     context:"The group is integrating Revolut Pay as a new APM. Revolut requires an EU-registered entity to collect payments — BravoNext SA (Switzerland) does not qualify. NV (Netherlands) confirmed as preferred collecting entity.",
     need:"Designate an alternative group entity as EU collecting counterpart with full legal, fiscal, corporate and security sign-off.",
-    status:"Closed",      priority:"Urgent",   requester:"Business",      okr:"Governance & Compliance",
+    conclusion:"NV confirmed as the preferred collecting entity. No legal, fiscal, corporate, or cyber blockers. Pending final Revolut contract review.",
+    status:"Closed", priority:"Urgent", requester:"Business", okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2026-06-23", goLiveDisplay:"Jun 2026" },
 
-  { id:3,  prioritized:false, name:"LMNext UK Asset Transfer",       init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-10",
+  { id:2, prioritized:false, name:"LMNext UK Asset Transfer", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-10",
     context:"LM Forward divesting its assets. Transfer of 12 domains, 17 trademarks, 32 clients, Content Hub platform. LM Forward → LMNext UK.",
     need:"Guarantee structural consistency and operational stability across the intra-group asset transfer.",
-    status:"Closed",      priority:"Urgent",   requester:"Corporate",     okr:"Governance & Compliance",
+    conclusion:"Transfer completed. RoPA and privacy policies updated. Social profiles and B2C websites aligned. Both ex-post phases completed by OM Governance.",
+    status:"Closed", priority:"Urgent", requester:"Corporate", okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","Corporate Affairs"], goLive:"2026-05-31", goLiveDisplay:"May 2026" },
 
-  { id:4,  prioritized:false, name:"France Market Architecture",     init:"INIT-997",  jira:"https://lastminute.atlassian.net/browse/OMG-12",
+  { id:3, prioritized:false, name:"France Market Architecture", init:"INIT-997", jira:"https://lastminute.atlassian.net/browse/OMG-12",
     context:"Transitioning from 'Group-down' framework to tailored horizontal national Operating Model. France market used as pilot/standard-builder.",
     need:"Map local architectural layers, respect regional constraints, and drive 'conscious efficiency' eliminating structural redundancies.",
-    status:"In Progress",  priority:"Urgent",   requester:"Corporate",     okr:"Expansion & Growth",
+    conclusion:"In progress. The exercise confirms 'surgical' volume reduction from LMNext FR will yield cross-functional benefits, but timing is not yet mature for execution. France used as the standard-builder.",
+    status:"In Progress", priority:"Urgent", requester:"Corporate", okr:"Expansion & Growth",
     functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2026-06-30", goLiveDisplay:"Jun 2026" },
 
-  { id:5,  prioritized:true,  name:"Newco Romania Activation",       init:"INIT-1004", jira:"https://lastminute.atlassian.net/browse/OMG-6",
-    context:"Addresses the need to stabilise and scale the workforce in Eastern Europe. Fragmented contractor model creates 'shadow payroll' risks and non-compliance with Romanian labor laws.",
+  { id:4, prioritized:true, name:"Newco Romania Activation", init:"INIT-1004", jira:"https://lastminute.atlassian.net/browse/OMG-6",
+    context:"Fragmented contractor model creates 'shadow payroll' risks and non-compliance with Romanian labor laws.",
     need:"Activate a dedicated NewCo to reconcile contractors and establish a Centre of Excellence serving all Group subsidiaries.",
-    status:"In Progress",  priority:"Urgent",   requester:"Corporate",     okr:"Expansion & Growth",
+    conclusion:"In progress. Go-live no earlier than end of Q3 2026. Critical path: name approval, Business Central/Tagetik, Treasury engagement.",
+    status:"In Progress", priority:"Urgent", requester:"Corporate", okr:"Expansion & Growth",
     functions:["Legal","Finance & Tax","DPO","HR","IT"], goLive:"2026-07-31", goLiveDisplay:"Jul 2026" },
 
-  { id:6,  prioritized:false, name:"Cruise Apps Decommissioning",    init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-14",
-    context:"Cross-analysis of legal and DPO constraints for decommissioning of Crocierissime and supporting apps: Calypso (BO), VTE (CRM), Azure (Cloud). Termination date: 31/01/2027.",
+  { id:5, prioritized:false, name:"Cruise Apps Decommissioning", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-14",
+    context:"Decommissioning of Crocierissime and supporting apps: Calypso (BO), VTE (CRM), Azure (Cloud). Termination date: 31/01/2027.",
     need:"Establish clear rules for data management, deletion/retention, and define a reusable guideline for future decommissioning scenarios.",
-    status:"In Progress",  priority:"Urgent",   requester:"OM Governance", okr:"Governance & Compliance",
+    conclusion:"Cross-departmental group defined termination date as 31/01/2027. Approving body: GDPR Core Committee. OM Governance supervises until execution phase.",
+    status:"In Progress", priority:"Urgent", requester:"OM Governance", okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","DPO","IT"], goLive:"2027-01-31", goLiveDisplay:"Jan 2027" },
 
-  { id:7,  prioritized:false, name:"OTA B2C Appian Workflow",        init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-15",
-    context:"Appian B2C OM workflow upgrade: migrating data source from Order Accounting tables to the OM B2C reference spreadsheet for enhanced data reliability.",
+  { id:6, prioritized:false, name:"OTA B2C Appian Workflow", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-15",
+    context:"Appian B2C OM workflow upgrade: migrating data source from Order Accounting to OM B2C reference spreadsheet for enhanced data reliability.",
     need:"Upgrade workflow data source and implement UX/process enhancements for Legal, Tax, and DPO team operations.",
-    status:"In Progress",  priority:"Normal", requester:"OM Governance", okr:"OM Maintenance & Review",
+    conclusion:"Development on best-effort basis. Current focus: note field logic, comment history, data controller field read-only. Next: static lists for order type combinations.",
+    status:"In Progress", priority:"Normal", requester:"OM Governance", okr:"OM Maintenance & Review",
     functions:["Legal","Finance & Tax","DPO"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
-  { id:8,  prioritized:true,  name:"Pigi OTA B2C Reuse",             init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-19",
+  { id:7, prioritized:true, name:"Pigi OTA B2C Reuse", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-19",
     context:"Pigi was a dormant Italian legal entity holding active travel agency licenses and VAT credits. Scope expanded from IT Welfare to full OTA B2C assessment.",
     need:"Define scope (countries & business lines) and assess cross-functional feasibility: Legal, Finance & Tax, HR, and Technology.",
-    status:"In Progress",  priority:"Urgent",   requester:"Business",      okr:"Cost Optimisation",
+    conclusion:"All assessments completed for IT Welfare feasibility. Awaiting corporate evaluation on whether to proceed to OTA B2C scope.",
+    status:"In Progress", priority:"Urgent", requester:"Business", okr:"Cost Optimisation",
     functions:["Legal","Finance & Tax","DPO","Corporate Affairs","HR"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
-  { id:9,  prioritized:false, name:"PT Invoicing for Flights",       init:"IDEA-1244", jira:"https://lastminute.atlassian.net/browse/OMG-16",
-    context:"Technical stream to start invoicing via the PT entity for the Flight product, ensuring full fiscal compliance. LMNext PT created and incorporated within the group.",
+  { id:8, prioritized:false, name:"PT Invoicing for Flights", init:"IDEA-1244", jira:"https://lastminute.atlassian.net/browse/OMG-16",
+    context:"Technical stream to start invoicing via PT entity for Flight product. LMNext PT created and incorporated within the group.",
     need:"Develop specific workflows in Business Central and Order Accounting to enable the switch from Rumbo to LMNext PT.",
-    status:"New",          priority:"Normal", requester:"Business",      okr:"Governance & Compliance",
+    conclusion:"Project plan under evaluation. Technical team capacity currently dedicated to other core initiatives. OM Table and ERM will assess priority.",
+    status:"New", priority:"Normal", requester:"Business", okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","DPO"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
-  { id:10, prioritized:false, name:"PT Licence Reuse for EU Markets", init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-17",
+  { id:9, prioritized:false, name:"PT Licence Reuse for EU Markets", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-17",
     context:"Strategic evaluation on leveraging Portuguese licenses to optimise insolvency-related costs across Europe.",
     need:"Assess cross-functional feasibility from all Operating Model perspectives (Legal, Finance & Tax, DPO).",
-    status:"Paused",       priority:"Normal",    requester:"Business",      okr:"Cost Optimisation",
+    conclusion:"Paused 30/06/2025 — analysis on hold to prioritise Pigi OTA B2C. Will resume once corporate direction on Pigi is confirmed.",
+    status:"Paused", priority:"Normal", requester:"Business", okr:"Cost Optimisation",
     functions:["Legal","Finance & Tax","DPO"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
-  { id:11, prioritized:false, name:"New HR Matrix",                   init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-18",
+  { id:10, prioritized:false, name:"New HR Matrix", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-18",
     context:"Align HR job families and roles structure with the Operating Model following organisational evolution.",
     need:"Institutionalise a consistent HR structure harmonising talent acquisition and global mobility with OM business rules.",
-    status:"Paused",       priority:"Normal",    requester:"Corporate",     okr:"OM Maintenance & Review",
+    conclusion:"Paused until the company formalises the new job families and roles structure. No ETA currently defined.",
+    status:"Paused", priority:"Normal", requester:"Corporate", okr:"OM Maintenance & Review",
     functions:["HR","Legal"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" }
 ];
 
+// Compute derived fields
+const NOW = new Date();
 streams.forEach(s => {
   s.is2026closed = s.goLive && s.goLive.startsWith("2026") && s.status === "Closed";
-  s.year   = s.goLive ? s.goLive.substring(0,4) : "—";
+  s.year = s.goLive ? s.goLive.substring(0,4) : "—";
+  // Aging: months since stream started (approximate from goLive relative to now for active)
+  if (s.status !== "Closed" && s.goLive) {
+    const dl = new Date(s.goLive);
+    const monthsLeft = (dl - NOW) / (1000*60*60*24*30);
+    if (monthsLeft < 0) s.agingClass = "aging-danger";
+    else if (monthsLeft < 3) s.agingClass = "aging-warn";
+    else s.agingClass = "aging-ok";
+    if (monthsLeft < 0) s.agingLabel = "Overdue";
+    else if (monthsLeft < 1) s.agingLabel = "<1 mo";
+    else s.agingLabel = `${Math.round(monthsLeft)} mo`;
+  }
 });
 
-// ─────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────
-let activeFilters = { search:"", status:[], priority:[], year:[], req:[], okr:[] };
+// ── STATE ─────────────────────────────────────
+let activeFilters = { search:"", status:[], priority:[], year:[], req:[], okr:[], func:[] };
 let openCards = new Set();
 
-// ─────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function reqClass(r){ return {Business:"rq-business",Corporate:"rq-corporate","OM Governance":"rq-om"}[r]||""; }
-function priorityClass(p){ return {Urgent:"p-urgent",Normal:"p-normal"}[p]||""; }
 
 const funcDefs = {
-  "Legal":            { cls:"fi-legal",   icon:"⚖️",  label:"Legal" },
-  "Finance & Tax":    { cls:"fi-finance", icon:"💰",  label:"Finance & Tax" },
-  "DPO":              { cls:"fi-dpo",     icon:"🔒",  label:"DPO" },
-  "Corporate Affairs":{ cls:"fi-corp",    icon:"🏛️",  label:"Corporate Affairs" },
-  "IT":               { cls:"fi-it",      icon:"💻",  label:"IT" },
-  "HR":               { cls:"fi-hr",      icon:"👥",  label:"HR" },
+  "Legal":            {cls:"fi-legal",  icon:"⚖️", label:"Legal"},
+  "Finance & Tax":    {cls:"fi-finance",icon:"💰", label:"Finance & Tax"},
+  "DPO":              {cls:"fi-dpo",    icon:"🔒", label:"DPO"},
+  "Corporate Affairs":{cls:"fi-corp",   icon:"🏛️", label:"Corporate Affairs"},
+  "IT":               {cls:"fi-it",     icon:"💻", label:"IT"},
+  "HR":               {cls:"fi-hr",     icon:"👥", label:"HR"},
 };
 function funcIcons(funcs){ return funcs.map(f=>{ const d=funcDefs[f]||{cls:"fi-it",icon:"•",label:f}; return `<span class="func-icon ${d.cls}" title="${d.label}">${d.icon}</span>`; }).join(""); }
 
 const okrDefs = {
-  "Governance & Compliance": { cls:"okr-gov",    label:"🛡️ Governance & Compliance" },
-  "Cost Optimisation":       { cls:"okr-cost",   label:"💰 Cost Optimisation" },
-  "Expansion & Growth":      { cls:"okr-growth", label:"🚀 Expansion & Growth" },
-  "OM Maintenance & Review": { cls:"okr-ops",    label:"⚙️ OM Maintenance & Review" },
+  "Governance & Compliance":{cls:"okr-gov",   label:"🛡️ Governance & Compliance"},
+  "Cost Optimisation":      {cls:"okr-cost",  label:"💰 Cost Optimisation"},
+  "Expansion & Growth":     {cls:"okr-growth",label:"🚀 Expansion & Growth"},
+  "OM Maintenance & Review":{cls:"okr-ops",   label:"⚙️ OM Maintenance & Review"},
 };
 function okrBadge(okr){ const d=okrDefs[okr]; if(!d) return ""; return `<span class="badge badge-okr ${d.cls}">${d.label}</span>`; }
 
-// ─────────────────────────────────────────────
-// RENDER CARD
-// ─────────────────────────────────────────────
+// ── CARD ──────────────────────────────────────
 function renderCard(s){
   const isOpen = openCards.has(s.id);
+  const aging = s.agingLabel ? `<span class="aging-chip ${s.agingClass}" title="Time to effective date">⏱ ${s.agingLabel}</span>` : "";
   return `
   <div class="stream-card${s.prioritized?" priority-card":""}${isOpen?" open":""}" id="card-${s.id}">
     <div class="card-header" onclick="toggleCard(${s.id})">
@@ -404,22 +440,17 @@ function renderCard(s){
         </div>
         <div class="card-top-right">
           ${s.prioritized?`<span class="priority-indicator"><span class="priority-dot"></span>Priority</span>`:""}
-          <span class="requester-top"><span class="requester-label">Requester</span> <span class="req-pill ${reqClass(s.requester)}">${esc(s.requester)}</span></span>
+          <span class="requester-top"><span class="requester-label">Requester</span>&nbsp;<span class="req-pill ${reqClass(s.requester)}">${esc(s.requester)}</span></span>
           <span class="card-chevron">▼</span>
         </div>
       </div>
       <div class="card-meta">
-        Effective date: ${esc(s.goLiveDisplay)}
+        <span>Effective date: ${esc(s.goLiveDisplay)}</span>
+        ${aging}
       </div>
       <div class="card-footer">
-        <div class="card-badges">
-          
-          ${okrBadge(s.okr)}
-        </div>
-        <div class="card-funcs">
-          <span class="funcs-label">Functions</span>
-          ${funcIcons(s.functions)}
-        </div>
+        <div class="card-badges">${okrBadge(s.okr)}</div>
+        <div class="card-funcs"><span class="funcs-label">Functions</span>${funcIcons(s.functions)}</div>
       </div>
     </div>
     <div class="card-body">
@@ -431,82 +462,83 @@ function renderCard(s){
         <div class="card-section-label">Need</div>
         <div class="card-section-text">${esc(s.need)}</div>
       </div>
+      <div class="card-section">
+        <div class="card-section-label">Conclusion</div>
+        <div class="conclusion-text">${esc(s.conclusion)}</div>
+      </div>
       ${s.jira?`<a class="jira-link" href="${s.jira}" target="_blank">🔗 View on Jira</a>`:""}
     </div>
   </div>`;
 }
 
-// ─────────────────────────────────────────────
-// RENDER 3 COLUMNS
-// New | In Progress + Paused | Closed
-// ─────────────────────────────────────────────
+// ── COLUMNS ───────────────────────────────────
 function renderColumns(data){
-  const colNew    = data.filter(s => s.status === "New");
-  const colIP     = data.filter(s => s.status === "In Progress" || s.status === "Paused");
-  const colClosed = data.filter(s => s.status === "Closed");
-
-  // sort: prioritized first, then by goLive desc
-  const sort = arr => arr.sort((a,b)=>{
-    if(a.prioritized && !b.prioritized) return -1;
-    if(!a.prioritized && b.prioritized) return 1;
-    return b.goLive.localeCompare(a.goLive);
-  });
-  sort(colNew); sort(colIP); sort(colClosed);
-
-  const makeCol = (cls, label, icon, arr) => `
+  const colNew    = data.filter(s => s.status==="New");
+  const colIP     = data.filter(s => s.status==="In Progress"||s.status==="Paused");
+  const colClosed = data.filter(s => s.status==="Closed");
+  const srt = arr => arr.sort((a,b)=>{ if(a.prioritized&&!b.prioritized)return -1; if(!a.prioritized&&b.prioritized)return 1; return b.goLive.localeCompare(a.goLive); });
+  srt(colNew); srt(colIP); srt(colClosed);
+  const makeCol=(cls,label,icon,arr)=>`
     <div class="col-wrap ${cls}">
-      <div class="col-header">
-        <span>${icon} ${label}</span>
-        <span class="col-count">${arr.length}</span>
-      </div>
-      <div class="col-cards">
-        ${arr.length ? arr.map(renderCard).join("") : `<div class="empty-col">No streams</div>`}
-      </div>
+      <div class="col-header"><span>${icon} ${label}</span><span class="col-count">${arr.length}</span></div>
+      <div class="col-cards">${arr.length?arr.map(renderCard).join(""):`<div class="empty-col">No streams</div>`}</div>
     </div>`;
-
   document.getElementById("col-grid").innerHTML =
-    makeCol("col-new",    "New",         "🆕", colNew)   +
-    makeCol("col-ip",     "In Progress", "⚡", colIP)    +
-    makeCol("col-closed", "Closed",      "✅", colClosed);
+    makeCol("col-new","New","🆕",colNew)+
+    makeCol("col-ip","In Progress","⚡",colIP)+
+    makeCol("col-closed","Closed","✅",colClosed);
+  // update KPIs
+  document.getElementById("kpi-total").textContent  = streams.length;
+  document.getElementById("kpi-new").textContent    = streams.filter(s=>s.status==="New").length;
+  document.getElementById("kpi-ip").textContent     = streams.filter(s=>s.status==="In Progress"||s.status==="Paused").length;
+  document.getElementById("kpi-closed").textContent = streams.filter(s=>s.status==="Closed").length;
 }
 
 function toggleCard(id){
-  if(openCards.has(id)) openCards.delete(id);
-  else openCards.add(id);
-  const card = document.getElementById("card-"+id);
-  if(card) card.classList.toggle("open", openCards.has(id));
+  if(openCards.has(id)) openCards.delete(id); else openCards.add(id);
+  const card=document.getElementById("card-"+id);
+  if(card) card.classList.toggle("open",openCards.has(id));
 }
 
-// ─────────────────────────────────────────────
-// FILTER
-// ─────────────────────────────────────────────
+// ── FILTER ────────────────────────────────────
 function applyFilters(){
   activeFilters.status   = Array.from(document.querySelectorAll('#dd-status input:checked')).map(e=>e.value);
   activeFilters.priority = Array.from(document.querySelectorAll('#dd-priority input:checked')).map(e=>e.value);
   activeFilters.year     = Array.from(document.querySelectorAll('#dd-year input:checked')).map(e=>e.value);
+  activeFilters.okr      = Array.from(document.querySelectorAll('#dd-okr input:checked')).map(e=>e.value);
+  _applyAndRender();
+}
 
+function applyFiltersOKR(){ applyFilters(); }
+
+function _applyAndRender(){
   let filtered = streams.filter(s => {
     const q = activeFilters.search.toLowerCase();
-    if(q && !s.name.toLowerCase().includes(q) && !s.context.toLowerCase().includes(q)) return false;
+    if(q && !s.name.toLowerCase().includes(q) && !s.context.toLowerCase().includes(q) && !s.need.toLowerCase().includes(q)) return false;
     if(activeFilters.status.length   && !activeFilters.status.includes(s.status))    return false;
     if(activeFilters.priority.length && !activeFilters.priority.includes(s.priority)) return false;
     if(activeFilters.year.length     && !activeFilters.year.includes(s.year))         return false;
     if(activeFilters.req.length      && !activeFilters.req.includes(s.requester))     return false;
     if(activeFilters.okr.length      && !activeFilters.okr.includes(s.okr))           return false;
+    if(activeFilters.func.length     && !activeFilters.func.some(f=>s.functions.includes(f))) return false;
     return true;
   });
-
   renderColumns(filtered);
-
-  const total   = streams.length;
-  document.getElementById("kpi-total").textContent = total;
-
-  const hasF = activeFilters.search||activeFilters.status.length||activeFilters.priority.length||activeFilters.year.length||activeFilters.req.length||activeFilters.okr.length;
-  document.getElementById("results-count") && (document.getElementById("results-count").textContent = hasF?`${filtered.length} of ${total}`:`${total} streams`);
-
   updateFilterTags();
   updateClearBtn();
   updateDropdownBtns();
+}
+
+function filterByStatus(status){
+  clearAllFilters(true);
+  if(status==="In Progress"){
+    document.getElementById("s-progress").checked=true;
+    document.getElementById("s-paused").checked=true;
+  } else {
+    const id={"New":"s-new","Closed":"s-closed"}[status];
+    if(id) document.getElementById(id).checked=true;
+  }
+  applyFilters();
 }
 
 function updateFilterTags(){
@@ -514,37 +546,40 @@ function updateFilterTags(){
   activeFilters.status.forEach(v=>tags.push({label:`Status: ${v}`,type:"status",value:v}));
   activeFilters.priority.forEach(v=>tags.push({label:`Priority: ${v}`,type:"priority",value:v}));
   activeFilters.year.forEach(v=>tags.push({label:`Year: ${v}`,type:"year",value:v}));
-  activeFilters.req.forEach(v=>tags.push({label:v,type:"req",value:v}));
   activeFilters.okr.forEach(v=>tags.push({label:v,type:"okr",value:v}));
+  activeFilters.req.forEach(v=>tags.push({label:v,type:"req",value:v}));
+  activeFilters.func.forEach(v=>tags.push({label:v,type:"func",value:v}));
   document.getElementById("active-filter-tags").innerHTML=tags.map(t=>
     `<span class="filter-tag">${esc(t.label)} <span class="filter-tag-remove" onclick="removeFilterTag('${t.type}','${esc(t.value)}')">×</span></span>`
   ).join("");
 }
 
 function removeFilterTag(type,value){
-  if(type==="status")  { const cb=document.querySelector(`#dd-status input[value="${value}"]`);   if(cb)cb.checked=false; }
-  if(type==="priority"){ const cb=document.querySelector(`#dd-priority input[value="${value}"]`); if(cb)cb.checked=false; }
-  if(type==="year")    { const cb=document.querySelector(`#dd-year input[value="${value}"]`);     if(cb)cb.checked=false; }
-  if(type==="req"||type==="okr"){ activeFilters[type]=activeFilters[type].filter(v=>v!==value); document.querySelectorAll(`.mf-chip[data-filter="${type}"][data-value="${value}"]`).forEach(c=>c.classList.remove("active")); }
+  if(type==="status")  {const cb=document.querySelector(`#dd-status input[value="${value}"]`);   if(cb)cb.checked=false;}
+  if(type==="priority"){const cb=document.querySelector(`#dd-priority input[value="${value}"]`); if(cb)cb.checked=false;}
+  if(type==="year")    {const cb=document.querySelector(`#dd-year input[value="${value}"]`);     if(cb)cb.checked=false;}
+  if(type==="okr")     {const cb=document.querySelector(`#dd-okr input[value="${value}"]`);      if(cb)cb.checked=false;}
+  if(type==="req"||type==="func"){ activeFilters[type]=activeFilters[type].filter(v=>v!==value); document.querySelectorAll(`.mf-chip[data-filter="${type}"][data-value="${value}"]`).forEach(c=>c.classList.remove("active")); }
   applyFilters();
 }
 
 function updateClearBtn(){
-  const h=activeFilters.search||activeFilters.status.length||activeFilters.priority.length||activeFilters.year.length||activeFilters.req.length||activeFilters.okr.length;
+  const h=activeFilters.search||activeFilters.status.length||activeFilters.priority.length||activeFilters.year.length||activeFilters.req.length||activeFilters.okr.length||activeFilters.func.length;
   document.getElementById("clear-all-btn").style.display=h?"inline":"none";
 }
 
-function clearAllFilters(){
-  activeFilters={search:"",status:[],priority:[],year:[],req:[],okr:[]};
+function clearAllFilters(silent=false){
+  activeFilters={search:"",status:[],priority:[],year:[],req:[],okr:[],func:[]};
   document.getElementById("search-input").value="";
-  document.querySelectorAll('#dd-status input,#dd-priority input,#dd-year input').forEach(c=>c.checked=false);
+  document.querySelectorAll('#dd-status input,#dd-priority input,#dd-year input,#dd-okr input').forEach(c=>c.checked=false);
   document.querySelectorAll('.mf-chip').forEach(c=>c.classList.remove("active"));
-  applyFilters();
+  if(!silent) _applyAndRender();
 }
 
 function updateDropdownBtns(){
-  [["dd-status","status","Status"],["dd-priority","priority","Priority"],["dd-year","year","Year"]].forEach(([id,key,label])=>{
+  [["dd-status","status","Status"],["dd-priority","priority","Priority"],["dd-year","year","Year"],["dd-okr","okr","Strategic Pillar"]].forEach(([id,key,label])=>{
     const btn=document.querySelector(`#${id} .filter-btn`);
+    if(!btn)return;
     btn.classList.toggle("active",activeFilters[key].length>0);
     btn.innerHTML=activeFilters[key].length?`${label} <span class="filter-count">${activeFilters[key].length}</span>`:`${label} <span class="chevron">▾</span>`;
   });
@@ -562,40 +597,31 @@ function toggleMoreFilters(){
 function toggleChip(el){
   el.classList.toggle("active");
   const ft=el.dataset.filter,val=el.dataset.value;
-  if(el.classList.contains("active")){ if(!activeFilters[ft].includes(val))activeFilters[ft].push(val); }
-  else { activeFilters[ft]=activeFilters[ft].filter(v=>v!==val); }
-  applyFilters();
+  if(el.classList.contains("active")){if(!activeFilters[ft].includes(val))activeFilters[ft].push(val);}
+  else{activeFilters[ft]=activeFilters[ft].filter(v=>v!==val);}
+  _applyAndRender();
 }
 
-// Replace with your deployed Apps Script Web App URL after setup
-// See Code.gs in the GitHub repo for setup instructions
-const APPS_SCRIPT_URL = ""; // "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec"
-
+// Apps Script integration
+const APPS_SCRIPT_URL = "";
 function doRefresh(btn){
   btn.classList.add("spinning");
-  btn.querySelector(".spin-icon").textContent="↻";
-  if (APPS_SCRIPT_URL) {
-    fetch(APPS_SCRIPT_URL)
-      .then(r => r.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          streams.length = 0;
-          data.forEach(s => streams.push(s));
-          applyFilters();
-          btn.title = "Last sync: " + new Date().toLocaleTimeString();
-        }
-      })
-      .catch(err => console.warn("Apps Script fetch failed:", err))
-      .finally(() => btn.classList.remove("spinning"));
+  const upd = document.getElementById("last-updated");
+  if(APPS_SCRIPT_URL){
+    fetch(APPS_SCRIPT_URL).then(r=>r.json()).then(data=>{
+      if(Array.isArray(data)&&data.length>0){ streams.length=0; data.forEach(s=>streams.push(s)); }
+      _applyAndRender();
+      upd.textContent="Updated "+new Date().toLocaleTimeString();
+    }).catch(()=>{ upd.textContent="Sync failed"; }).finally(()=>btn.classList.remove("spinning"));
   } else {
-    setTimeout(()=>{ applyFilters(); btn.classList.remove("spinning"); }, 600);
+    setTimeout(()=>{ _applyAndRender(); btn.classList.remove("spinning"); upd.textContent="Updated "+new Date().toLocaleTimeString(); }, 500);
   }
 }
 
 document.addEventListener("click",e=>{ if(!e.target.closest(".dropdown-wrap"))document.querySelectorAll(".dropdown-wrap").forEach(d=>d.classList.remove("open")); });
-document.getElementById("search-input").addEventListener("input",e=>{ activeFilters.search=e.target.value; applyFilters(); });
+document.getElementById("search-input").addEventListener("input",e=>{ activeFilters.search=e.target.value; _applyAndRender(); });
 
-applyFilters();
+_applyAndRender();
 </script>
 </body>
 </html>
