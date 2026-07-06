@@ -156,7 +156,7 @@
   .okr-cost     { background:#d1fae5; color:#065f46; }
   .okr-growth   { background:#dbeafe; color:#1e40af; }
   .okr-ops      { background:#f3e8ff; color:#6b21a8; }
-  .p-high    { background:rgba(220,38,38,0.08);  color:#dc2626; }
+  .p-urgent  { background:rgba(220,38,38,0.08);  color:#dc2626; }
   .p-medium  { background:rgba(234,179,8,0.1);   color:#a16207; }
   .p-low     { background:rgba(34,197,94,0.1);   color:#15803d; }
   .req-pill  { font-size:9px; padding:2px 7px; border-radius:10px; font-weight:600; }
@@ -238,9 +238,8 @@
   <div class="dropdown-wrap" id="dd-priority">
     <button class="filter-btn" onclick="toggleDropdown('dd-priority')">Priority <span class="chevron">▾</span></button>
     <div class="dropdown-menu">
-      <div class="dropdown-item"><input type="checkbox" id="p-high"   value="High"   onchange="applyFilters()"><label for="p-high">High</label></div>
-      <div class="dropdown-item"><input type="checkbox" id="p-medium" value="Medium" onchange="applyFilters()"><label for="p-medium">Medium</label></div>
-      <div class="dropdown-item"><input type="checkbox" id="p-low"    value="Low"    onchange="applyFilters()"><label for="p-low">Low</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="p-urgent" value="Urgent" onchange="applyFilters()"><label for="p-urgent">Urgent</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="p-normal" value="Normal" onchange="applyFilters()"><label for="p-normal">Normal</label></div>
     </div>
   </div>
 
@@ -295,61 +294,61 @@ const streams = [
   { id:1,  prioritized:false, name:"Acquiring Service Evolution",    init:"LEG-891067", jira:"https://lastminute.atlassian.net/browse/OMG-7",
     context:"The group is integrating Revolut Pay as a new APM. Revolut requires an EU-registered entity to collect payments — BravoNext SA (Switzerland) does not qualify. NV (Netherlands) confirmed as preferred collecting entity.",
     need:"Designate an alternative group entity as EU collecting counterpart with full legal, fiscal, corporate and security sign-off.",
-    status:"Closed",      priority:"High",   requester:"Business",      okr:"Governance & Compliance",
+    status:"Closed",      priority:"Urgent",   requester:"Business",      okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2026-06-23", goLiveDisplay:"Jun 2026" },
 
   { id:3,  prioritized:false, name:"LMNext UK Asset Transfer",       init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-10",
     context:"LM Forward divesting its assets. Transfer of 12 domains, 17 trademarks, 32 clients, Content Hub platform. LM Forward → LMNext UK.",
     need:"Guarantee structural consistency and operational stability across the intra-group asset transfer.",
-    status:"Closed",      priority:"High",   requester:"Corporate",     okr:"Expansion & Growth",
+    status:"Closed",      priority:"Urgent",   requester:"Corporate",     okr:"Expansion & Growth",
     functions:["Legal","Finance & Tax","Corporate Affairs"], goLive:"2026-05-31", goLiveDisplay:"May 2026" },
 
   { id:4,  prioritized:false, name:"France Market Architecture",     init:"INIT-997",  jira:"https://lastminute.atlassian.net/browse/OMG-12",
     context:"Transitioning from 'Group-down' framework to tailored horizontal national Operating Model. France market used as pilot/standard-builder.",
     need:"Map local architectural layers, respect regional constraints, and drive 'conscious efficiency' eliminating structural redundancies.",
-    status:"In Progress",  priority:"High",   requester:"Corporate",     okr:"Expansion & Growth",
+    status:"In Progress",  priority:"Urgent",   requester:"Corporate",     okr:"Expansion & Growth",
     functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2026-06-30", goLiveDisplay:"Jun 2026" },
 
   { id:5,  prioritized:true,  name:"Newco Romania Activation",       init:"INIT-1004", jira:"https://lastminute.atlassian.net/browse/OMG-6",
     context:"Addresses the need to stabilise and scale the workforce in Eastern Europe. Fragmented contractor model creates 'shadow payroll' risks and non-compliance with Romanian labor laws.",
     need:"Activate a dedicated NewCo to reconcile contractors and establish a Centre of Excellence serving all Group subsidiaries.",
-    status:"In Progress",  priority:"High",   requester:"Corporate",     okr:"Expansion & Growth",
+    status:"In Progress",  priority:"Urgent",   requester:"Corporate",     okr:"Expansion & Growth",
     functions:["Legal","Finance & Tax","DPO","HR","IT"], goLive:"2026-07-31", goLiveDisplay:"Jul 2026" },
 
   { id:6,  prioritized:false, name:"Cruise Apps Decommissioning",    init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-14",
     context:"Cross-analysis of legal and DPO constraints for decommissioning of Crocierissime and supporting apps: Calypso (BO), VTE (CRM), Azure (Cloud). Termination date: 31/01/2027.",
     need:"Establish clear rules for data management, deletion/retention, and define a reusable guideline for future decommissioning scenarios.",
-    status:"In Progress",  priority:"High",   requester:"OM Governance", okr:"Governance & Compliance",
+    status:"In Progress",  priority:"Urgent",   requester:"OM Governance", okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","DPO","IT"], goLive:"2027-01-31", goLiveDisplay:"Jan 2027" },
 
   { id:7,  prioritized:false, name:"OTA B2C Appian Workflow",        init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-15",
     context:"Appian B2C OM workflow upgrade: migrating data source from Order Accounting tables to the OM B2C reference spreadsheet for enhanced data reliability.",
     need:"Upgrade workflow data source and implement UX/process enhancements for Legal, Tax, and DPO team operations.",
-    status:"In Progress",  priority:"Medium", requester:"OM Governance", okr:"OM Maintenance & Review",
+    status:"In Progress",  priority:"Normal", requester:"OM Governance", okr:"OM Maintenance & Review",
     functions:["Legal","Finance & Tax","DPO"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
   { id:8,  prioritized:true,  name:"Pigi OTA B2C Reuse",             init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-19",
     context:"Pigi was a dormant Italian legal entity holding active travel agency licenses and VAT credits. Scope expanded from IT Welfare to full OTA B2C assessment.",
     need:"Define scope (countries & business lines) and assess cross-functional feasibility: Legal, Finance & Tax, HR, and Technology.",
-    status:"In Progress",  priority:"High",   requester:"Business",      okr:"Cost Optimisation",
+    status:"In Progress",  priority:"Urgent",   requester:"Business",      okr:"Cost Optimisation",
     functions:["Legal","Finance & Tax","DPO","Corporate Affairs","HR"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
   { id:9,  prioritized:false, name:"PT Invoicing for Flights",       init:"IDEA-1244", jira:"https://lastminute.atlassian.net/browse/OMG-16",
     context:"Technical stream to start invoicing via the PT entity for the Flight product, ensuring full fiscal compliance. LMNext PT created and incorporated within the group.",
     need:"Develop specific workflows in Business Central and Order Accounting to enable the switch from Rumbo to LMNext PT.",
-    status:"New",          priority:"Medium", requester:"Business",      okr:"Governance & Compliance",
+    status:"New",          priority:"Normal", requester:"Business",      okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","DPO"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
   { id:10, prioritized:false, name:"PT Licence Reuse for EU Markets", init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-17",
     context:"Strategic evaluation on leveraging Portuguese licenses to optimise insolvency-related costs across Europe.",
     need:"Assess cross-functional feasibility from all Operating Model perspectives (Legal, Finance & Tax, DPO).",
-    status:"Paused",       priority:"Low",    requester:"Business",      okr:"Cost Optimisation",
+    status:"Paused",       priority:"Normal",    requester:"Business",      okr:"Cost Optimisation",
     functions:["Legal","Finance & Tax","DPO"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" },
 
   { id:11, prioritized:false, name:"New HR Matrix",                   init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-18",
     context:"Align HR job families and roles structure with the Operating Model following organisational evolution.",
     need:"Institutionalise a consistent HR structure harmonising talent acquisition and global mobility with OM business rules.",
-    status:"Paused",       priority:"Low",    requester:"Corporate",     okr:"OM Maintenance & Review",
+    status:"Paused",       priority:"Normal",    requester:"Corporate",     okr:"OM Maintenance & Review",
     functions:["HR","Legal"], goLive:"2026-12-31", goLiveDisplay:"TBD 2026" }
 ];
 
@@ -369,7 +368,7 @@ let openCards = new Set();
 // ─────────────────────────────────────────────
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function reqClass(r){ return {Business:"rq-business",Corporate:"rq-corporate","OM Governance":"rq-om"}[r]||""; }
-function priorityClass(p){ return {High:"p-high",Medium:"p-medium",Low:"p-low"}[p]||""; }
+function priorityClass(p){ return {Urgent:"p-urgent",Normal:"p-normal"}[p]||""; }
 
 const funcDefs = {
   "Legal":            { cls:"fi-legal",   icon:"⚖️",  label:"Legal" },
@@ -414,7 +413,7 @@ function renderCard(s){
       </div>
       <div class="card-footer">
         <div class="card-badges">
-          ${s.priority==="High"?`<span class="badge p-high">High</span>`:""}
+          ${s.priority==="Urgent"?`<span class="badge p-urgent">Urgent</span>`:""}
           ${okrBadge(s.okr)}
         </div>
         <div class="card-funcs">
