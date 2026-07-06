@@ -394,6 +394,86 @@ const streams = [
     status:"Paused", priority:"Normal", requester:"Business", okr:"Cost Optimisation",
     functions:["Legal","Finance & Tax","DPO"], goLive:"2026-12-31", goLiveDisplay:"Q4 2026" },
 
+  { id:11, prioritized:false,
+    name:"GR VAT Representative Implementation", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-7",
+    context:"Implementation of a Greek VAT Representative as required by local regulations for non-EU established entities operating in the Greek market.",
+    need:"Appoint and register a local VAT representative in Greece to ensure full fiscal compliance with Greek tax authority requirements.",
+    conclusion:"Completed in 2026. VAT representative appointed and registered with Greek tax authorities.",
+    status:"Closed", priority:"Normal", requester:"Business", okr:"Governance & Compliance",
+    functions:["Legal","Finance & Tax"], goLive:"2026-03-31", goLiveDisplay:"Q1 2026" },
+
+  { id:12, prioritized:false,
+    name:"IT Welfare Business in Pigi", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-19",
+    context:"Assessment of Pigi S.r.l. as the entity to host the Italian Welfare business, leveraging existing travel agency licenses and VAT credits.",
+    need:"Assess legal, fiscal, HR, DPO and corporate feasibility of activating the IT Welfare scope within Pigi.",
+    conclusion:"All cross-functional assessments completed. Feasibility confirmed. Decision escalated to corporate for OTA B2C scope expansion.",
+    status:"Closed", priority:"Normal", requester:"Business", okr:"Cost Optimisation",
+    functions:["Legal","Finance & Tax","DPO","Corporate Affairs","HR"], goLive:"2026-04-30", goLiveDisplay:"Q2 2026" },
+
+  { id:13, prioritized:false,
+    name:"Forward Assets Transfer", init:null, jira:null,
+    context:"Intra-group transfer of assets from LM Forward entity to LMNext UK, covering domains, trademarks, clients and platform assets.",
+    need:"Execute the legal and operational transfer ensuring continuity of business and compliance with corporate governance requirements.",
+    conclusion:"Transfer completed. All assets legally transferred. RoPA and operational systems updated accordingly.",
+    status:"Closed", priority:"Normal", requester:"Corporate", okr:"Governance & Compliance",
+    functions:["Legal","Finance & Tax","Corporate Affairs"], goLive:"2026-05-31", goLiveDisplay:"May 2026" },
+
+  { id:14, prioritized:false,
+    name:"Telesales & Rumbo Focal Point Review", init:null, jira:null,
+    context:"Review of the Telesales operating model and Rumbo focal point structure to align with the updated group Operating Model.",
+    need:"Assess and formalise the role of Rumbo as focal point for Telesales operations across the group.",
+    conclusion:"Review completed. Updated operating model documented and communicated to relevant stakeholders.",
+    status:"Closed", priority:"Normal", requester:"Business", okr:"OM Maintenance & Review",
+    functions:["Legal","Finance & Tax"], goLive:"2026-03-31", goLiveDisplay:"Q1 2026" },
+
+  { id:15, prioritized:false,
+    name:"CAA Audit – ATOL Adequacy Assessment", init:null, jira:null,
+    context:"Civil Aviation Authority audit of ATOL licence adequacy and compliance for the group's UK travel operations.",
+    need:"Ensure full compliance with CAA/ATOL requirements and respond to audit findings within required timelines.",
+    conclusion:"Audit completed. Adequacy confirmed. Required documentation submitted to CAA.",
+    status:"Closed", priority:"Normal", requester:"OM Governance", okr:"Governance & Compliance",
+    functions:["Legal","Corporate Affairs"], goLive:"2026-02-28", goLiveDisplay:"Q1 2026" },
+
+  { id:16, prioritized:false,
+    name:"Whistleblower Comm. – Indian Entities", init:null, jira:null,
+    context:"Implementation of Whistleblower communication and compliance framework for Indian group entities as required by local regulations.",
+    need:"Ensure Indian entities comply with local whistleblower legislation through formal policy adoption and communication.",
+    conclusion:"Whistleblower framework implemented and communicated across all Indian group entities.",
+    status:"Closed", priority:"Normal", requester:"OM Governance", okr:"Governance & Compliance",
+    functions:["Legal","HR","Corporate Affairs"], goLive:"2026-01-31", goLiveDisplay:"Q1 2026" },
+
+  { id:17, prioritized:false,
+    name:"OM Assessment: US Tax Compliance", init:null, jira:null,
+    context:"Assessment of US tax compliance obligations for group entities with exposure to US tax jurisdiction.",
+    need:"Map US tax obligations, assess current compliance posture and define action plan for any gaps identified.",
+    conclusion:"Assessment completed. Compliance posture documented. Action plan agreed with Finance & Tax.",
+    status:"Closed", priority:"Normal", requester:"OM Governance", okr:"Governance & Compliance",
+    functions:["Legal","Finance & Tax"], goLive:"2026-04-30", goLiveDisplay:"Q2 2026" },
+
+  { id:18, prioritized:false,
+    name:"ICO Group Asset Inventory", init:null, jira:null,
+    context:"Comprehensive inventory of ICO (Information Commissioner's Office) registered assets and data processing activities across group entities.",
+    need:"Build a complete and accurate ICO asset inventory to support DPA compliance and GDPR accountability obligations.",
+    conclusion:"Inventory completed. All ICO registrations verified and updated. DPA attachments PDF produced.",
+    status:"Closed", priority:"Normal", requester:"OM Governance", okr:"Governance & Compliance",
+    functions:["Legal","DPO"], goLive:"2026-06-30", goLiveDisplay:"Q2 2026" },
+
+  { id:19, prioritized:false,
+    name:"OM B2B Services Catalog Review", init:null, jira:null,
+    context:"Review and update of the B2B services catalog to reflect the current group Operating Model and entity structure.",
+    need:"Ensure the B2B services catalog accurately reflects intercompany service flows and is aligned with legal and fiscal arrangements.",
+    conclusion:"Catalog reviewed and updated. Signed off by Legal and Finance & Tax.",
+    status:"Closed", priority:"Normal", requester:"Business", okr:"OM Maintenance & Review",
+    functions:["Legal","Finance & Tax","Corporate Affairs"], goLive:"2026-05-31", goLiveDisplay:"May 2026" },
+
+  { id:20, prioritized:false,
+    name:"New Market Prioritisation", init:null, jira:null,
+    context:"Strategic assessment to prioritise new markets for group expansion, evaluating regulatory, fiscal and operational feasibility.",
+    need:"Define a prioritised list of target markets for 2026-2027 expansion with cross-functional assessment for each.",
+    conclusion:"Prioritisation framework completed. Recommended markets presented to and approved by C-Team.",
+    status:"Closed", priority:"Normal", requester:"Corporate", okr:"Expansion & Growth",
+    functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2026-06-30", goLiveDisplay:"Q2 2026" },
+
   { id:10, prioritized:false,
     name:"New HR Matrix", init:null, jira:"https://lastminute.atlassian.net/browse/OMG-18",
     context:"Align HR job families and roles structure with the Operating Model following organisational evolution.",
@@ -524,7 +604,7 @@ function renderColumns(data){
   srt(colTodo); srt(colIP); srt(colClosed);
   const makeCol=(cls,label,icon,arr,subtitle="")=>`
     <div class="col-wrap ${cls}">
-      <div class="col-header" style="justify-content:center;gap:10px;flex-direction:column;padding:8px 14px 6px;">
+      <div class="col-header" style="justify-content:center;gap:10px;flex-direction:column;padding:10px 14px 8px;">
         <div style="display:flex;align-items:center;gap:8px;width:100%;justify-content:center;"><span>${label}</span><span class="col-count">${arr.length}</span></div>
         ${subtitle?`<div style="font-family:system-ui;font-size:9px;font-weight:600;opacity:0.55;text-transform:uppercase;letter-spacing:0.1em;">${subtitle}</div>`:""}
       </div>
@@ -533,7 +613,7 @@ function renderColumns(data){
   document.getElementById("col-grid").innerHTML =
     makeCol("col-todo",  "To Do",       "", colTodo)+
     makeCol("col-ip",    "In Progress", "", colIP)+
-    makeCol("col-closed","Closed",      "", colClosed, "2026 · Closed streams");
+    makeCol("col-closed","2026  ·  Closed", "", colClosed, "");
   // KPIs
   document.getElementById("kpi-total").textContent  = streams.length;
   document.getElementById("kpi-todo").textContent   = streams.filter(s=>s.status==="New").length;
