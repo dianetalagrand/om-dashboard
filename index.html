@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OM Governance · Portfolio Dashboard</title>
+<style>
+  :root {
+    --pink: #F2007D;
+    --dark: #1E0023;
+    --teal: #2ABEB9;
+    --purple: #441F72;
+    --blue: #4a86e8;
+    --yellow: #FFB511;
+    --navy: #1a1f3a;
+    --bg: #f5f5f7;
+    --white: #ffffff;
+    --border: #e0e0e0;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --badge-2025: #F2007D;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-dot {
+    width: 10px; height: 10px;
+    background: var(--pink);
+    border-radius: 50%;
+  }
+  .header-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .header-sub {
+    color: rgba(255,255,255,0.45);
+    font-size: 12px;
+    margin-left: 4px;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .kpi-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 4px 12px;
+    color: white;
+    font-size: 11.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .kpi-num {
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .kpi-num.pink { color: var(--pink); }
+  .kpi-sep { color: rgba(255,255,255,0.3); }
+
+  /* FILTER BAR */
+  .filter-bar {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 320px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .search-input {
+    width: 100%;
+    padding: 7px 10px 7px 32px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+    color: var(--text);
+    background: var(--bg);
+  }
+  .search-input:focus { border-color: var(--pink); background: white; }
+
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    font-size: 12.5px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover { border-color: var(--pink); color: var(--pink); }
+  .filter-btn.active { background: var(--pink); color: white; border-color: var(--pink); }
+  .filter-btn .chevron { font-size: 10px; opacity: 0.6; }
+  .filter-count {
+    background: var(--pink);
+    color: white;
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .filter-divider { width: 1px; height: 24px; background: var(--border); }
+
+  /* DROPDOWN */
+  .dropdown-wrap { position: relative; }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    min-width: 200px;
+    z-index: 200;
+    padding: 6px 0;
+  }
+  .dropdown-wrap.open .dropdown-menu { display: block; }
+  .dropdown-section { padding: 6px 14px 2px; color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .dropdown-item {
+    padding: 7px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    transition: background 0.1s;
+  }
+  .dropdown-item:hover { background: var(--bg); }
+  .dropdown-item input[type=checkbox] { accent-color: var(--pink); width: 13px; height: 13px; cursor: pointer; }
+  .dropdown-item label { cursor: pointer; flex: 1; }
+
+  /* MORE FILTERS PANEL */
+  .more-filters-panel {
+    display: none;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .more-filters-panel.open { display: flex; }
+  .mf-group { display: flex; flex-direction: column; gap: 6px; }
+  .mf-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+  .mf-options { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mf-chip {
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .mf-chip:hover { border-color: var(--pink); color: var(--pink); }
+  .mf-chip.active { background: var(--pink); color: white; border-color: var(--pink); }
+
+  /* ACTIVE FILTER TAGS */
+  .active-filters {
+    padding: 6px 28px 0;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .active-filters:empty { display: none; }
+  .filter-tag {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(242,0,125,0.08);
+    border: 1px solid rgba(242,0,125,0.2);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11.5px;
+    color: var(--pink);
+  }
+  .filter-tag-remove {
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    opacity: 0.7;
+  }
+  .filter-tag-remove:hover { opacity: 1; }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 20px 28px 40px;
+  }
+
+  /* TABLE */
+  .table-wrap {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  thead tr {
+    background: var(--dark);
+    color: white;
+  }
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  th:hover { background: rgba(255,255,255,0.06); }
+  th .sort-arrow { opacity: 0.4; margin-left: 4px; }
+  th.sorted .sort-arrow { opacity: 1; color: var(--pink); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(242,0,125,0.03); }
+
+  td {
+    padding: 10px 14px;
+    vertical-align: middle;
+  }
+
+  /* BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-2025 {
+    background: rgba(242,0,125,0.1);
+    color: var(--pink);
+    border: 1px solid rgba(242,0,125,0.25);
+    font-size: 9.5px;
+    padding: 1px 6px;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+
+  .status-badge { font-weight: 600; }
+  .s-active { background: rgba(42,190,185,0.12); color: #1a9994; }
+  .s-closed { background: rgba(242,0,125,0.1); color: var(--pink); }
+  .s-paused { background: rgba(74,134,232,0.12); color: #2d6cc4; }
+  .s-pending { background: rgba(255,181,17,0.15); color: #b5810a; }
+
+  .priority-badge {}
+  .p-high { background: rgba(220,38,38,0.1); color: #dc2626; }
+  .p-medium { background: rgba(234,179,8,0.1); color: #a16207; }
+  .p-low { background: rgba(34,197,94,0.1); color: #15803d; }
+
+  .stream-name {
+    font-weight: 600;
+    color: var(--text);
+    max-width: 260px;
+  }
+  .stream-init {
+    display: inline-block;
+    background: var(--purple);
+    color: white;
+    font-size: 9.5px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  .stream-desc {
+    color: var(--muted);
+    font-size: 11.5px;
+    margin-top: 2px;
+    max-width: 280px;
+  }
+
+  .func-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+  .func-pill {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .fp-legal { background: rgba(68,31,114,0.1); color: var(--purple); }
+  .fp-finance { background: rgba(42,190,185,0.1); color: #1a9994; }
+  .fp-dpo { background: rgba(74,134,232,0.12); color: #2d6cc4; }
+  .fp-corporate { background: rgba(255,181,17,0.15); color: #b5810a; }
+  .fp-it { background: rgba(242,0,125,0.08); color: var(--pink); }
+  .fp-hr { background: rgba(107,114,128,0.12); color: #4b5563; }
+
+  .requester-pill {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .rq-business { background: rgba(42,190,185,0.1); color: #1a9994; }
+  .rq-corporate { background: rgba(255,181,17,0.15); color: #b5810a; }
+  .rq-om { background: rgba(242,0,125,0.1); color: var(--pink); }
+
+  .date-cell { white-space: nowrap; color: var(--muted); }
+  .date-cell.overdue { color: #dc2626; font-weight: 600; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--muted);
+  }
+  .empty-state .icon { font-size: 32px; margin-bottom: 10px; }
+
+  /* RESULTS COUNT */
+  .results-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 2px;
+  }
+  .results-count { color: var(--muted); font-size: 12px; }
+  .clear-all {
+    font-size: 12px;
+    color: var(--pink);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-dot"></div>
+    <span class="header-title">Operating Model Governance</span>
+    <span class="header-sub">/ Portfolio</span>
+  </div>
+  <div class="header-right">
+    <div class="kpi-pill">
+      <span>Total streams</span>
+      <span class="kpi-num" id="kpi-total">—</span>
+      <span class="kpi-sep">|</span>
+      <span>2025</span>
+      <span class="kpi-num pink" id="kpi-2025">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+
+  <!-- Search -->
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" id="search-input" placeholder="Search streams…">
+  </div>
+
+  <div class="filter-divider"></div>
+
+  <!-- Status -->
+  <div class="dropdown-wrap" id="dd-status">
+    <button class="filter-btn" onclick="toggleDropdown('dd-status')">
+      Status <span class="chevron">▾</span>
+    </button>
+    <div class="dropdown-menu">
+      <div class="dropdown-item"><input type="checkbox" id="s-active" value="Active" onchange="applyFilters()"><label for="s-active">Active</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="s-closed" value="Closed" onchange="applyFilters()"><label for="s-closed">Closed</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="s-paused" value="Paused" onchange="applyFilters()"><label for="s-paused">Paused</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="s-pending" value="Pending" onchange="applyFilters()"><label for="s-pending">Pending</label></div>
+    </div>
+  </div>
+
+  <!-- Priority -->
+  <div class="dropdown-wrap" id="dd-priority">
+    <button class="filter-btn" onclick="toggleDropdown('dd-priority')">
+      Priority <span class="chevron">▾</span>
+    </button>
+    <div class="dropdown-menu">
+      <div class="dropdown-item"><input type="checkbox" id="p-high" value="High" onchange="applyFilters()"><label for="p-high">High</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="p-medium" value="Medium" onchange="applyFilters()"><label for="p-medium">Medium</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="p-low" value="Low" onchange="applyFilters()"><label for="p-low">Low</label></div>
+    </div>
+  </div>
+
+  <!-- More Filters -->
+  <button class="filter-btn" id="btn-more" onclick="toggleMoreFilters()">
+    More Filters <span class="chevron">▾</span>
+  </button>
+
+  <!-- Clear all (shown when filters active) -->
+  <span class="clear-all" id="clear-all-btn" style="display:none" onclick="clearAllFilters()">Clear all</span>
+
+</div>
+
+<!-- MORE FILTERS PANEL -->
+<div class="more-filters-panel" id="more-filters-panel">
+  <div class="mf-group">
+    <div class="mf-label">OM Enabling Functions</div>
+    <div class="mf-options" id="mf-functions">
+      <span class="mf-chip" data-filter="func" data-value="Legal" onclick="toggleChip(this)">Legal</span>
+      <span class="mf-chip" data-filter="func" data-value="Finance & Tax" onclick="toggleChip(this)">Finance &amp; Tax</span>
+      <span class="mf-chip" data-filter="func" data-value="DPO" onclick="toggleChip(this)">DPO</span>
+      <span class="mf-chip" data-filter="func" data-value="Corporate Affairs" onclick="toggleChip(this)">Corporate Affairs</span>
+      <span class="mf-chip" data-filter="func" data-value="IT/EUS" onclick="toggleChip(this)">IT / EUS</span>
+      <span class="mf-chip" data-filter="func" data-value="HR" onclick="toggleChip(this)">HR</span>
+    </div>
+  </div>
+  <div class="mf-group">
+    <div class="mf-label">Requester</div>
+    <div class="mf-options" id="mf-requester">
+      <span class="mf-chip" data-filter="req" data-value="Business" onclick="toggleChip(this)">Business</span>
+      <span class="mf-chip" data-filter="req" data-value="Corporate" onclick="toggleChip(this)">Corporate</span>
+      <span class="mf-chip" data-filter="req" data-value="OM Governance" onclick="toggleChip(this)">OM Governance</span>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVE FILTER TAGS -->
+<div class="active-filters" id="active-filter-tags"></div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="results-bar">
+    <span class="results-count" id="results-count"></span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortTable('name')">Stream <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('status')">Status <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('priority')">Priority <span class="sort-arrow">↕</span></th>
+          <th>Enabling Functions</th>
+          <th onclick="sortTable('requester')">Requester <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('goLive')">Effective / Go-Live <span class="sort-arrow">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const streams = [
+  {
+    id: 1,
+    name: "Acquiring Service Evolution",
+    init: null,
+    desc: "Assessment and governance of payment acquiring service restructuring.",
+    status: "Closed",
+    priority: "High",
+    functions: ["Legal", "Finance & Tax", "DPO"],
+    requester: "Business",
+    goLive: "2025-11-30",
+    goLiveDisplay: "Nov 2025"
+  },
+  {
+    id: 2,
+    name: "Revolut Pay Integration",
+    init: "LEG-891067",
+    desc: "NV entity approved as collecting counterpart. PSA/PSD2 compliance assessment.",
+    status: "Closed",
+    priority: "High",
+    functions: ["Legal", "Finance & Tax", "DPO"],
+    requester: "Business",
+    goLive: "2025-09-30",
+    goLiveDisplay: "Sep 2025"
+  },
+  {
+    id: 3,
+    name: "Tool Decommission Policy",
+    init: null,
+    desc: "Policy, guideline & 5 function checklists (LMN-OM-DEC-P01 / G01).",
+    status: "Closed",
+    priority: "Medium",
+    functions: ["Legal", "Finance & Tax", "DPO", "IT/EUS", "HR"],
+    requester: "OM Governance",
+    goLive: "2025-10-31",
+    goLiveDisplay: "Oct 2025"
+  },
+  {
+    id: 4,
+    name: "France Market Architecture",
+    init: "INIT-997",
+    desc: "OM structure design — cassettiera framework (Viaggiare / LMnext FR / BravoNext).",
+    status: "Active",
+    priority: "High",
+    functions: ["Legal", "Finance & Tax", "DPO", "Corporate Affairs"],
+    requester: "Corporate",
+    goLive: "2026-06-30",
+    goLiveDisplay: "Jun 2026"
+  },
+  {
+    id: 5,
+    name: "Newco Romania",
+    init: "INIT-1004",
+    desc: "Entity incorporation — Tech & Service company. Contractors → employees.",
+    status: "Active",
+    priority: "High",
+    functions: ["Legal", "Finance & Tax", "DPO", "HR", "IT/EUS"],
+    requester: "Corporate",
+    goLive: "2026-07-31",
+    goLiveDisplay: "Jul 2026"
+  },
+  {
+    id: 6,
+    name: "Cruise Apps Decommissioning",
+    init: null,
+    desc: "Full governance kit. GDPR Core Committee approval. Deadline Jan 31, 2027.",
+    status: "Active",
+    priority: "High",
+    functions: ["Legal", "Finance & Tax", "DPO", "IT/EUS"],
+    requester: "OM Governance",
+    goLive: "2027-01-31",
+    goLiveDisplay: "Jan 2027"
+  },
+  {
+    id: 7,
+    name: "LMNext UK Asset Transfer",
+    init: null,
+    desc: "12 domains, 17 trademarks, 32 clients, Content Hub. LM Forward → LMNext UK.",
+    status: "Closed",
+    priority: "High",
+    functions: ["Legal", "Finance & Tax", "Corporate Affairs"],
+    requester: "Corporate",
+    goLive: "2025-05-31",
+    goLiveDisplay: "May 2025"
+  },
+  {
+    id: 8,
+    name: "DPA Attachments PDF",
+    init: null,
+    desc: "ICO agreements & Extra EU data transfers. ~2,500 rows FSE data.",
+    status: "Closed",
+    priority: "Medium",
+    functions: ["Legal", "DPO"],
+    requester: "OM Governance",
+    goLive: "2025-07-31",
+    goLiveDisplay: "Jul 2025"
+  },
+  {
+    id: 9,
+    name: "PT Invoicing for Flights",
+    init: null,
+    desc: "Processing of PT invoicing stream for flight product.",
+    status: "Pending",
+    priority: "Medium",
+    functions: ["Finance & Tax", "Legal"],
+    requester: "Business",
+    goLive: "2026-09-30",
+    goLiveDisplay: "Sep 2026"
+  },
+  {
+    id: 10,
+    name: "Pigi OTA B2C Reuse",
+    init: null,
+    desc: "Appian-powered OTA B2C workflow — governance and reuse assessment.",
+    status: "Active",
+    priority: "High",
+    functions: ["Legal", "Finance & Tax", "DPO"],
+    requester: "Business",
+    goLive: "2026-10-31",
+    goLiveDisplay: "Oct 2026"
+  },
+  {
+    id: 11,
+    name: "PT Licence Reuse",
+    init: null,
+    desc: "On hold to prioritise Pigi OTA B2C.",
+    status: "Paused",
+    priority: "Low",
+    functions: ["Legal", "Finance & Tax"],
+    requester: "Business",
+    goLive: "2026-12-31",
+    goLiveDisplay: "Dec 2026"
+  },
+  {
+    id: 12,
+    name: "New HR Matrix",
+    init: null,
+    desc: "On hold until consolidated org structure is confirmed.",
+    status: "Paused",
+    priority: "Low",
+    functions: ["HR", "Legal"],
+    requester: "Corporate",
+    goLive: "2026-12-31",
+    goLiveDisplay: "Dec 2026"
+  }
+];
+
+// Mark 2025 badge: goLive year === 2025 → badge
+streams.forEach(s => {
+  s.is2025 = s.goLive && s.goLive.startsWith("2025");
+});
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let activeFilters = {
+  search: "",
+  status: [],
+  priority: [],
+  func: [],
+  req: []
+};
+let sortCol = "goLive";
+let sortDir = 1;
+
+// ─────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────
+function statusClass(s) {
+  return { Active: "s-active", Closed: "s-closed", Paused: "s-paused", Pending: "s-pending" }[s] || "";
+}
+function priorityClass(p) {
+  return { High: "p-high", Medium: "p-medium", Low: "p-low" }[p] || "";
+}
+function funcClass(f) {
+  return { "Legal": "fp-legal", "Finance & Tax": "fp-finance", "DPO": "fp-dpo", "Corporate Affairs": "fp-corporate", "IT/EUS": "fp-it", "HR": "fp-hr" }[f] || "";
+}
+function reqClass(r) {
+  return { "Business": "rq-business", "Corporate": "rq-corporate", "OM Governance": "rq-om" }[r] || "";
+}
+
+function renderTable(data) {
+  const tbody = document.getElementById("table-body");
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="icon">🔍</div><div>No streams match the current filters.</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map(s => `
+    <tr>
+      <td>
+        <div class="stream-name">
+          ${escHtml(s.name)}
+          ${s.init ? `<span class="stream-init">${s.init}</span>` : ""}
+          ${s.is2025 ? `<span class="badge badge-2025">2025</span>` : ""}
+        </div>
+        <div class="stream-desc">${escHtml(s.desc)}</div>
+      </td>
+      <td><span class="badge status-badge ${statusClass(s.status)}">${s.status}</span></td>
+      <td><span class="badge priority-badge ${priorityClass(s.priority)}">${s.priority}</span></td>
+      <td>
+        <div class="func-pills">
+          ${s.functions.map(f => `<span class="func-pill ${funcClass(f)}">${escHtml(f)}</span>`).join("")}
+        </div>
+      </td>
+      <td><span class="badge requester-pill ${reqClass(s.requester)}">${s.requester}</span></td>
+      <td class="date-cell">${s.goLiveDisplay}</td>
+    </tr>
+  `).join("");
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// ─────────────────────────────────────────────
+// FILTER + SORT
+// ─────────────────────────────────────────────
+function applyFilters() {
+  // Collect status checkboxes
+  activeFilters.status = Array.from(document.querySelectorAll('#dd-status input:checked')).map(el => el.value);
+  activeFilters.priority = Array.from(document.querySelectorAll('#dd-priority input:checked')).map(el => el.value);
+
+  let filtered = streams.filter(s => {
+    const q = activeFilters.search.toLowerCase();
+    if (q && !s.name.toLowerCase().includes(q) && !s.desc.toLowerCase().includes(q)) return false;
+    if (activeFilters.status.length && !activeFilters.status.includes(s.status)) return false;
+    if (activeFilters.priority.length && !activeFilters.priority.includes(s.priority)) return false;
+    if (activeFilters.func.length && !activeFilters.func.some(f => s.functions.includes(f))) return false;
+    if (activeFilters.req.length && !activeFilters.req.includes(s.requester)) return false;
+    return true;
+  });
+
+  // Sort
+  filtered.sort((a, b) => {
+    let va = a[sortCol] || "";
+    let vb = b[sortCol] || "";
+    if (sortCol === "functions") { va = a.functions.join(","); vb = b.functions.join(","); }
+    return va < vb ? -sortDir : va > vb ? sortDir : 0;
+  });
+
+  renderTable(filtered);
+  updateKPIs(filtered);
+  updateResultsCount(filtered.length);
+  updateFilterTags();
+  updateClearBtn();
+  updateDropdownBtns();
+}
+
+function updateKPIs(filtered) {
+  const total = streams.length;
+  const count2025 = streams.filter(s => s.is2025).length;
+  document.getElementById("kpi-total").textContent = total;
+  document.getElementById("kpi-2025").textContent = count2025;
+}
+
+function updateResultsCount(n) {
+  const total = streams.length;
+  document.getElementById("results-count").textContent =
+    n === total ? `${total} streams` : `${n} of ${total} streams`;
+}
+
+function updateFilterTags() {
+  const container = document.getElementById("active-filter-tags");
+  const tags = [];
+  activeFilters.status.forEach(v => tags.push({ label: `Status: ${v}`, type: "status", value: v }));
+  activeFilters.priority.forEach(v => tags.push({ label: `Priority: ${v}`, type: "priority", value: v }));
+  activeFilters.func.forEach(v => tags.push({ label: v, type: "func", value: v }));
+  activeFilters.req.forEach(v => tags.push({ label: `Requester: ${v}`, type: "req", value: v }));
+  container.innerHTML = tags.map(t =>
+    `<span class="filter-tag">${t.label} <span class="filter-tag-remove" onclick="removeFilterTag('${t.type}','${t.value}')">×</span></span>`
+  ).join("");
+}
+
+function removeFilterTag(type, value) {
+  if (type === "status") {
+    const cb = document.querySelector(`#dd-status input[value="${value}"]`);
+    if (cb) cb.checked = false;
+  } else if (type === "priority") {
+    const cb = document.querySelector(`#dd-priority input[value="${value}"]`);
+    if (cb) cb.checked = false;
+  } else if (type === "func" || type === "req") {
+    activeFilters[type] = activeFilters[type].filter(v => v !== value);
+    // uncheck chip
+    document.querySelectorAll(`.mf-chip[data-filter="${type}"][data-value="${value}"]`).forEach(c => c.classList.remove("active"));
+  }
+  applyFilters();
+}
+
+function updateClearBtn() {
+  const hasAny = activeFilters.search || activeFilters.status.length || activeFilters.priority.length || activeFilters.func.length || activeFilters.req.length;
+  document.getElementById("clear-all-btn").style.display = hasAny ? "inline" : "none";
+}
+
+function updateDropdownBtns() {
+  const statusBtn = document.querySelector('#dd-status .filter-btn');
+  const priorityBtn = document.querySelector('#dd-priority .filter-btn');
+  statusBtn.classList.toggle("active", activeFilters.status.length > 0);
+  priorityBtn.classList.toggle("active", activeFilters.priority.length > 0);
+  if (activeFilters.status.length) statusBtn.innerHTML = `Status <span class="filter-count">${activeFilters.status.length}</span>`;
+  else statusBtn.innerHTML = `Status <span class="chevron">▾</span>`;
+  if (activeFilters.priority.length) priorityBtn.innerHTML = `Priority <span class="filter-count">${activeFilters.priority.length}</span>`;
+  else priorityBtn.innerHTML = `Priority <span class="chevron">▾</span>`;
+}
+
+function clearAllFilters() {
+  activeFilters = { search: "", status: [], priority: [], func: [], req: [] };
+  document.getElementById("search-input").value = "";
+  document.querySelectorAll('#dd-status input, #dd-priority input').forEach(c => c.checked = false);
+  document.querySelectorAll('.mf-chip').forEach(c => c.classList.remove("active"));
+  applyFilters();
+}
+
+// ─────────────────────────────────────────────
+// SORT
+// ─────────────────────────────────────────────
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll("th").forEach(th => th.classList.remove("sorted"));
+  applyFilters();
+}
+
+// ─────────────────────────────────────────────
+// DROPDOWNS
+// ─────────────────────────────────────────────
+function toggleDropdown(id) {
+  const wrap = document.getElementById(id);
+  const isOpen = wrap.classList.contains("open");
+  document.querySelectorAll(".dropdown-wrap").forEach(d => d.classList.remove("open"));
+  if (!isOpen) wrap.classList.add("open");
+}
+
+function toggleMoreFilters() {
+  const panel = document.getElementById("more-filters-panel");
+  const btn = document.getElementById("btn-more");
+  const isOpen = panel.classList.contains("open");
+  panel.classList.toggle("open");
+  btn.classList.toggle("active", !isOpen);
+}
+
+function toggleChip(el) {
+  el.classList.toggle("active");
+  const filterType = el.dataset.filter;
+  const value = el.dataset.value;
+  if (el.classList.contains("active")) {
+    if (!activeFilters[filterType].includes(value)) activeFilters[filterType].push(value);
+  } else {
+    activeFilters[filterType] = activeFilters[filterType].filter(v => v !== value);
+  }
+  applyFilters();
+}
+
+// Close dropdowns on outside click
+document.addEventListener("click", e => {
+  if (!e.target.closest(".dropdown-wrap")) {
+    document.querySelectorAll(".dropdown-wrap").forEach(d => d.classList.remove("open"));
+  }
+});
+
+// Search
+document.getElementById("search-input").addEventListener("input", e => {
+  activeFilters.search = e.target.value;
+  applyFilters();
+});
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+applyFilters();
+</script>
+</body>
+</html>
