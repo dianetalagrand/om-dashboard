@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
 <title>OM Governance · Portfolio Dashboard</title>
 <style>
   :root {
@@ -98,14 +101,14 @@
 
   /* COLUMNS */
   .col-wrap{display:flex;flex-direction:column;}
-  .col-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px 8px 0 0;font-family:"Permanent Marker",cursive;font-size:14px;letter-spacing:0.03em;background:white;border-bottom:2px solid;}
+  .col-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px 8px 0 0;font-family:"Permanent Marker","Caveat","Comic Sans MS","Chalkboard SE","Bradley Hand",cursive;font-size:15px;font-weight:700;letter-spacing:0.03em;background:white;border-bottom:2px solid;}
   .col-header .col-count{font-size:10.5px;font-weight:700;border-radius:10px;padding:1px 7px;border:1.5px solid;}
   .col-cards{display:flex;flex-direction:column;gap:6px;padding:8px 0 4px;}
-  .col-todo   .col-header{border-color:var(--col-todo);  color:var(--col-todo); text-align:center;}
+  .col-todo   .col-header{border-color:var(--col-todo);  color:var(--col-todo); text-align:center; border-bottom-width:3px;}
   .col-todo   .col-header .col-count{color:var(--col-todo);  border-color:var(--col-todo);  background:rgba(68,31,114,0.07);}
-  .col-ip     .col-header{border-color:var(--col-ip);    color:var(--col-ip); text-align:center;}
+  .col-ip     .col-header{border-color:var(--col-ip);    color:var(--col-ip); text-align:center; border-bottom-width:3px;}
   .col-ip     .col-header .col-count{color:var(--col-ip);    border-color:var(--col-ip);    background:rgba(42,190,185,0.1);}
-  .col-closed .col-header{border-color:var(--col-closed);color:var(--col-closed); text-align:center;}
+  .col-closed .col-header{border-color:var(--col-closed);color:var(--col-closed); text-align:center; border-bottom-width:3px;}
   .col-closed .col-header .col-count{color:var(--col-closed);border-color:var(--col-closed);background:rgba(242,0,125,0.08);}
 
   /* STREAM CARD */
@@ -197,7 +200,6 @@
 
   ::-webkit-scrollbar{width:4px;height:4px;}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-  @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 </style>
 </head>
 <body>
