@@ -19,12 +19,12 @@
     --muted:   #6b7280;
 
     /* column colours */
-    --col-new:      #7c3aed;   /* violet */
-    --col-new-bg:   #f5f3ff;
-    --col-ip:       #0284c7;   /* sky blue */
-    --col-ip-bg:    #f0f8ff;
-    --col-closed:   #059669;   /* emerald */
-    --col-closed-bg:#f0fdf4;
+    --col-new:      #441F72;   /* purple aziendale */
+    --col-new-bg:   #faf8ff;
+    --col-ip:       #2ABEB9;   /* teal aziendale */
+    --col-ip-bg:    #f0fffe;
+    --col-closed:   #F2007D;   /* pink aziendale */
+    --col-closed-bg:#fff0f7;
   }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); font-size:13px; min-height:100vh; display:flex; flex-direction:column; }
@@ -101,13 +101,16 @@
   .col-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:start; }
 
   .col-wrap { display:flex; flex-direction:column; gap:0; }
-  .col-header { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-radius:8px 8px 0 0; font-size:11.5px; font-weight:700; letter-spacing:0.03em; }
-  .col-header .col-count { font-size:11px; font-weight:600; opacity:0.8; background:rgba(255,255,255,0.25); border-radius:10px; padding:1px 7px; }
+  .col-header { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-radius:8px 8px 0 0; font-size:11.5px; font-weight:700; letter-spacing:0.03em; background:white; border-bottom:2px solid; }
+  .col-header .col-count { font-size:11px; font-weight:700; border-radius:10px; padding:1px 8px; border:1.5px solid; }
   .col-cards { display:flex; flex-direction:column; gap:6px; padding:8px 0 4px; }
 
-  .col-new    .col-header { background:var(--col-new);    color:white; }
-  .col-ip     .col-header { background:var(--col-ip);     color:white; }
-  .col-closed .col-header { background:var(--col-closed); color:white; }
+  .col-new    .col-header { border-color:var(--col-new);    color:var(--col-new); }
+  .col-new    .col-header .col-count { color:var(--col-new); border-color:var(--col-new); background:rgba(68,31,114,0.07); }
+  .col-ip     .col-header { border-color:var(--col-ip);     color:var(--col-ip); }
+  .col-ip     .col-header .col-count { color:var(--col-ip); border-color:var(--col-ip); background:rgba(42,190,185,0.1); }
+  .col-closed .col-header { border-color:var(--col-closed); color:var(--col-closed); }
+  .col-closed .col-header .col-count { color:var(--col-closed); border-color:var(--col-closed); background:rgba(242,0,125,0.08); }
 
   /* ── STREAM CARD ── */
   .stream-card { background:white; border:1px solid var(--border); border-radius:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.04); transition:box-shadow 0.15s; }
@@ -242,7 +245,6 @@
   <div class="dropdown-wrap" id="dd-year">
     <button class="filter-btn" onclick="toggleDropdown('dd-year')">Year <span class="chevron">▾</span></button>
     <div class="dropdown-menu">
-      <div class="dropdown-item"><input type="checkbox" id="y-2025" value="2025" onchange="applyFilters()"><label for="y-2025">2025</label></div>
       <div class="dropdown-item"><input type="checkbox" id="y-2026" value="2026" onchange="applyFilters()"><label for="y-2026">2026</label></div>
       <div class="dropdown-item"><input type="checkbox" id="y-2027" value="2027" onchange="applyFilters()"><label for="y-2027">2027</label></div>
     </div>
@@ -298,13 +300,13 @@ const streams = [
     context:"NV entity approved as collecting counterpart. PSA/PSD2 compliance assessment finalised. T&C updates completed.",
     need:"Assess NV entity as Revolut Pay collecting counterpart for the group.",
     status:"Closed",      priority:"High",   requester:"Business",      okr:"Governance & Compliance",
-    functions:["Legal","Finance & Tax","DPO"], goLive:"2025-09-30", goLiveDisplay:"Sep 2025" },
+    functions:["Legal","Finance & Tax","DPO"], goLive:"2026-05-31", goLiveDisplay:"May 2026" },
 
   { id:3,  prioritized:false, name:"LMNext UK Asset Transfer",       init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-10",
     context:"LM Forward divesting its assets. Transfer of 12 domains, 17 trademarks, 32 clients, Content Hub platform. LM Forward → LMNext UK.",
     need:"Guarantee structural consistency and operational stability across the intra-group asset transfer.",
     status:"Closed",      priority:"High",   requester:"Corporate",     okr:"Expansion & Growth",
-    functions:["Legal","Finance & Tax","Corporate Affairs"], goLive:"2025-05-31", goLiveDisplay:"May 2025" },
+    functions:["Legal","Finance & Tax","Corporate Affairs"], goLive:"2026-05-31", goLiveDisplay:"May 2026" },
 
   { id:4,  prioritized:false, name:"France Market Architecture",     init:"INIT-997",  jira:"https://lastminute.atlassian.net/browse/OMG-12",
     context:"Transitioning from 'Group-down' framework to tailored horizontal national Operating Model. France market used as pilot/standard-builder.",
@@ -356,8 +358,7 @@ const streams = [
 ];
 
 streams.forEach(s => {
-  s.is2025 = s.goLive && s.goLive.startsWith("2025");
-  s.is2026 = s.goLive && s.goLive.startsWith("2026") && s.status === "Closed";
+  s.is2026closed = s.goLive && s.goLive.startsWith("2026") && s.status === "Closed";
   s.year   = s.goLive ? s.goLive.substring(0,4) : "—";
 });
 
@@ -404,8 +405,7 @@ function renderCard(s){
         <div class="card-title-row">
           <span class="card-title">${esc(s.name)}</span>
           ${s.init?`<span class="stream-init">${esc(s.init)}</span>`:""}
-          ${s.is2025?`<span class="badge badge-2025">2025</span>`:""}
-          ${s.is2026?`<span class="badge badge-2026">2026</span>`:""}
+          ${s.is2026closed?`<span class="badge badge-2026">2026</span>`:""}
         </div>
         <div class="card-top-right">
           ${s.prioritized?`<span class="priority-indicator"><span class="priority-dot"></span>Priority</span>`:""}
