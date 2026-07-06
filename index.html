@@ -292,17 +292,11 @@
 // okr: strategic pillar tag
 // ─────────────────────────────────────────────
 const streams = [
-  { id:1,  prioritized:false, name:"Acquiring Service Evolution",    init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-7",
+  { id:1,  prioritized:false, name:"Acquiring Service Evolution",    init:"LEG-891067", jira:"https://lastminute.atlassian.net/browse/OMG-7",
     context:"The group is integrating Revolut Pay as a new APM. Revolut requires an EU-registered entity to collect payments — BravoNext SA (Switzerland) does not qualify. NV (Netherlands) confirmed as preferred collecting entity.",
     need:"Designate an alternative group entity as EU collecting counterpart with full legal, fiscal, corporate and security sign-off.",
     status:"Closed",      priority:"High",   requester:"Business",      okr:"Governance & Compliance",
     functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2026-06-23", goLiveDisplay:"Jun 2026" },
-
-  { id:2,  prioritized:false, name:"Revolut Pay Integration",        init:"LEG-891067", jira:"https://lastminute.atlassian.net/browse/OMG-8",
-    context:"NV entity approved as collecting counterpart. PSA/PSD2 compliance assessment finalised. T&C updates completed.",
-    need:"Assess NV entity as Revolut Pay collecting counterpart for the group.",
-    status:"Closed",      priority:"High",   requester:"Business",      okr:"Governance & Compliance",
-    functions:["Legal","Finance & Tax","DPO"], goLive:"2026-05-31", goLiveDisplay:"May 2026" },
 
   { id:3,  prioritized:false, name:"LMNext UK Asset Transfer",       init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-10",
     context:"LM Forward divesting its assets. Transfer of 12 domains, 17 trademarks, 32 clients, Content Hub platform. LM Forward → LMNext UK.",
