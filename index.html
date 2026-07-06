@@ -141,6 +141,7 @@
   /* BADGES */
   .badge { display:inline-flex; align-items:center; padding:2px 7px; border-radius:20px; font-size:10px; font-weight:600; white-space:nowrap; }
   .badge-2025   { background:rgba(242,0,125,0.1); color:var(--pink); border:1px solid rgba(242,0,125,0.25); font-size:8.5px; padding:1px 5px; }
+  .badge-2026   { background:rgba(37,99,235,0.1); color:#2563eb; border:1px solid rgba(37,99,235,0.25); font-size:8.5px; padding:1px 5px; }
   .badge-okr    { font-size:9px; padding:1px 6px; border-radius:4px; font-weight:500; }
   .okr-gov      { background:#fef3c7; color:#92400e; }
   .okr-cost     { background:#d1fae5; color:#065f46; }
@@ -318,10 +319,10 @@
 // ─────────────────────────────────────────────
 const streams = [
   { id:1,  prioritized:false, name:"Acquiring Service Evolution",    init:null,        jira:"https://lastminute.atlassian.net/browse/OMG-7",
-    context:"The group is integrating Revolut Pay as a new APM. Revolut requires an EU-registered entity to collect payments — BravoNext SA (Switzerland) does not qualify.",
+    context:"The group is integrating Revolut Pay as a new APM. Revolut requires an EU-registered entity to collect payments — BravoNext SA (Switzerland) does not qualify. NV (Netherlands) confirmed as preferred collecting entity.",
     need:"Designate an alternative group entity as EU collecting counterpart with full legal, fiscal, corporate and security sign-off.",
     status:"Closed",      priority:"High",   requester:"Business",      okr:"Governance & Compliance",
-    functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2025-11-30", goLiveDisplay:"Nov 2025" },
+    functions:["Legal","Finance & Tax","DPO","Corporate Affairs"], goLive:"2026-06-23", goLiveDisplay:"Jun 2026" },
 
   { id:2,  prioritized:false, name:"Revolut Pay Integration",        init:"LEG-891067", jira:"https://lastminute.atlassian.net/browse/OMG-8",
     context:"NV entity approved as collecting counterpart. PSA/PSD2 compliance assessment finalised. T&C updates completed.",
@@ -386,6 +387,7 @@ const streams = [
 
 streams.forEach(s => {
   s.is2025 = s.goLive && s.goLive.startsWith("2025");
+  s.is2026 = s.goLive && s.goLive.startsWith("2026") && s.status === "Closed";
   s.year   = s.goLive ? s.goLive.substring(0,4) : "—";
 });
 
@@ -430,12 +432,13 @@ function renderCard(s){
     <div class="card-header" onclick="toggleCard(${s.id})">
       <div class="card-top">
         <div class="card-title-row">
-          ${s.prioritized?`<span class="priority-indicator"><span class="priority-dot"></span>Priority</span>`:""}
           <span class="card-title">${esc(s.name)}</span>
           ${s.init?`<span class="stream-init">${esc(s.init)}</span>`:""}
           ${s.is2025?`<span class="badge badge-2025">2025</span>`:""}
+          ${s.is2026?`<span class="badge badge-2026">2026</span>`:""}
         </div>
         <div class="card-top-right">
+          ${s.prioritized?`<span class="priority-indicator"><span class="priority-dot"></span>Priority</span>`:""}
           <span class="card-chevron">▼</span>
         </div>
       </div>
