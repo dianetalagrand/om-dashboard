@@ -284,7 +284,7 @@
   <div class="dropdown-wrap" id="dd-year">
     <button class="filter-btn" onclick="toggleDropdown('dd-year')">Year <span class="chevron">▾</span></button>
     <div class="dropdown-menu">
-      <div class="dropdown-item"><input type="checkbox" id="y-2026" value="2026" onchange="applyFilters()"><label for="y-2026">2026</label></div>
+      <div class="dropdown-item"><input type="checkbox" id="y-2026" value="2026" onchange="applyFilters()"><label for="y-2026">2026 (this year)</label></div>
       <div class="dropdown-item"><input type="checkbox" id="y-2027" value="2027" onchange="applyFilters()"><label for="y-2027">2027</label></div>
     </div>
   </div>
@@ -407,7 +407,11 @@ const streams = [
 const NOW = new Date();
 streams.forEach(s => {
   s.is2026closed = s.status==="Closed";
+  // For closed streams: year = goLive year (= actual close year)
+  // For active streams: year = goLive year (target)
   s.year = s.goLive ? s.goLive.substring(0,4) : "—";
+  // Closed streams this year get special flag
+  s.isClosedThisYear = s.status==="Closed" && s.goLive && s.goLive.startsWith(String(new Date().getFullYear()));
   if(s.status!=="Closed" && s.goLive){
     const dl = new Date(s.goLive);
     const mo = (dl - NOW)/(1000*60*60*24*30.5);
@@ -556,7 +560,11 @@ function _applyAndRender(){
     if(q && !s.name.toLowerCase().includes(q) && !s.context.toLowerCase().includes(q) && !s.need.toLowerCase().includes(q)) return false;
     if(activeFilters.status.length   && !activeFilters.status.includes(s.status))    return false;
     if(activeFilters.priority.length && !activeFilters.priority.includes(s.priority)) return false;
-    if(activeFilters.year.length     && !activeFilters.year.includes(s.year))         return false;
+    if(activeFilters.year.length) {
+      const matchYear = activeFilters.year.includes(s.year);
+      const matchClosed = s.status==="Closed" && activeFilters.year.includes(String(new Date().getFullYear()));
+      if(!matchYear && !matchClosed) return false;
+    }
     if(activeFilters.req.length      && !activeFilters.req.includes(s.requester))     return false;
     if(activeFilters.okr.length      && !activeFilters.okr.includes(s.okr))           return false;
     if(activeFilters.func.length     && !activeFilters.func.some(f=>s.functions.includes(f))) return false;
