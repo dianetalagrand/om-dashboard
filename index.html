@@ -16,7 +16,8 @@
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;display:flex;flex-direction:column;}
 
   /* HEADER */
-  .header{background:var(--dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+  .header{background:var(--dark);height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;justify-content:center;}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:960px;padding:0 20px;}
   .header-left{display:flex;align-items:center;gap:10px;}
   .header-dot{width:9px;height:9px;background:var(--pink);border-radius:50%;}
   .header-title{color:white;font-size:14px;font-weight:600;letter-spacing:0.02em;}
@@ -50,7 +51,8 @@
   .spin-icon{display:inline-block;}
 
   /* FILTER BAR */
-  .filter-bar{background:white;border-bottom:1px solid var(--border);padding:7px 20px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .filter-bar{background:white;border-bottom:1px solid var(--border);padding:7px 0;display:flex;justify-content:center;}
+  .filter-bar-inner{display:flex;align-items:center;gap:7px;flex-wrap:wrap;width:100%;max-width:960px;padding:0 20px;}
   .search-wrap{position:relative;flex:1;min-width:150px;max-width:240px;}
   .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:11px;}
   .search-input{width:100%;padding:5px 10px 5px 28px;border:1px solid var(--border);border-radius:6px;font-size:11.5px;outline:none;transition:border-color 0.15s;background:var(--bg);color:var(--text);}
@@ -73,7 +75,9 @@
   .dropdown-item label{cursor:pointer;flex:1;}
 
   /* MORE FILTERS */
-  .more-filters-panel{display:none;background:white;border-bottom:1px solid var(--border);padding:9px 20px;gap:20px;flex-wrap:wrap;align-items:flex-start;}
+  .more-filters-panel{display:none;background:white;border-bottom:1px solid var(--border);padding:0;justify-content:center;}
+  .more-filters-panel.open{display:flex;}
+  .more-filters-inner{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;width:100%;max-width:960px;padding:9px 20px;}
   .more-filters-panel.open{display:flex;}
   .mf-group{display:flex;flex-direction:column;gap:4px;}
   .mf-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}
@@ -83,7 +87,8 @@
   .mf-chip.active{background:var(--pink);color:white;border-color:var(--pink);}
 
   /* FILTER TAGS */
-  .active-filters{padding:5px 20px 0;display:flex;gap:4px;flex-wrap:wrap;}
+  .active-filters{padding:0;display:flex;justify-content:center;}
+  .active-filters-inner{display:flex;gap:4px;flex-wrap:wrap;width:100%;max-width:960px;padding:5px 20px 0;}
   .active-filters:empty{display:none;}
   .filter-tag{display:flex;align-items:center;gap:3px;background:rgba(242,0,125,0.07);border:1px solid rgba(242,0,125,0.2);border-radius:20px;padding:2px 8px;font-size:10px;color:var(--pink);}
   .filter-tag-remove{cursor:pointer;font-size:11px;opacity:0.65;}
@@ -200,6 +205,7 @@
 
 <!-- HEADER -->
 <div class="header">
+  <div class="header-inner">
   <div class="header-left">
     <div class="header-dot"></div>
     <span class="header-title">Operating Model Governance</span>
@@ -224,10 +230,12 @@
       <span class="refresh-tooltip" id="refresh-tooltip">Connect Apps Script to enable live sync</span>
     </button>
   </div>
+  </div><!-- /header-inner -->
 </div>
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
+<div class="filter-bar-inner">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input class="search-input" type="text" id="search-input" placeholder="Search streams…">
@@ -282,10 +290,12 @@
 
   <button class="filter-btn" id="btn-more" onclick="toggleMoreFilters()">More <span class="chevron">▾</span></button>
   <span class="clear-all" id="clear-all-btn" style="display:none" onclick="clearAllFilters()">Clear all</span>
+</div><!-- /filter-bar-inner -->
 </div>
 
 <!-- MORE FILTERS — only Enabling Function now -->
 <div class="more-filters-panel" id="more-filters-panel">
+<div class="more-filters-inner">
   <div class="mf-group">
     <div class="mf-label">Enabling Function</div>
     <div class="mf-options" id="func-chips">
@@ -297,10 +307,11 @@
       <span class="mf-chip" data-filter="func" data-value="HR"                onclick="toggleChip(this)">👥 HR</span>
     </div>
   </div>
+</div><!-- /more-filters-inner -->
 </div>
 
 <!-- FILTER TAGS -->
-<div class="active-filters" id="active-filter-tags"></div>
+<div class="active-filters" id="active-filter-tags-wrap"><div class="active-filters-inner" id="active-filter-tags"></div></div>
 
 <!-- MAIN -->
 <div class="content-area">
