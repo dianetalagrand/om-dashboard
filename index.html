@@ -127,7 +127,9 @@
   .card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:4px; }
   .card-title-row { display:flex; align-items:center; gap:5px; flex-wrap:wrap; flex:1; min-width:0; }
   .card-title { font-size:12.5px; font-weight:700; color:var(--text); line-height:1.3; }
-  .card-top-right { display:flex; align-items:center; gap:5px; flex-shrink:0; }
+  .card-top-right { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .requester-top { display:flex; align-items:center; gap:4px; }
+  .requester-label { font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); }
   .card-chevron { font-size:9px; color:var(--muted); transition:transform 0.2s; }
   .stream-card.open .card-chevron { transform:rotate(180deg); }
 
@@ -409,16 +411,16 @@ function renderCard(s){
         </div>
         <div class="card-top-right">
           ${s.prioritized?`<span class="priority-indicator"><span class="priority-dot"></span>Priority</span>`:""}
+          <span class="requester-top"><span class="requester-label">Requester</span> <span class="req-pill ${reqClass(s.requester)}">${esc(s.requester)}</span></span>
           <span class="card-chevron">▼</span>
         </div>
       </div>
       <div class="card-meta">
-        <span class="req-pill ${reqClass(s.requester)}">${esc(s.requester)}</span>
-        &nbsp;·&nbsp; Effective date: ${esc(s.goLiveDisplay)}
+        Effective date: ${esc(s.goLiveDisplay)}
       </div>
       <div class="card-footer">
         <div class="card-badges">
-          <span class="badge ${priorityClass(s.priority)}">${s.priority}</span>
+          ${s.priority==="High"?`<span class="badge p-high">High</span>`:""}
           ${okrBadge(s.okr)}
         </div>
         <div class="card-funcs">
