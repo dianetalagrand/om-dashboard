@@ -1,105 +1,84 @@
 /**
  * OM Governance Portfolio Dashboard — Apps Script Web App
- * 
- * HOW TO DEPLOY:
- * 1. In your Google Sheet: Extensions > Apps Script
- * 2. Paste this entire file into Code.gs
- * 3. Deploy > New deployment > Web App
- *    - Execute as: Me
- *    - Who has access: Anyone
- * 4. Copy the Web App URL
- * 5. In the dashboard HTML, replace the fetch URL with your Web App URL
+ * Sheet: "OM Portfolio" — columns read by position (A→N)
  *
- * SHEET COLUMN ORDER (do not change):
- * A: ID | B: Stream Name | C: INIT | D: Status | E: Priority | F: Prioritized
- * G: Requester | H: Strategic Pillar (OKR) | I: Functions
- * J: Effective Date | K: Go-Live Display | L: Context | M: Need | N: Jira URL
+ * DEPLOY:
+ *   Distribuisci > Nuova distribuzione > App web
+ *   Esegui come: Me | Chi può accedere: Chiunque
+ *   Copia l'URL e incollalo in index.html → const APPS_SCRIPT_URL = "..."
  */
 
 const SHEET_NAME = "OM Portfolio";
 
-// ── CORS headers for cross-origin fetch from the dashboard ──
-function setCORSHeaders(output) {
-  return output
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader("Access-Control-Allow-Origin", "*")
-    .setHeader("Access-Control-Allow-Methods", "GET")
-    .setHeader("Access-Control-Allow-Headers", "Content-Type");
-}
-
-// ── Main entry point: GET request returns JSON array of streams ──
 function doGet(e) {
   try {
-    const ss    = SpreadsheetApp.getActiveSpreadsheet();
-    const sheet = ss.getSheetByName(SHEET_NAME);
-
-    if (!sheet) {
-      return setCORSHeaders(
-        ContentService.createTextOutput(
-          JSON.stringify({ error: `Sheet "${SHEET_NAME}" not found` })
-        )
-      );
-    }
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    if (!sheet) return respond({ error: 'Sheet "' + SHEET_NAME + '" not found' });
 
     const lastRow = sheet.getLastRow();
-    if (lastRow < 2) {
-      return setCORSHeaders(
-        ContentService.createTextOutput(JSON.stringify([]))
-      );
-    }
+    if (lastRow < 2) return respond([]);
 
-    // Read all data rows (skip header row 1)
-    const range  = sheet.getRange(2, 1, lastRow - 1, 14);
-    const values = range.getValues();
+    const values = sheet.getRange(2, 1, lastRow - 1, 15).getValues();
 
     const streams = values
-      .filter(row => row[0] !== "" && row[1] !== "")  // skip empty rows
-      .map(row => {
-        const goLiveRaw = row[9];
-        // Handle both Date objects and strings
-        let goLiveStr = "";
-        if (goLiveRaw instanceof Date) {
-          goLiveStr = Utilities.formatDate(goLiveRaw, Session.getScriptTimeZone(), "yyyy-MM-dd");
-        } else if (typeof goLiveRaw === "string" && goLiveRaw.trim()) {
-          goLiveStr = goLiveRaw.trim();
+      .filter(r => r[0] !== "" && r[1] !== "")
+      .map(r => {
+        // Col J (index 9) = Effective Date — can be Date object or string
+        const raw = r[9];
+        let goLive = "";
+        if (raw instanceof Date && !isNaN(raw)) {
+          goLive = Utilities.formatDate(raw, Session.getScriptTimeZone(), "yyyy-MM-dd");
+        } else if (typeof raw === "string" && raw.trim()) {
+          goLive = raw.trim();
         }
 
+        const status = String(r[3]).trim();
+
         return {
-          id:             Number(row[0]),
-          name:           String(row[1]).trim(),
-          init:           row[2] ? String(row[2]).trim() : null,
-          status:         String(row[3]).trim(),
-          priority:       String(row[4]).trim(),
-          prioritized:    String(row[5]).toUpperCase() === "TRUE",
-          requester:      String(row[6]).trim(),
-          okr:            String(row[7]).trim(),
-          functions:      String(row[8]).split(",").map(f => f.trim()).filter(Boolean),
-          goLive:         goLiveStr,
-          goLiveDisplay:  String(row[10]).trim(),
-          context:        String(row[11]).trim(),
-          need:           String(row[12]).trim(),
-          jira:           row[13] ? String(row[13]).trim() : null,
-          // computed fields
-          is2026closed:   goLiveStr.startsWith("2026") && String(row[3]).trim() === "Closed",
-          year:           goLiveStr ? goLiveStr.substring(0, 4) : "—"
+          id:           Number(r[0]),
+          name:         String(r[1]).trim(),
+          init:         r[2] ? String(r[2]).trim() : null,
+          status:       status,
+          priority:     mapPriority(String(r[4]).trim()),
+          prioritized:  String(r[5]).toUpperCase() === "TRUE",
+          requester:    String(r[6]).trim(),
+          okr:          String(r[7]).trim(),
+          functions:    String(r[8]).split(",").map(f => f.trim()).filter(Boolean),
+          goLive:       goLive,
+          goLiveDisplay:String(r[10]).trim(),
+          context:      String(r[11]).trim(),
+          need:         String(r[12]).trim(),
+          conclusion:   r[13] ? String(r[13]).trim() : "",
+          jira:         r[14] ? String(r[14]).trim() : null,
+          is2026closed: goLive.startsWith("2026") && status === "Closed",
+          year:         goLive ? goLive.substring(0, 4) : "—"
         };
       });
 
-    return setCORSHeaders(
-      ContentService.createTextOutput(JSON.stringify(streams))
-    );
+    return respond(streams);
 
   } catch (err) {
-    return setCORSHeaders(
-      ContentService.createTextOutput(
-        JSON.stringify({ error: err.message, stack: err.stack })
-      )
-    );
+    return respond({ error: err.message });
   }
 }
 
-// ── Optional: test function — run this in the editor to preview output ──
+// Map old Priority values (High/Medium/Low) → new (Urgent/Normal)
+function mapPriority(p) {
+  if (p === "High")   return "Urgent";
+  if (p === "Medium") return "Normal";
+  if (p === "Low")    return "Normal";
+  return p; // already Urgent/Normal
+}
+
+function respond(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeader("Access-Control-Allow-Origin", "*");
+}
+
+// Test: run this in the editor to see output in the Logs
 function testDoGet() {
-  const result = doGet({});
-  Logger.log(result.getContent().substring(0, 500));
+  const out = doGet({});
+  Logger.log(out.getContent().substring(0, 800));
 }
