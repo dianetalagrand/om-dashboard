@@ -737,20 +737,60 @@ const APPS_SCRIPT_URL = "https://script.google.com/a/macros/lastminute.com/s/AKf
 function doRefresh(btn){
   const tip=document.getElementById("refresh-tooltip");
   btn.classList.add("spinning");
-  if(APPS_SCRIPT_URL){
-    tip.textContent="Syncing from Google Sheet…";
-    fetch(APPS_SCRIPT_URL).then(r=>r.json()).then(data=>{
-      if(Array.isArray(data)&&data.length>0){streams.length=0;data.forEach(s=>streams.push(s));}
+  if(!APPS_SCRIPT_URL){
+    tip.textContent="No Apps Script URL configured";
+    setTimeout(()=>{ _applyAndRender(); btn.classList.remove("spinning"); document.getElementById("last-updated").textContent="Updated "+new Date().toLocaleTimeString(); }, 500);
+    return;
+  }
+  tip.textContent="Syncing from Google Sheet…";
+  // Use JSONP to bypass CORS — inject a script tag
+  const callbackName = "omDashCallback_"+Date.now();
+  const url = APPS_SCRIPT_URL + (APPS_SCRIPT_URL.includes("?")?"&":"?") + "callback="+callbackName;
+  window[callbackName] = function(data){
+    delete window[callbackName];
+    document.getElementById("jsonp-loader")&&document.getElementById("jsonp-loader").remove();
+    if(Array.isArray(data)&&data.length>0){
+      streams.length=0;
+      data.forEach(s=>streams.push(s));
       _applyAndRender();
       const t=new Date().toLocaleTimeString();
       document.getElementById("last-updated").textContent="Updated "+t;
       tip.textContent="Last sync: "+t;
-    }).catch(()=>{ tip.textContent="Sync failed — check Apps Script URL"; })
-    .finally(()=>btn.classList.remove("spinning"));
-  } else {
-    tip.textContent="Connect Apps Script to enable live sync";
-    setTimeout(()=>{ _applyAndRender(); btn.classList.remove("spinning"); document.getElementById("last-updated").textContent="Updated "+new Date().toLocaleTimeString(); }, 500);
-  }
+    } else {
+      tip.textContent="No data returned";
+    }
+    btn.classList.remove("spinning");
+  };
+  // Fallback: plain fetch (works if same domain or CORS enabled)
+  fetch(APPS_SCRIPT_URL)
+    .then(r=>r.json())
+    .then(data=>{
+      if(window[callbackName]) delete window[callbackName]; // cancel JSONP if fetch wins
+      if(Array.isArray(data)&&data.length>0){
+        streams.length=0;
+        data.forEach(s=>streams.push(s));
+        _applyAndRender();
+        const t=new Date().toLocaleTimeString();
+        document.getElementById("last-updated").textContent="Updated "+t;
+        tip.textContent="Last sync: "+t;
+      }
+    })
+    .catch(()=>{
+      // fetch failed (CORS) — try JSONP script tag
+      tip.textContent="Trying alternative sync…";
+      const s=document.createElement("script");
+      s.id="jsonp-loader";
+      s.src=url;
+      s.onerror=()=>{
+        tip.textContent="Sync failed — CORS blocked. Open dashboard from GitHub Pages.";
+        btn.classList.remove("spinning");
+        delete window[callbackName];
+      };
+      document.head.appendChild(s);
+    })
+    .finally(()=>{
+      setTimeout(()=>btn.classList.remove("spinning"), 3000);
+    });
 }
 
 document.addEventListener("click",e=>{ if(!e.target.closest(".dropdown-wrap"))document.querySelectorAll(".dropdown-wrap").forEach(d=>d.classList.remove("open")); });
