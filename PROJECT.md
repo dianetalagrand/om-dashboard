@@ -6,7 +6,5 @@
 - NEVER: session summaries, changelogs, bug history, to-dos, code. Git remembers those.
 - Telegraphic style: "Runs: npm run dev, port 3000" — no full sentences. -->
 
-- What this app does: (not set yet)
-- How to run it: (not set yet)
-- Workflow: (not set yet — "MR flow" / "setup" / "clasp", see CLAUDE.md)
-- Anything unusual: (nothing yet)
+- What this app does: Personal training repo for First Launch mission
+- Workflow: setup phase
