@@ -1,0 +1,7 @@
+# CI del repo.
+# Non contiene logica: richiama il modello condiviso del gruppo whyus-git.
+# Il modello vive in wu-git-startup -> se cambia quello, cambia anche qui.
+include:
+  - project: 'whyus-git/general/wu-git-startup'
+    ref: main
+    file: '/mission-control/ci/whyus-base.yml'
