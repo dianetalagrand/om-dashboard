@@ -43,7 +43,7 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ✅ **Dashboard (3D View)** — Filter by Cluster × OutputType × Completeness  
 ✅ **Archive** — Historical view of completed activities per year  
-✅ **Market Details Panel** — Legal/Tax/DPO context for each market (FR included)  
+✅ **Market Details Panel** — Legal/Tax/DPO context for each market  
 
 ### Operations
 
