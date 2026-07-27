@@ -89,12 +89,20 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ## Architecture
 
-### Tech Stack
+> ⚠️ **MVP bridge, not the target architecture.** Google Apps Script and the OM Log Doc / OM Catalog Sheet exist only to get real data into a working UI fast. They are **not** a permanent dependency: the production app will be rebuilt on a proper framework (TBD) with its own data store, and the OM Log Doc / OM Catalog Sheet dependency must be eliminated at that point — not carried forward as "the database."
 
-- **Backend**: Google Apps Script (Apps Script runtime)
+### Tech Stack (MVP only)
+
+- **Backend**: Google Apps Script (Apps Script runtime) — MVP prototype, not production
 - **Frontend**: HTML/Vanilla JS (no framework — MVP lean)
-- **Data**: Google Sheets (OM Catalog source)
-- **Source of Truth**: Google Doc (OM Log narrative)
+- **Data**: Google Sheets (OM Catalog source) — temporary system of record, to be replaced
+- **Source of Truth**: Google Doc (OM Log narrative) — temporary, to be replaced
+
+### Target Production Architecture
+
+- **Framework**: TBD — not Google Apps Script
+- **Data store**: TBD — must not depend on the OM Log Doc or OM Catalog Sheet
+- Migration path: MVP data (streams, version history) gets exported/migrated once the target stack is chosen; the Doc/Sheet pair is then decommissioned
 
 ### Key Components
 
@@ -149,12 +157,14 @@ See `config/markets.json`:
 
 ## Development
 
-### Prerequisites
+> ⚠️ The workflow below (clasp + Apps Script) is **MVP-only tooling**. It exists to validate the product with real users quickly; it is not the development setup for the production app, which will target a different framework (TBD) and won't build against the OM Log Doc / OM Catalog Sheet.
+
+### Prerequisites (MVP)
 
 - Node.js 18+ (for local tooling)
 - `clasp` CLI (`npm install -g @google/clasp`)
 
-### Local Development
+### Local Development (MVP)
 
 ```bash
 # Deploy changes to Apps Script
@@ -179,6 +189,8 @@ See `CONTRIBUTING.md` for full guidelines.
 ---
 
 ## Deployment
+
+> ⚠️ **MVP deployment target only.** Apps Script deploy/rollback below is for validating the MVP. It is not the production deployment plan — the production framework and hosting are TBD and will not depend on the OM Log Doc / OM Catalog Sheet.
 
 ### Testing (Staging)
 

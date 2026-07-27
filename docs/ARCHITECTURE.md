@@ -2,10 +2,13 @@
 
 ## Overview
 
-**Backend**: Google Apps Script + Google Sheet
-**Frontend**: HTML/JS (vanilla, no framework — MVP lean)
-**Data Source**: OM Streams Log (Google Doc) → OM Catalog (Google Sheet)
-**Sync**: Continuo via Apps Script trigger
+> ⚠️ **Everything below is the MVP bridge architecture, not the target architecture.** Apps Script, the OM Streams Log (Google Doc), and the OM Catalog (Google Sheet) exist only to prove the product with real data quickly. The production app will be rebuilt on a different framework (TBD) with its own data store, and the dependency on the OM Log Doc / OM Catalog Sheet must be eliminated at that point — they are a temporary DB, not the permanent one.
+
+**Backend (MVP)**: Google Apps Script + Google Sheet
+**Frontend (MVP)**: HTML/JS (vanilla, no framework — MVP lean)
+**Data Source (MVP)**: OM Streams Log (Google Doc) → OM Catalog (Google Sheet)
+**Sync (MVP)**: Continuo via Apps Script trigger
+**Target production backend**: TBD (not Apps Script; no dependency on OM Log Doc / OM Catalog Sheet)
 
 ---
 
@@ -295,14 +298,17 @@ See more: [link to catalog]
 
 ## Deployment
 
-**Hosting**: Google Apps Script (free tier)
-**URL**: `https://script.google.com/macros/d/{DEPLOYMENT_ID}/usercontent/`
+> ⚠️ **MVP hosting only.** Apps Script hosting below is for the MVP prototype. Production hosting/framework is TBD and will not carry forward the OM Log Doc / OM Catalog Sheet dependency.
+
+**Hosting (MVP)**: Google Apps Script (free tier)
+**URL (MVP)**: `https://script.google.com/macros/d/{DEPLOYMENT_ID}/usercontent/`
 **Custom domain** (optional): Via Apps Script → Deploy → New deployment
 
 **Versioning**:
-- Version 1: MVP (CREARE, AGGIORNARE, AUTH, Dashboard, Market panel FR)
+- Version 1: MVP (CREARE, AGGIORNARE, AUTH, Dashboard, Market panel FR) — Apps Script + Sheet/Doc bridge
 - Version 2: Archive tab, notifiche, market panel NL/IT
 - Version 3: Advanced filtering, export, tier 2 markets
+- **Production (post-MVP)**: Migrate off Apps Script + OM Log Doc/OM Catalog Sheet onto the target framework (TBD) and its own data store
 
 ---
 
