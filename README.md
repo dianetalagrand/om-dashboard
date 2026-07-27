@@ -89,22 +89,31 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ## Architecture
 
-> ⚠️ **MVP bridge, not the target architecture.** Google Apps Script and the OM Log Doc / OM Catalog Sheet exist only to get real data into a working UI fast. They are **not** a permanent dependency: the production app will be rebuilt on a proper framework (TBD) with its own data store, and the OM Log Doc / OM Catalog Sheet dependency must be eliminated at that point — not carried forward as "the database."
+### Vision
 
-### Tech Stack (MVP only)
+The OM Governance Dashboard is being built as the **single management center for Operations Management** — the one place where OM streams are created, tracked, and reported on. The goal is to **eliminate the other OM documents**, not run alongside them: today OM work lives scattered across the OM Streams Log (Google Doc) and siloed legal/tax/DPO trackers; once the app is live, it replaces them as the way OM work is managed.
 
-- **Backend**: Google Apps Script (Apps Script runtime) — MVP prototype, not production
+### Tech Stack (MVP)
+
+- **Backend**: Google Apps Script — used to bootstrap the MVP with real data
 - **Frontend**: HTML/Vanilla JS (no framework — MVP lean)
-- **Data**: Google Sheets (OM Catalog source) — temporary system of record, to be replaced
-- **Source of Truth**: Google Doc (OM Log narrative) — temporary, to be replaced
+- **Data**: Google Sheet ("OM Catalog") + Google Doc ("OM Streams Log") act as the **database** for the MVP. Once the real app is deployed, these documents are no longer used or managed directly — all OM management moves into the app.
 
-### Target Production Architecture
+### Real App Requirements (post-MVP)
 
-- **Framework**: TBD — not Google Apps Script
-- **Data store**: TBD — must not depend on the OM Log Doc or OM Catalog Sheet
-- Migration path: MVP data (streams, version history) gets exported/migrated once the target stack is chosen; the Doc/Sheet pair is then decommissioned
+Since the target is a real, standalone management app — not a Google Workspace script — Apps Script won't be needed once the real app exists. Deploying a real app requires:
 
-### Key Components
+- A backend framework/runtime (TBD)
+- A real database (TBD) replacing the OM Log Doc / OM Catalog Sheet as the system of record
+- A hosting/cloud environment (e.g., the company's existing Azure/AWS/GCP setup — TBD)
+- A CI/CD pipeline (build → test → deploy on merge to main)
+- Environment & secrets management (DB credentials, OAuth client secrets, API keys) — not hardcoded in the repo
+- Authentication/SSO integration (Google Workspace SSO for the lastminute.com domain)
+- A custom domain + TLS certificate
+- Monitoring, logging, and alerting (uptime, errors)
+- A backup & rollback strategy (previous build/image, DB migration rollback)
+
+### Key Components (MVP)
 
 | Component | Purpose | File |
 |-----------|---------|------|
@@ -157,7 +166,7 @@ See `config/markets.json`:
 
 ## Development
 
-> ⚠️ The workflow below (clasp + Apps Script) is **MVP-only tooling**. It exists to validate the product with real users quickly; it is not the development setup for the production app, which will target a different framework (TBD) and won't build against the OM Log Doc / OM Catalog Sheet.
+> The clasp/Apps Script workflow below is for the MVP only — it validates the product with real OM data before the real app is built. The real app will use its own framework, its own database, and its own CI/CD instead of Apps Script and the OM Log Doc/OM Catalog Sheet (see [Real App Requirements](#real-app-requirements-post-mvp)).
 
 ### Prerequisites (MVP)
 
@@ -190,9 +199,7 @@ See `CONTRIBUTING.md` for full guidelines.
 
 ## Deployment
 
-> ⚠️ **MVP deployment target only.** Apps Script deploy/rollback below is for validating the MVP. It is not the production deployment plan — the production framework and hosting are TBD and will not depend on the OM Log Doc / OM Catalog Sheet.
-
-### Testing (Staging)
+### MVP (Testing/Staging via Apps Script)
 
 ```bash
 clasp deploy --description "Test deployment"
@@ -203,8 +210,6 @@ Test the staging app:
 - Verify filters work
 - Check market details panel loads
 
-### Production (Live)
-
 ```bash
 clasp deploy --description "v0.1 MVP Launch"
 ```
@@ -213,13 +218,25 @@ Announce to users:
 - Slack: #om-governance-updates
 - Email: OM Team + Value Stream Owners
 
-### Rollback
-
-If issues arise post-launch:
+**Rollback (MVP)**:
 ```bash
 clasp deployments
 clasp undeploy <DEPLOYMENT_ID>
 ```
+
+### Real App Deployment (post-MVP)
+
+Once the real app is built on the target framework, deploying it requires:
+
+1. Hosting/runtime environment provisioned (container or app-service on the target cloud)
+2. Real database provisioned and migrated (replacing the OM Log Doc / OM Catalog Sheet)
+3. CI/CD pipeline building, testing, and deploying automatically on merge to `main`
+4. Environment variables/secrets configured in the hosting platform (never in code)
+5. Custom domain + TLS certificate pointed at the deployment
+6. Monitoring/alerting wired up before go-live
+7. A rollback plan: previous build/image kept ready, plus DB migration rollback scripts
+
+Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Stream Owners).
 
 ---
 

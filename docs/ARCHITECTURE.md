@@ -2,13 +2,14 @@
 
 ## Overview
 
-> ⚠️ **Everything below is the MVP bridge architecture, not the target architecture.** Apps Script, the OM Streams Log (Google Doc), and the OM Catalog (Google Sheet) exist only to prove the product with real data quickly. The production app will be rebuilt on a different framework (TBD) with its own data store, and the dependency on the OM Log Doc / OM Catalog Sheet must be eliminated at that point — they are a temporary DB, not the permanent one.
+**Vision**: this app is the **single management center for Operations Management**, replacing the OM Streams Log Doc and the other siloed OM tracking documents — not running alongside them. OM work should be created, updated, and reported on only in the app once it's live.
 
 **Backend (MVP)**: Google Apps Script + Google Sheet
 **Frontend (MVP)**: HTML/JS (vanilla, no framework — MVP lean)
-**Data Source (MVP)**: OM Streams Log (Google Doc) → OM Catalog (Google Sheet)
+**Data Source (MVP)**: OM Streams Log (Google Doc) → OM Catalog (Google Sheet) — this is the app's database for the MVP; once the real app is live, these documents are no longer used or maintained
 **Sync (MVP)**: Continuo via Apps Script trigger
-**Target production backend**: TBD (not Apps Script; no dependency on OM Log Doc / OM Catalog Sheet)
+
+**Real app backend**: TBD — a real framework + real database, not Apps Script. See "Real App Deployment Requirements" below.
 
 ---
 
@@ -298,17 +299,29 @@ See more: [link to catalog]
 
 ## Deployment
 
-> ⚠️ **MVP hosting only.** Apps Script hosting below is for the MVP prototype. Production hosting/framework is TBD and will not carry forward the OM Log Doc / OM Catalog Sheet dependency.
-
 **Hosting (MVP)**: Google Apps Script (free tier)
 **URL (MVP)**: `https://script.google.com/macros/d/{DEPLOYMENT_ID}/usercontent/`
 **Custom domain** (optional): Via Apps Script → Deploy → New deployment
 
 **Versioning**:
-- Version 1: MVP (CREARE, AGGIORNARE, AUTH, Dashboard, Market panel FR) — Apps Script + Sheet/Doc bridge
+- Version 1: MVP (CREARE, AGGIORNARE, AUTH, Dashboard, Market panel FR) — Apps Script + Sheet/Doc as database
 - Version 2: Archive tab, notifiche, market panel NL/IT
 - Version 3: Advanced filtering, export, tier 2 markets
-- **Production (post-MVP)**: Migrate off Apps Script + OM Log Doc/OM Catalog Sheet onto the target framework (TBD) and its own data store
+- **Real app (post-MVP)**: Retire Apps Script and the OM Log Doc/OM Catalog Sheet; the app becomes the single OM management center
+
+### Real App Deployment Requirements
+
+Because the real app replaces the OM Log Doc / OM Catalog Sheet outright (not just wraps them), Apps Script is not the right long-term tool. Deploying the real app needs:
+
+- A backend framework/runtime (TBD)
+- A real database (TBD), seeded once from the OM Log Doc / OM Catalog Sheet, then the system of record on its own
+- A hosting/cloud environment (company's existing cloud infra — TBD)
+- A CI/CD pipeline (build → test → deploy on merge to `main`)
+- Environment/secrets management (DB credentials, OAuth client secrets, API keys) — not hardcoded
+- Authentication/SSO integration (Google Workspace SSO for lastminute.com)
+- A custom domain + TLS certificate
+- Monitoring, logging, and alerting
+- A backup & rollback strategy (previous build/image, DB migration rollback)
 
 ---
 
