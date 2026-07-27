@@ -1,0 +1,103 @@
+{
+  "clusters": [
+    {
+      "id": "OM-CE",
+      "name": "OM Compliance-Evolution",
+      "description": "Attività di evoluzione aziendale: nuovi mercati, nuove entità, espansioni. Driver: Company expansion OKR. Sempre con INIT specifica.",
+      "examples": [
+        "Invoicing in PT (INIT-997)",
+        "Apertura Newco Romania (INIT-1004)",
+        "Market entry nuovi paesi",
+        "Nuove product lines"
+      ],
+      "outputTypes": [
+        "Business Evolution",
+        "Market Expansion"
+      ],
+      "hasInit": true,
+      "driverType": "external_strategic",
+      "color": "#2ABEB9",
+      "icon": "🚀"
+    },
+    {
+      "id": "OM-CC",
+      "name": "OM Compliance-Continuity",
+      "description": "Attività di osservanza legale e cicli di revisione. Driver: Regulatory compliance, risk mitigation. NO INIT — compliance baseline generale.",
+      "examples": [
+        "Osservanza leggi locali",
+        "Cicli di revisione periodici",
+        "Compliance framework per market",
+        "Risk baseline mitigation"
+      ],
+      "outputTypes": [
+        "Corporate Compliance",
+        "Business Continuity"
+      ],
+      "hasInit": false,
+      "driverType": "external_compliance",
+      "color": "#F2007D",
+      "icon": "⚖️"
+    },
+    {
+      "id": "OM-CE-EFF",
+      "name": "OM Compliance-Efficiency",
+      "description": "Attività di analisi e ottimizzazione cross-funzionale. Driver: Cost reduction, process optimization. NO INIT — improvement generale.",
+      "examples": [
+        "Analisi miglioramento fiscalità infragruppo",
+        "Remunerazione inter-company pricing",
+        "Accentramenti costi e servizi",
+        "Ottimizzazione strutture"
+      ],
+      "outputTypes": [
+        "Operational Efficiency",
+        "Cost Optimization"
+      ],
+      "hasInit": false,
+      "driverType": "internal_operational",
+      "color": "#4a86e8",
+      "icon": "⚡"
+    }
+  ],
+  "outputTypes": {
+    "Business Evolution": {
+      "description": "Abilitazione di nuova capability aziendale, market entry, product expansion. Legato a company growth OKR.",
+      "relatedClusters": ["OM-CE"],
+      "forBusinessOwner": "Abilita il tuo VS a entrare in nuovi mercati o lanciare nuovi prodotti"
+    },
+    "Market Expansion": {
+      "description": "Supporto all'espansione geografica. Abilitazione di nuovi paesi/mercati.",
+      "relatedClusters": ["OM-CE"],
+      "forBusinessOwner": "Abilita l'operatività nel tuo mercato target con struttura OM allineata"
+    },
+    "Corporate Compliance": {
+      "description": "Conformità alle leggi e regulatory requirement. Osservanza normative locali.",
+      "relatedClusters": ["OM-CC"],
+      "forBusinessOwner": "Garantisce che la tua operatività sia legalmente compliant in ogni market"
+    },
+    "Business Continuity": {
+      "description": "Risk mitigation e stabilità operativa. Strutture per continuare il business in caso di change.",
+      "relatedClusters": ["OM-CC"],
+      "forBusinessOwner": "Garantisce che il tuo VS continua a operare in caso di disruption o regulatory change"
+    },
+    "Operational Efficiency": {
+      "description": "Ottimizzazione processi, cost reduction, automation di attività. Cross-funzionale.",
+      "relatedClusters": ["OM-CE-EFF"],
+      "forBusinessOwner": "Migliora l'efficienza dei tuoi processi e riduce i costi operativi"
+    },
+    "Cost Optimization": {
+      "description": "Riduzione costi attraverso miglioramento fiscalità infragruppo, centralizzazione servizi.",
+      "relatedClusters": ["OM-CE-EFF"],
+      "forBusinessOwner": "Riduce i costi infragruppo del tuo VS senza impattare la qualità del servizio"
+    }
+  },
+  "statusEnum": [
+    "New",
+    "In Progress",
+    "Paused",
+    "Closed"
+  ],
+  "priorityEnum": [
+    "Urgent",
+    "Normal"
+  ]
+}

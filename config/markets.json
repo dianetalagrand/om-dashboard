@@ -1,0 +1,179 @@
+{
+  "markets": {
+    "tier1": {
+      "description": "Tier 1: Mercati principali (contribution to PMC3). Decisions si cascadano per tutti.",
+      "markets": [
+        {
+          "code": "UK",
+          "name": "Regno Unito",
+          "tier": 1,
+          "docStatus": "partial",
+          "hasMarketArchitecture": false,
+          "comments": "To be documented"
+        },
+        {
+          "code": "FR",
+          "name": "Francia",
+          "tier": 1,
+          "docStatus": "complete",
+          "hasMarketArchitecture": true,
+          "architectureElements": [
+            "Distribution Chain",
+            "Consent & Processing by Touchpoint",
+            "Who Owns Customer Data",
+            "Market Architecture"
+          ],
+          "comments": "Documentazione completa in OM Market Architecture PPT"
+        },
+        {
+          "code": "DE",
+          "name": "Germania",
+          "tier": 1,
+          "docStatus": "partial",
+          "hasMarketArchitecture": false,
+          "comments": "To be documented"
+        },
+        {
+          "code": "IT",
+          "name": "Italia",
+          "tier": 1,
+          "docStatus": "partial",
+          "hasMarketArchitecture": false,
+          "comments": "To be documented"
+        },
+        {
+          "code": "ES",
+          "name": "Spagna",
+          "tier": 1,
+          "docStatus": "partial",
+          "hasMarketArchitecture": false,
+          "comments": "To be documented"
+        }
+      ]
+    },
+    "tier2": {
+      "description": "Tier 2: Mercati secondari (contribution PMC3). Decisions si cascadano dall'alto.",
+      "markets": [
+        {
+          "code": "CH",
+          "name": "Svizzera",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "SE",
+          "name": "Svezia",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "AT",
+          "name": "Austria",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "NL",
+          "name": "Paesi Bassi",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "DK",
+          "name": "Danimarca",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "BE",
+          "name": "Belgio",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "IE",
+          "name": "Irlanda",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "NO",
+          "name": "Norvegia",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "PT",
+          "name": "Portogallo",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "HU",
+          "name": "Ungheria",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "FI",
+          "name": "Finlandia",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "PL",
+          "name": "Polonia",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "CZ",
+          "name": "Repubblica Ceca",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        },
+        {
+          "code": "SK",
+          "name": "Slovacchia",
+          "tier": 2,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        }
+      ]
+    },
+    "tier3": {
+      "description": "Tier 3: Mercati residuali (minimal contribution PMC3).",
+      "markets": [
+        {
+          "code": "US",
+          "name": "Stati Uniti",
+          "tier": 3,
+          "docStatus": "none",
+          "hasMarketArchitecture": false
+        }
+      ]
+    }
+  },
+  "mvpScope": {
+    "description": "MVP copre questi mercati con market details panel",
+    "markets": ["FR"],
+    "expandIn": {
+      "phase2": ["FR", "NL", "IT"],
+      "phase3": ["FR", "NL", "IT", "ES", "UK", "DE"]
+    }
+  },
+  "decisionCascade": "Decisions si prendono per Tier 1; Tier 2 e Tier 3 ereditano con local adaptation se necessario."
+}
