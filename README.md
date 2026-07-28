@@ -184,14 +184,9 @@ npm run test
 npm run logs
 ```
 
-### Branching Model
+### Workflow
 
-- `main` — Production-ready code
-- `develop` — Integration branch
-- `feature/*` — Feature branches
-- `bugfix/*` — Bug fix branches
-
-See `CONTRIBUTING.md` for full guidelines.
+Currently in **setup phase** (see `PROJECT.md`): `main` is not yet protected, so work happens directly on `main`. Once `main` becomes protected, this switches to one-branch-per-task + merge request (recorded in `PROJECT.md` when that happens).
 
 ---
 
@@ -271,8 +266,7 @@ Priority for everything after launch follows the **market Tier order** (Tier 1 �
 
 ### For Developers
 
-- See `CONTRIBUTING.md` for contribution guidelines
-- See `PROJECT.md` for architecture decisions
+- See `PROJECT.md` for project facts and workflow
 - See `CLAUDE.md` for Claude Code integration
 
 ---
@@ -307,6 +301,6 @@ A: No — the app is read-only for everyone on the lastminute.com network. Only 
 
 ---
 
-**Last Updated**: 27 July 2026  
+**Last Updated**: 28 July 2026  
 **Version**: 0.1 MVP (In Development)  
 **Status**: 🔄 In Review with OM Leadership
