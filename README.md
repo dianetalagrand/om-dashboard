@@ -76,7 +76,17 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 ### Installation
 
 1. **Clone the repository**
+
+   This project is mirrored on both GitHub (primary, where commits land first) and GitLab (the company's official location, kept in sync via an open merge request until it's merged). Clone from whichever you have access to — note the folder name differs:
+
    ```bash
+   # GitHub
+   git clone https://github.com/dianetalagrand/om-dashboard.git
+   cd om-dashboard
+   ```
+
+   ```bash
+   # GitLab
    git clone https://gitlab.lastminute.com/whyus-git/omg/om-governance-dashboard.git
    cd om-governance-dashboard
    ```
