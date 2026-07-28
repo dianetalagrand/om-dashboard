@@ -22,3 +22,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Nested git repos that don't belong in this repo's history (broke GitHub Pages submodule checkout)
+/wu-station/
+/wu-station-add-diane-card/
