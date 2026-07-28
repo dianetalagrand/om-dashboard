@@ -2,18 +2,18 @@
 
 > A three-dimensional catalog viewer for Operations Management activities, enabling Value Stream Owners to understand what the OM office delivers and why.
 
-## 🩷 Recently Updated
+## Recently Updated
 
-This is the **single README** for the project (merged with the former `README_MVP_PLAN.md` on 28 July 2026, to stop the two from drifting out of sync). Each update logs what changed here — 🩷 marks content that's new or just revised; it gets cleared on the next update once it's no longer "new."
+This is the **single README** for the project (merged with the former `README_MVP_PLAN.md` on 28 July 2026, to stop the two from drifting out of sync). Each update logs what changed here — **NEW** marks content that's new or just revised; it gets cleared on the next update once it's no longer "new."
 
 **28 July 2026**:
-- 🩷 No login: read access open on the lastminute.com network, editing reserved to Diane
-- 🩷 Removed Rollback — Version History is now read-only (single editor, no version conflicts to recover from)
-- 🩷 Doc → Sheet import is one-time (bootstrap only), not a continuous daily sync
-- 🩷 Added `EndDate` field so Archive groups correctly by closing year
-- 🩷 Roadmap phases reordered by market Tier (1 → 2 → 3) instead of mixed calendar phases
-- 🩷 Fixed the GitHub Pages CI failure (broken submodule references from `wu-station`/`wu-station-add-diane-card`)
-- 🩷 Merged `README_MVP_PLAN.md` into this file (see Next Steps and Repository Structure below)
+- **NEW:** No login: read access open on the lastminute.com network, editing reserved to Diane
+- **NEW:** Removed Rollback — Version History is now read-only (single editor, no version conflicts to recover from)
+- **NEW:** Doc → Sheet import is one-time (bootstrap only), not a continuous daily sync
+- **NEW:** Added `EndDate` field so Archive groups correctly by closing year
+- **NEW:** Roadmap phases reordered by market Tier (1 → 2 → 3) instead of mixed calendar phases
+- **NEW:** Fixed the GitHub Pages CI failure (broken submodule references from `wu-station`/`wu-station-add-diane-card`)
+- **NEW:** Merged `README_MVP_PLAN.md` into this file (see Next Steps and Repository Structure below)
 
 ## Overview
 
