@@ -4,8 +4,7 @@
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│ HEADER (sticky)                                                │
-│ 👤 Diane Mary T. | Role: OM PM  [Logout]                       │
+│ HEADER (sticky) — nessun login, visibile a chiunque in rete    │
 │ OM GOVERNANCE PORTAL | v0.1 MVP                                │
 └────────────────────────────────────────────────────────────────┘
 
@@ -36,7 +35,7 @@
 │ │ ├─ Status: [In Progress]  Priority: [Urgent]           │   │
 │ │ ├─ Markets: PT, ES, FR    Completeness: ████░░ 75%     │   │
 │ │ ├─ Requester: Business    Updated: 26 Jul 2026         │   │
-│ │ └─ [📋 Market Details ▼] [🔗 OM Log] [EDIT] [✓ DELETE] │   │
+│ │ └─ [📋 Market Details ▼] [🔗 OM Log]                   │   │
 │ └─────────────────────────────────────────────────────────┘   │
 │                                                                │
 │ ┌─────────────────────────────────────────────────────────┐   │
@@ -44,7 +43,7 @@
 │ │ ├─ Status: [In Progress]  Priority: [Urgent]           │   │
 │ │ ├─ Markets: RO (Tier 2)   Completeness: ███░░░░░░░ 40% │   │
 │ │ ├─ Requester: Corporate   Updated: 20 Jul 2026         │   │
-│ │ └─ [📋 Market Details ▼] [🔗 OM Log] [EDIT] [✓ DELETE] │   │
+│ │ └─ [📋 Market Details ▼] [🔗 OM Log]                   │   │
 │ └─────────────────────────────────────────────────────────┘   │
 │                                                                │
 │ CLUSTER: OM Compliance-Continuity                             │
@@ -56,13 +55,15 @@
 │ │ ├─ Status: [New]          Priority: [Normal]            │   │
 │ │ ├─ Markets: FR            Completeness: ██░░░░░░░░ 20% │   │
 │ │ ├─ Requester: OM Governance Updated: 10 Jul 2026       │   │
-│ │ └─ [📋 Market Details ▼] [🔗 OM Log] [EDIT] [✓ DELETE] │   │
+│ │ └─ [📋 Market Details ▼] [🔗 OM Log]                   │   │
 │ └─────────────────────────────────────────────────────────┘   │
 │                                                                │
 │ [Load More Streams] or [Infinite scroll]                      │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
 ```
+
+**Nota**: questa è la vista pubblica (chiunque in rete lastminute, nessun login). I bottoni `[+ NEW STREAM]`, `[EDIT]` e `[✓ DELETE]` compaiono **solo** nell'accesso separato di Diane — non sono visibili qui.
 
 ---
 
@@ -158,7 +159,7 @@
 - Audit log entry added: "Diane: Status In Progress → Closed (27 Jul 2026 16:00)"
 - Notifications sent (Slack, email if configured)
 
-**Click [HISTORY]**:
+**Click [HISTORY]** (sola lettura, nessun restore):
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │ VERSION HISTORY: OMG-12                                       │
@@ -167,7 +168,6 @@
 │ 2026-07-27 15:30 - Diane                                     │
 │ Status: In Progress → Closed                                  │
 │ Completeness: 75% → 100%                                     │
-│ [RESTORE TO THIS VERSION]                                     │
 │                                                                │
 │ ────────────────────────────────────────────────────────────  │
 │                                                                │
@@ -282,37 +282,7 @@
 
 ## Page: Login
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│                                                                │
-│                    OM GOVERNANCE PORTAL                       │
-│                                                                │
-│                         Sign In                               │
-│                                                                │
-│ ────────────────────────────────────────────────────────────── │
-│                                                                │
-│ Email *                                                       │
-│ [__________________________ "diane@lastminute.com"]           │
-│                                                                │
-│ Password *                                                    │
-│ [__________________________ "••••••••"]                        │
-│                                                                │
-│ [✓] Remember me for 30 days                                  │
-│                                                                │
-│ [SIGN IN]  [Forgot password?]                                │
-│                                                                │
-│ ────────────────────────────────────────────────────────────── │
-│                                                                │
-│ Or use single sign-on:                                        │
-│                                                                │
-│ [🔵 Sign in with Google]  (lastminute.com domain only)       │
-│                                                                │
-│ ────────────────────────────────────────────────────────────── │
-│                                                                │
-│ Contact support@om-governance.internal for access.           │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
-```
+Non esiste — niente pagina di login. Chiunque sulla rete lastminute.com apre l'URL e vede subito la dashboard, in sola lettura. L'accesso di editing di Diane è un percorso separato e più semplice (meccanismo esatto da definire in Sprint 1), non una pagina di sign-in con email/password/SSO.
 
 ---
 

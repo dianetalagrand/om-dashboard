@@ -36,8 +36,8 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 ### Core Functionality
 
 ✅ **Create Streams** — Add new OM activities with structured metadata  
-✅ **Update Streams** — Edit, track changes, rollback to previous versions  
-✅ **Authenticate** — Google OAuth + Email login, role-based access control  
+✅ **Update Streams** — Edit + track changes (version history, read-only)  
+✅ **Open Access** — No login required; read access is open on the lastminute.com network. Editing is Diane-only  
 
 ### Visualization
 
@@ -47,9 +47,9 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ### Operations
 
-✅ **Continuous Sync** — OM Log (Google Doc) → OM Catalog (Google Sheet)  
+✅ **One-Time Import** — OM Log (Google Doc) → OM Catalog (Google Sheet), done once at launch to bootstrap real data. The Doc is not touched again afterward  
 ✅ **Notifications** — Slack/Email alerts on status changes & milestones  
-✅ **Audit Trail** — Complete change log with user attribution  
+✅ **Change Log** — Timestamped history of edits (single editor: Diane)  
 
 ---
 
@@ -57,9 +57,8 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ### Prerequisites
 
-- Google Account (lastminute.com domain)
-- Access to OM Governance Team
-- Google Drive (for sync source)
+- Access to the lastminute.com network (no login/account needed to view)
+- Google Drive access (Diane only, for the one-time Doc/Sheet import)
 
 ### Installation
 
@@ -76,8 +75,7 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
    ```
 
 3. **Open the web app**
-   - Navigate to the deployment URL (from `clasp list`)
-   - Sign in with your lastminute.com Google account
+   - Navigate to the deployment URL (from `clasp list`) — no login needed to view
 
 ### First Run
 
@@ -107,8 +105,8 @@ Since the target is a real, standalone management app — not a Google Workspace
 - A real database (TBD) replacing the OM Log Doc / OM Catalog Sheet as the system of record
 - A hosting/cloud environment (e.g., the company's existing Azure/AWS/GCP setup — TBD)
 - A CI/CD pipeline (build → test → deploy on merge to main)
-- Environment & secrets management (DB credentials, OAuth client secrets, API keys) — not hardcoded in the repo
-- Authentication/SSO integration (Google Workspace SSO for the lastminute.com domain)
+- Environment & secrets management (DB credentials, API keys) — not hardcoded in the repo
+- Network-level access restriction (reachable only from the lastminute.com network) — no user login; editing stays reserved to Diane through a separate, simpler access path (not exposed in the public UI)
 - A custom domain + TLS certificate
 - Monitoring, logging, and alerting (uptime, errors)
 - A backup & rollback strategy (previous build/image, DB migration rollback)
@@ -119,7 +117,7 @@ Since the target is a real, standalone management app — not a Google Workspace
 |-----------|---------|------|
 | **doGet()** | Serve frontend, read catalog | `Code.gs` |
 | **doPost()** | Create/update streams | `Code.gs` |
-| **syncDocToSheet()** | Sync OM Log → Sheet | `Code.gs` |
+| **importDocToSheet()** | One-time import: OM Log → Sheet | `Code.gs` |
 | **Dashboard UI** | 3D filter & view | `index.html` |
 | **Market Panel** | Legal/Tax context | `index.html` |
 
@@ -243,22 +241,23 @@ Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Strea
 ## Roadmap
 
 ### Phase 1 (Aug 2026) — MVP Launch
-- ✅ CRUD streams (Create, Read, Update, Delete)
-- ✅ Auth & roles
+- ✅ Create/update streams + version history
+- ✅ Open access (no login), editing Diane-only
 - ✅ 3D dashboard view
-- ✅ FR market details panel
+- ✅ FR market details panel (Tier 1)
 - ✅ Archive tab
 
-### Phase 2 (Sep-Oct 2026)
-- Market details for NL, IT, ES
+Priority for everything after launch follows the **market Tier order** (Tier 1 → Tier 2 → Tier 3), not fixed calendar phases:
+
+### Phase 2 — Remaining Tier 1 markets
+- Market details for IT, ES, UK, DE (all Tier 1 markets not yet covered)
 - Advanced analytics (trends, heatmaps)
 - Export to CSV/PDF
 
-### Phase 3 (Nov-Dec 2026)
-- All Tier 1 market details (UK, DE)
+### Phase 3 — Tier 2 markets
+- Market details for Tier 2 markets (CH, SE, AT, NL, DK, BE, IE, NO, PT, HU, FI, PL, CZ, SK)
 - Mobile responsive
 - Multi-language (English)
-- Real-time sync (not daily)
 
 ---
 
@@ -304,7 +303,7 @@ A: Yes — use the Cluster dropdown to select one, or leave blank to see all.
 A: Switch to the Archive tab to see closed activities per year.
 
 **Q: Can Value Stream Owners edit streams?**  
-A: No — they have read-only access (Viewer role). Only OM team can create/edit.
+A: No — the app is read-only for everyone on the lastminute.com network. Only Diane can create/edit, through a separate access path.
 
 ---
 

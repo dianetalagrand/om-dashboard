@@ -5,9 +5,8 @@
 **Scopo**: Creare una app fruibile per il business (Value Streams Owner) che visualizza il catalogo di attività OM in modo tridimensionale, mostrando **cosa fa l'OM office** e **quale beneficio restituisce all'azienda** attraverso decisioni strategiche cross-funzionali (legal, tax, DPO, finance).
 
 **Utenti**:
-- **Value Streams Owner** (Hotel, Flight, Packages, Partnership) → Viewers
-- **OM PM** (Diane) → Admin/Editor
-- **OM Team** → Contributors
+- **Chiunque sulla rete lastminute.com** → accesso in sola lettura, nessun login richiesto
+- **Diane (OM PM)** → unica editor (create/update)
 
 **Lingua**: Italiano (per il business)
 
@@ -45,7 +44,7 @@
 **Storage**:
 - Salva in Google Sheet "OM Catalog"
 - Log: created_by, created_at, updated_by, updated_at
-- Sync automatico con OM Streams Log (Google Doc)
+- Il Google Doc "OM Streams Log" NON viene più toccato dopo l'import iniziale — è servito solo a popolare lo Sheet una volta, a inizio progetto
 
 **Workflow**:
 1. Click "[+ NEW STREAM]"
@@ -65,8 +64,7 @@
 **Funzionalità**:
 - **Select & Edit**: Clicca su card stream → side panel con form edit
 - **Fields mutabili**: Tutti tranne `ID` (immutable)
-- **Version history**: Mostra chi ha modificato cosa e quando
-- **Rollback**: Possibilità di tornare a versione precedente
+- **Version history**: Mostra chi ha modificato cosa e quando (sola lettura — nessun "restore a versione precedente": editor unico, non serve gestire conflitti tra versioni)
 - **Notifiche**: Alert team se:
   - Status cambia (New → In Progress, In Progress → Closed)
   - Completeness cambia >20% (es. 30% → 55%)
@@ -86,33 +84,21 @@
 
 ---
 
-### 1.3 LIVELLO 2C: AUTENTICARE
+### 1.3 LIVELLO 2C: ACCESSO
 
-**Descrizione**: Autenticazione basata su account (email) con roles & permissions.
+**Descrizione**: Niente login. Non ci sono dati sensibili nell'app, e la priorità è restare facilmente accessibile senza sovracomplicare.
 
-**Auth method**: 
-- **Primary**: Google OAuth (lastminute.com domain)
-- **Fallback**: Email + Password (gestito da Apps Script)
+**Modello**:
+- **Lettura**: aperta a chiunque sia sulla rete lastminute.com — nessun account, nessuna password
+- **Scrittura (create/update)**: riservata a Diane, tramite un accesso separato e più semplice del login classico (meccanismo esatto — es. URL/parametro riservato — da definire in Sprint 1). Non ci sono altri ruoli (niente OM Admin/PM/Contributor/Viewer): l'editing è sempre e solo Diane
 
-**Roles & Permissions**:
-
-| Role | CREATE | UPDATE | DELETE | VIEW ALL | ADMIN |
-|------|--------|--------|--------|----------|-------|
-| **OM Admin** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **OM PM** | ✅ | ✅ | ✅ | ✅ | ❌ |
-| **OM Contributor** | ✅ | ✅ Own | ❌ | Own | ❌ |
-| **Viewer** (VS Owner) | ❌ | ❌ | ❌ | ✅ | ❌ |
-
-**Audit Trail**:
-- Every action logged: user, action (CREATE/UPDATE/DELETE), timestamp, field changes
-- Compliance-ready per legal/DPO
+**Change log**:
+- Ogni modifica registra timestamp + cosa è cambiato (campo `Updated At` / version history)
+- Non serve un audit trail multi-utente: l'unico editor è Diane, quindi il log serve a tracciare la cronologia, non a distinguere chi ha fatto cosa tra più persone
 
 **Workflow**:
-1. Utente accede a `/catalog`
-2. Se no session → redirect LOGIN
-3. Email + SSO button
-4. Post-login → Dashboard
-5. Header mostra: "👤 Diane Mary T. | Role: OM PM"
+1. Utente apre l'app dalla rete lastminute → vede subito la dashboard, nessun login
+2. Editing: solo Diane, tramite il suo accesso separato
 
 ---
 
@@ -207,7 +193,7 @@
 
 **Trigger**: Click "ARCHIVE (History)" tab
 
-**Mostra**: Stream chiusi (Status=Closed), raggruppati per year
+**Mostra**: Stream chiusi (Status=Closed), raggruppati per year in base al campo `EndDate` (valorizzato quando Status passa a Closed — non si usa `UpdatedAt`, che cambia per qualsiasi modifica)
 
 ```
 ┌──────────────────────────────────────────┐
@@ -245,19 +231,22 @@ Vedi `ARCHITECTURE.md`
 ## 4. Acceptance Criteria (MVP)
 
 - ✅ Form CREARE stream con validazione
-- ✅ Edit stream + version history
-- ✅ Auth account-based + roles
+- ✅ Edit stream + version history (sola lettura, no restore)
+- ✅ Accesso libero in rete lastminute (nessun login); editing riservato a Diane
 - ✅ Dashboard Cluster × OutputType × Completeness filtrato
 - ✅ Market details panel (FR only)
-- ✅ Archive tab con closed items per year
-- ✅ Sync Doc → Sheet continuo
+- ✅ Archive tab con closed items per year (via `EndDate`)
+- ✅ Import Doc → Sheet (una tantum, a inizio progetto — non continuo)
 - ✅ Notifiche status change + completeness >20%
-- ✅ Audit trail (log action)
+- ✅ Change log (chi/cosa/quando — editor unico)
 
 ---
 
-## 5. Non in scope (post-MVP)
+## 5. Non in scope
 
+- **Rollback/restore versione precedente** — rimosso dallo scope: editor unico (Diane), non serve gestire conflitti tra versioni
+- **Login/ruoli multipli** — rimosso: nessun account, lettura libera in rete lastminute, editing solo Diane
+- **Sync continuo Doc → Sheet** — rimosso: il Doc serve solo per l'import iniziale una tantum
 - Multi-language (ora italiano, future: inglese)
 - Advanced analytics (trend, forecasting)
 - Tier 2/3 market details

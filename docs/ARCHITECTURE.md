@@ -6,8 +6,8 @@
 
 **Backend (MVP)**: Google Apps Script + Google Sheet
 **Frontend (MVP)**: HTML/JS (vanilla, no framework — MVP lean)
-**Data Source (MVP)**: OM Streams Log (Google Doc) → OM Catalog (Google Sheet) — this is the app's database for the MVP; once the real app is live, these documents are no longer used or maintained
-**Sync (MVP)**: Continuo via Apps Script trigger
+**Data Source (MVP)**: OM Streams Log (Google Doc) → OM Catalog (Google Sheet) — the Doc is imported **once** to bootstrap the Sheet; after that, the Doc is never read or updated again. All ongoing operations happen in the app.
+**Access (MVP)**: No login. Read access is open to anyone on the lastminute.com network; create/update is reserved to Diane via a separate, simpler access path (not exposed in the public UI).
 
 **Real app backend**: TBD — a real framework + real database, not Apps Script. See "Real App Deployment Requirements" below.
 
@@ -40,7 +40,8 @@
 | Q | Created At | Datetime | 2026-07-22T10:24:00 | ISO 8601 |
 | R | Updated By | String | diane.talagrand@... | Email last editor |
 | S | Updated At | Datetime | 2026-07-27T15:30:00 | ISO 8601 |
-| T | Version History | JSON Array | [{user, action, timestamp},...] | Audit trail |
+| T | Version History | JSON Array | [{user, action, timestamp},...] | Change log (sola lettura, no restore) |
+| U | End Date | Datetime | 2026-06-26T00:00:00 | Valorizzato **solo** quando Status passa a Closed. Usato da Archive per raggruppare per anno (non usare `UpdatedAt`, che cambia per qualsiasi modifica) |
 
 **Schema JSON (per colonne M, N, T)**:
 
@@ -182,15 +183,17 @@ POST /exec
 
 ---
 
-## Sync: Google Doc (OM Streams Log) → Google Sheet
+## Import: Google Doc (OM Streams Log) → Google Sheet (una tantum)
 
-**Flow**:
-1. Diane aggiorna `OM Streams Log.docx` manualmente (add/edit stream info)
-2. Trigger schedulato ogni mattina (6 AM) esegue `syncDocToSheet()`
+Questo non è un sync continuo: gira **una sola volta**, a inizio progetto, per popolare lo Sheet con i dati già raccolti nel Doc narrativo. Dopo l'import, il Doc non viene più letto né aggiornato — ogni operazione successiva (create/update) avviene direttamente in app, sullo Sheet.
+
+**Flow (una tantum)**:
+1. Diane finalizza `OM Streams Log.docx` con tutti gli stream esistenti
+2. Si esegue manualmente `importDocToSheet()` (nessun trigger schedulato)
 3. Apps Script legge il Doc
 4. Estrae metadata dai paragrafi strutturati
-5. Aggiorna/crea righe in "OM Catalog" sheet
-6. Log di sync: success/error
+5. Crea righe in "OM Catalog" sheet
+6. Log di import: success/error
 
 **Metadata extraction** (da Doc):
 - Heading level 2 → Stream Name
@@ -200,44 +203,30 @@ POST /exec
 - Paragrafo con "Context:" → Description
 - Etc.
 
-**Fallback**: Se parsing fallisce, lascia il campo come è (manual edit richiesto)
+**Fallback**: Se parsing fallisce, lascia il campo come è (manual edit richiesto, direttamente in app)
 
 ---
 
-## Authentication Flow
+## Access (no login)
 
-**Login**:
+Niente autenticazione, niente ruoli multipli. Motivo: nessun dato sensibile nell'app, priorità a restare facilmente accessibile.
+
 ```
-User opens /index.html
+User opens /index.html (da rete lastminute.com)
   ↓
-Redirect → /auth?redirect=/dashboard
-  ↓
-Try SSO (Google OAuth for lastminute.com)
-  ↓
-If fails, fallback → Email + Password form
-  ↓
-Validate user in AppScript (check email domain + password hash)
-  ↓
-Set session cookie (HttpOnly, SameSite=Strict)
-  ↓
-Redirect → /dashboard
+Dashboard visibile subito, in sola lettura — nessun redirect, nessun login
 ```
 
-**Session check** (ogni page load):
-```javascript
-async function checkAuth() {
-  const response = await fetch('/exec?action=checkAuth');
-  const result = await response.json();
-  if (!result.authenticated) {
-    window.location.href = '/auth?redirect=' + window.location.pathname;
-  }
-  return result.user; // {email, role, name}
-}
+**Editing (solo Diane)**:
+```
+Diane apre l'app tramite il suo accesso separato
+  ↓
+UI di editing (create/update) visibile solo lì — non esposta nella vista pubblica
+  ↓
+POST a doPost() come sempre
 ```
 
-**Roles mapping**:
-- Email ends with `@lastminute.com` + in sheet "Users" with role → OM Admin / OM PM / OM Contributor
-- Viewer role → auto per VS Owner (read-only access)
+Il meccanismo esatto dell'accesso separato di Diane (es. URL/parametro riservato, o altro) è da definire in Sprint 1 — non è un sistema di login/sessione, solo un modo per non esporre i controlli di editing a chiunque altro.
 
 ---
 
@@ -263,16 +252,15 @@ See more: [link to catalog]
 
 ---
 
-## Version History & Rollback
+## Version History
 
 **Stored in**: Column T (VersionHistory, JSON array)
 
-**Rollback workflow**:
+**Workflow (sola lettura)**:
 1. User clicks "[HISTORY]" on card
 2. Panel mostra list di versioni (chi, quando, cosa)
-3. Click "[RESTORE TO THIS VERSION]"
-4. Apps Script ripristina i valori
-5. Nuova entry aggiunta a VersionHistory con action="ROLLBACK"
+
+Niente restore/rollback: editor unico (Diane), non serve gestire conflitti tra versioni.
 
 ---
 
@@ -280,20 +268,21 @@ See more: [link to catalog]
 
 - **Sheet row limit**: 1,000 rows (MVP scope). Alert se >80%
 - **Query latency**: <2sec per fetch (Google Sheets API è lento; consider caching)
-- **Sync frequency**: 1x/day (6 AM) — non real-time
-- **Concurrent edits**: Sheet locking potrebbe causare conflict; manual merge se occorre
+- **Import Doc → Sheet**: una tantum, non ricorrente
+- **Concurrent edits**: editor unico (Diane), rischio di conflitto minimo; nessuna gestione dedicata necessaria in MVP
 
 ---
 
 ## Security
 
 - **HTTPS only**: deployed su Apps Script HTTPS domain
+- **Network restriction**: raggiungibile solo dalla rete lastminute.com (nessun login utente)
 - **CORS**: Abilitato solo per lastminute.com domain
 - **CSRF**: Token-based (set in form hidden field)
 - **SQL injection**: N/A (Google Sheet API, not SQL)
 - **XSS**: Template sanitization + CSP header
-- **Auth**: Email-based, no password in URL
-- **Audit trail**: Ogni action logged con user + timestamp
+- **Editing**: riservato a Diane tramite accesso separato, non esposto nella vista pubblica
+- **Change log**: Ogni modifica loggata con timestamp (editor unico)
 
 ---
 
@@ -304,9 +293,9 @@ See more: [link to catalog]
 **Custom domain** (optional): Via Apps Script → Deploy → New deployment
 
 **Versioning**:
-- Version 1: MVP (CREARE, AGGIORNARE, AUTH, Dashboard, Market panel FR) — Apps Script + Sheet/Doc as database
-- Version 2: Archive tab, notifiche, market panel NL/IT
-- Version 3: Advanced filtering, export, tier 2 markets
+- Version 1: MVP (CREARE, AGGIORNARE, Dashboard, Market panel FR, no login) — Apps Script + Sheet/Doc as bootstrap database
+- Version 2: Archive tab, notifiche, market panel per il resto del Tier 1 (IT, ES, UK, DE)
+- Version 3: Advanced filtering, export, Tier 2 markets
 - **Real app (post-MVP)**: Retire Apps Script and the OM Log Doc/OM Catalog Sheet; the app becomes the single OM management center
 
 ### Real App Deployment Requirements
@@ -317,8 +306,8 @@ Because the real app replaces the OM Log Doc / OM Catalog Sheet outright (not ju
 - A real database (TBD), seeded once from the OM Log Doc / OM Catalog Sheet, then the system of record on its own
 - A hosting/cloud environment (company's existing cloud infra — TBD)
 - A CI/CD pipeline (build → test → deploy on merge to `main`)
-- Environment/secrets management (DB credentials, OAuth client secrets, API keys) — not hardcoded
-- Authentication/SSO integration (Google Workspace SSO for lastminute.com)
+- Environment/secrets management (DB credentials, API keys) — not hardcoded
+- Network-level access restriction (lastminute.com network only) — no user login; editing stays Diane-only via a separate, simpler access path
 - A custom domain + TLS certificate
 - Monitoring, logging, and alerting
 - A backup & rollback strategy (previous build/image, DB migration rollback)
@@ -328,12 +317,12 @@ Because the real app replaces the OM Log Doc / OM Catalog Sheet outright (not ju
 ## Testing Checklist
 
 - [ ] CREARE stream: validazione, storage, ID auto-generate
-- [ ] AGGIORNARE stream: edit, version history, rollback
-- [ ] AUTH: login/logout, role-based access, session persistence
+- [ ] AGGIORNARE stream: edit, version history (sola lettura)
+- [ ] Accesso: lettura libera senza login, editing accessibile solo a Diane
 - [ ] Filtering: cluster, output type, status, markets, completeness
 - [ ] Market panel: FR details load, images render, links work
-- [ ] Archive: closed items per year, correct counts
-- [ ] Sync: Doc → Sheet aggiorna correttamente
+- [ ] Archive: closed items per year (via EndDate), correct counts
+- [ ] Import: Doc → Sheet una tantum completato correttamente
 - [ ] Notifiche: Slack/Email inviati on status change + completeness >20%
 - [ ] Performance: <2sec query latency
-- [ ] Security: HTTPS, CORS, no XSS, audit trail logged
+- [ ] Security: HTTPS, CORS, no XSS, network restriction, change log

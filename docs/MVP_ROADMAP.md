@@ -12,23 +12,22 @@
 
 ## Sprint Structure
 
-### **SPRINT 1: Auth + Backend Setup** (Week 1-2: 28 Jul - 10 Aug)
+### **SPRINT 1: Backend Setup** (Week 1-2: 28 Jul - 10 Aug)
 
-**Tema**: Infrastruttura e autenticazione
+**Tema**: Infrastruttura. Niente auth da costruire — lettura libera senza login, editing riservato a Diane tramite accesso separato (più semplice di un vero sistema di login/ruoli).
 
 **Deliverables**:
-- [ ] Auth system: Google OAuth + Email login fallback
-- [ ] Role-based access control (OM Admin, PM, Contributor, Viewer)
-- [ ] Google Sheet "OM Catalog" creato con colonne strutturate
+- [ ] Accesso separato e semplice per l'editing di Diane (non login/sessione)
+- [ ] Google Sheet "OM Catalog" creato con colonne strutturate (incluso `EndDate`)
 - [ ] Apps Script endpoint `doGet()` — read catalog
 - [ ] Apps Script endpoint `doPost()` — create/update stream (basic)
-- [ ] Sync script: Doc → Sheet (first draft)
+- [ ] Script di import: Doc → Sheet (una tantum)
 
-**Effort**: 8 gg (Diane + 1 dev)
+**Effort**: 5 gg (Diane + 1 dev) — ridotto da 8 gg per la rimozione del sistema di auth/ruoli
 
 **Success criteria**:
-- ✅ Login funziona (SSO + fallback email)
-- ✅ Diane può creare 1 stream via form
+- ✅ Diane può creare 1 stream via form (dal suo accesso riservato)
+- ✅ Chiunque sulla rete lastminute vede la dashboard senza login
 - ✅ Sheet aggiornato correttamente
 - ✅ API risponde in <2sec
 
@@ -43,20 +42,18 @@
 **Deliverables**:
 - [ ] Form CREARE stream (complete, con validazione)
 - [ ] Form AGGIORNARE stream (edit in-place + side panel)
-- [ ] Version history: log every change (user, timestamp, before/after)
-- [ ] Rollback functionality (restore to previous version)
+- [ ] Version history: log every change (timestamp, before/after) — sola lettura, no restore
 - [ ] Notifiche su status change + completeness >20%
 - [ ] Slack integration (send alerts to #om-governance-updates)
 
-**Effort**: 8 gg (Diane + 1 dev)
+**Effort**: 6 gg (Diane + 1 dev) — ridotto da 8 gg per la rimozione del rollback
 
 **Success criteria**:
 - ✅ Form validazione non permette submit se fields mancano
 - ✅ Edit stream salva changes + crea version log
-- ✅ Rollback ripristina valori corretti
 - ✅ Slack notification inviato on status change
 
-**Demo**: Show create/edit flow, version history, rollback
+**Demo**: Show create/edit flow, version history
 
 ---
 
@@ -95,18 +92,14 @@
 
 | Task | Owner | Effort | Status |
 |------|-------|--------|--------|
-| Setup Google Sheet "OM Catalog" | Diane | 2h | |
-| Apps Script auth endpoint | Dev | 4h | |
-| Google OAuth integration | Dev | 3h | |
-| Email login fallback | Dev | 2h | |
-| Session management (cookies) | Dev | 2h | |
-| Roles & permissions schema | Diane | 2h | |
+| Setup Google Sheet "OM Catalog" (incl. EndDate) | Diane | 2h | |
+| Accesso separato per editing Diane (no login/sessione) | Dev | 3h | |
 | doGet() endpoint (read) | Dev | 3h | |
 | doPost() endpoint (create, basic) | Dev | 4h | |
-| Doc parser script (first draft) | Dev | 4h | |
-| Testing auth flow | Dev + Diane | 3h | |
+| Doc parser script (import una tantum, first draft) | Dev | 4h | |
+| Testing accesso pubblico + editing Diane | Dev + Diane | 3h | |
 
-**Total Week 1**: 29h
+**Total Week 1**: 19h
 
 ### **SPRINT 1: Week 2**
 
@@ -115,16 +108,16 @@
 | Task | Owner | Effort | Status |
 |------|-------|--------|--------|
 | Refine doPost() (validation) | Dev | 3h | |
-| Version history schema | Diane | 2h | |
-| Sync Doc → Sheet (complete) | Dev | 5h | |
-| Testing sync (manual test cases) | Diane | 2h | |
+| Version history schema (sola lettura) | Diane | 2h | |
+| Import Doc → Sheet (completo, una tantum) | Dev | 5h | |
+| Testing import (manual test cases) | Diane | 2h | |
 | Deployment to Apps Script | Dev | 2h | |
 | Documentation: Schema | Diane | 2h | |
 | Internal demo prep | Diane | 1h | |
 | **Internal Demo** (OM Team) | Diane | 1h | |
 
 **Total Week 2**: 18h
-**Sprint 1 Total**: 47h (≈ 1 dev full-time + Diane 50%)
+**Sprint 1 Total**: 37h (≈ 1 dev full-time + Diane 50%) — ridotto rispetto a prima per la rimozione del sistema di auth/ruoli
 
 ---
 
@@ -137,14 +130,13 @@
 | Form CREARE (HTML + JS) | Dev | 6h | |
 | Form validation (client + server) | Dev | 4h | |
 | Form AGGIORNARE (side panel) | Dev | 5h | |
-| Version history UI | Dev | 4h | |
-| Rollback logic | Dev | 3h | |
+| Version history UI (sola lettura) | Dev | 4h | |
 | Notifiche Slack integration | Dev | 4h | |
 | Email notifications | Dev | 2h | |
 | Testing create/update flow | Dev + Diane | 4h | |
 | Documentation: CRUD API | Diane | 2h | |
 
-**Total Sprint 2**: 34h
+**Total Sprint 2**: 31h
 
 ---
 
@@ -205,24 +197,24 @@
 
 ## Post-MVP Roadmap (Future)
 
-### **Phase 2 (September - October)**
+Priorità per **Tier di mercato** (Tier 1 → Tier 2 → Tier 3), non per fasi calendario fisse — FR è già coperto nell'MVP (Tier 1).
+
+### **Phase 2 — Tier 1 rimanente**
 
 **Scope**: 
-- Market details panel per NL, IT (oltre a FR)
+- Market details panel per IT, ES, UK, DE (tutto il Tier 1 non ancora coperto)
 - Advanced analytics (streams per cluster trend, completeness heatmap)
 - Export to CSV/PDF
-- Tier 2 market support
 
 **Effort**: 4-5 weeks
 
-### **Phase 3 (November - December)**
+### **Phase 3 — Tier 2**
 
 **Scope**:
-- Market details per tutti Tier 1 (UK, ES, DE) 
+- Market details per mercati Tier 2 (CH, SE, AT, NL, DK, BE, IE, NO, PT, HU, FI, PL, CZ, SK)
 - Mobile responsive
 - Multi-language (English)
 - Integration con Jira/GitHub
-- Real-time sync (Doc → Sheet, not just daily)
 
 **Effort**: 6-8 weeks
 
@@ -233,8 +225,7 @@
 | Risk | Probability | Impact | Mitigation |
 |------|-------------|--------|-----------|
 | Google Sheet API rate limit | Medium | High | Cache results, batch requests |
-| Doc parse failures | Medium | Medium | Manual fallback, error logging |
-| Sync delays (daily) | Low | Medium | User can manual refresh, async processing |
+| Doc parse failures (import una tantum) | Medium | Medium | Manual fallback, error logging |
 | User adoption (VS Owners) | Medium | High | Training, clear UX, support hours |
 | Scope creep | High | High | Strict MVP scope, defer post-launch |
 
