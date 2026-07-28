@@ -2,6 +2,19 @@
 
 > A three-dimensional catalog viewer for Operations Management activities, enabling Value Stream Owners to understand what the OM office delivers and why.
 
+## 🩷 Recently Updated
+
+This is the **single README** for the project (merged with the former `README_MVP_PLAN.md` on 28 July 2026, to stop the two from drifting out of sync). Each update logs what changed here — 🩷 marks content that's new or just revised; it gets cleared on the next update once it's no longer "new."
+
+**28 July 2026**:
+- 🩷 No login: read access open on the lastminute.com network, editing reserved to Diane
+- 🩷 Removed Rollback — Version History is now read-only (single editor, no version conflicts to recover from)
+- 🩷 Doc → Sheet import is one-time (bootstrap only), not a continuous daily sync
+- 🩷 Added `EndDate` field so Archive groups correctly by closing year
+- 🩷 Roadmap phases reordered by market Tier (1 → 2 → 3) instead of mixed calendar phases
+- 🩷 Fixed the GitHub Pages CI failure (broken submodule references from `wu-station`/`wu-station-add-diane-card`)
+- 🩷 Merged `README_MVP_PLAN.md` into this file (see Next Steps and Repository Structure below)
+
 ## Overview
 
 The **OM Governance Dashboard** (OM Catalog App) transforms the internal catalog of OM Streams into a business-friendly interface that visualizes organizational work across three dimensions:
@@ -140,7 +153,33 @@ See `docs/ARCHITECTURE.md` for the full schema.
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** — Data schema, API design, security
 - **[UI_WIREFRAMES.md](docs/UI_WIREFRAMES.md)** — Layout, interaction flows, design system
 - **[MVP_ROADMAP.md](docs/MVP_ROADMAP.md)** — Timeline (4 weeks), sprint planning
-- **[README_MVP_PLAN.md](README_MVP_PLAN.md)** — Formalized scope & success criteria
+- **[OKR_REFERENCE.md](docs/OKR_REFERENCE.md)** — Company OKR reference material for the stream-to-OKR bridge
+- **[conversations/](conversations/)** — Log of planning decisions and why they were made
+
+---
+
+## Repository Structure
+
+```
+om-dashboard/
+├── README.md (this file — overview, architecture, dev, deployment)
+│
+├── docs/
+│   ├── PRODUCT_SPEC.md
+│   ├── ARCHITECTURE.md
+│   ├── UI_WIREFRAMES.md
+│   ├── MVP_ROADMAP.md
+│   └── OKR_REFERENCE.md
+│
+├── conversations/ (decision log)
+│
+├── config/
+│   ├── clusters.json (3 cluster OM-driven + output type mapping)
+│   └── markets.json (Tier 1/2/3 classification)
+│
+├── Code.gs (Apps Script backend — CREARE, AGGIORNARE, IMPORT)
+└── index.html (Frontend — Dashboard, filters, market panel, archive)
+```
 
 ---
 
@@ -230,6 +269,15 @@ Once the real app is built on the target framework, deploying it requires:
 7. A rollback plan: previous build/image kept ready, plus DB migration rollback scripts
 
 Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Stream Owners).
+
+---
+
+## Next Steps
+
+1. **Nathan Vené approval** — cluster taxonomy and market scope (blocking Sprint 1)
+2. **OKR granularity decision** — Objective-level (4 options) vs. Key Result-level (16 options); asked, awaiting answer
+3. **Reorganize the Google Sheet** — once approved, split it functionally (Manage Streams) × visually (Dashboard/Archive/Market Panel)
+4. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`)
 
 ---
 
