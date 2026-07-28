@@ -2,109 +2,109 @@
 
 ## Overview
 
-**Scopo**: Creare una app fruibile per il business (Value Streams Owner) che visualizza il catalogo di attività OM in modo tridimensionale, mostrando **cosa fa l'OM office** e **quale beneficio restituisce all'azienda** attraverso decisioni strategiche cross-funzionali (legal, tax, DPO, finance).
+**Purpose**: Build an app usable by the business (Value Streams Owner) that displays the catalog of OM activities three-dimensionally, showing **what the OM office does** and **what benefit it returns to the company** through cross-functional strategic decisions (legal, tax, DPO, finance).
 
-**Utenti**:
-- **Chiunque sulla rete lastminute.com** → accesso in sola lettura, nessun login richiesto
-- **Diane (OM PM)** → unica editor (create/update)
+**Users**:
+- **Anyone on the lastminute.com network** → read-only access, no login required
+- **Diane (OM PM) and Nathan** → the only editors (create/update)
 
-**Lingua**: Italiano (per il business)
+**Product UI language**: Italian (for the business) — this is about the deployed app's interface, not this document.
 
 ---
 
-## 1. LIVELLO 1: GESTIONE STREAM — Funzionalità Principali
+## 1. LEVEL 1: STREAM MANAGEMENT — Core Functionality
 
-### 1.1 LIVELLO 2A: CREARE STREAM
+### 1.1 LEVEL 2A: CREATE STREAM
 
-**Descrizione**: Form strutturato per inserire una nuova attività OM nel catalogo.
+**Description**: Structured form to add a new OM activity to the catalog.
 
-**Input (campi obbligatori + optional)**:
+**Input (required + optional fields)**:
 
-| Campo | Tipo | Obbligatorio | Note |
-|-------|------|--------------|------|
-| **ID** | Auto-generated | ✅ | OMG-{incrementale} |
-| **Name** | Testo | ✅ | Es. "Invoicing in PT", "Apertura Newco Romania" |
-| **Init Code** | Testo | ❌ | Se INIT presente, es. INIT-997, INIT-1004 (solo per Evolution) |
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| **ID** | Auto-generated | ✅ | OMG-{incremental} |
+| **Name** | Text | ✅ | E.g. "Invoicing in PT", "Opening Newco Romania" |
+| **Init Code** | Text | ❌ | If an INIT exists, e.g. INIT-997, INIT-1004 (Evolution only) |
 | **Status** | Dropdown | ✅ | New, In Progress, Paused, Closed (default: New) |
 | **Priority** | Dropdown | ✅ | Urgent, Normal |
 | **Strategic Pillar** | Dropdown | ✅ | Governance & Compliance, Cost Optimisation, Expansion & Growth, OM Maintenance & Review |
 | **Cluster** | Dropdown | ✅ | OM Compliance-Evolution, OM Compliance-Continuity, OM Compliance-Efficiency |
-| **Output Type** | Dropdown | ✅ | Dipende da Cluster (vedi tabella mapping) |
+| **Output Type** | Dropdown | ✅ | Depends on Cluster (see mapping table) |
 | **Requester** | Dropdown | ✅ | Business, Corporate, OM Governance |
 | **Markets** | Multi-select | ✅ | UK, FR, DE, IT, ES, (Tier 2) ... |
 | **Completeness %** | Slider | ✅ | 0-100%, default 0% |
 | **Description** | Long text | ❌ | Context, need, conclusion (max 500 chars) |
 
-**Validazione**:
+**Validation**:
 - `Name` required
 - At least 1 market selected
 - `Cluster` + `Output Type` required
-- Se `Cluster = Evolution` → `Init Code` consigliato (ma non obbligatorio)
+- If `Cluster = Evolution` → `Init Code` recommended (but not required)
 
 **Storage**:
-- Salva in Google Sheet "OM Catalog"
+- Saved to the "OM Catalog" Google Sheet
 - Log: created_by, created_at, updated_by, updated_at
-- Il Google Doc "OM Streams Log" NON viene più toccato dopo l'import iniziale — è servito solo a popolare lo Sheet una volta, a inizio progetto
+- The "OM Streams Log" Google Doc is NOT touched again after the initial import — it only served to populate the Sheet once, at project start
 
 **Workflow**:
 1. Click "[+ NEW STREAM]"
-2. Compila form
+2. Fill in the form
 3. Click "[SAVE]"
-4. Validazione lato client
-5. POST a Apps Script endpoint
-6. Sheet aggiornato
-7. Confirmation: "Stream OMG-X creato ✅"
+4. Client-side validation
+5. POST to the Apps Script endpoint
+6. Sheet updated
+7. Confirmation: "Stream OMG-X created ✅"
 
 ---
 
-### 1.2 LIVELLO 2B: AGGIORNARE STREAM
+### 1.2 LEVEL 2B: UPDATE STREAM
 
-**Descrizione**: Modificare campi di uno stream esistente con traccia delle modifiche.
+**Description**: Edit fields of an existing stream with change tracking.
 
-**Funzionalità**:
-- **Select & Edit**: Clicca su card stream → side panel con form edit
-- **Fields mutabili**: Tutti tranne `ID` (immutable)
-- **Version history**: Mostra chi ha modificato cosa e quando (sola lettura — nessun "restore a versione precedente": editor unico, non serve gestire conflitti tra versioni)
-- **Notifiche**: Alert team se:
-  - Status cambia (New → In Progress, In Progress → Closed)
-  - Completeness cambia >20% (es. 30% → 55%)
+**Functionality**:
+- **Select & Edit**: Click a stream card → side panel with edit form
+- **Mutable fields**: All except `ID` (immutable)
+- **Version history**: Shows who changed what and when (read-only — no "restore to previous version": a small fixed set of editors, no version conflicts to manage)
+- **Notifications**: Alert the team if:
+  - Status changes (New → In Progress, In Progress → Closed)
+  - Completeness changes by >20% (e.g. 30% → 55%)
 
-**Validazione**: Stessa di CREARE
+**Validation**: Same as CREATE
 
 **Workflow**:
-1. Stream card mostra "[EDIT] [HISTORY] [...]"
+1. Stream card shows "[EDIT] [HISTORY] [...]"
 2. Click "[EDIT]"
 3. Side panel form (pre-filled)
-4. Modifica campi
+4. Edit fields
 5. Click "[SAVE CHANGES]"
-6. Validazione
-7. PUT a Apps Script endpoint
-8. Log creato: "Diane modificato Status: In Progress → Closed (26 Jul 2026)"
-9. Alert inviati a team (se configurato)
+6. Validation
+7. PUT to the Apps Script endpoint
+8. Log entry created: "Diane changed Status: In Progress → Closed (26 Jul 2026)"
+9. Alerts sent to the team (if configured)
 
 ---
 
-### 1.3 LIVELLO 2C: ACCESSO
+### 1.3 LEVEL 2C: ACCESS
 
-**Descrizione**: Niente login. Non ci sono dati sensibili nell'app, e la priorità è restare facilmente accessibile senza sovracomplicare.
+**Description**: No login. There's no sensitive data in the app, and the priority is staying easy to access without overcomplicating things.
 
-**Modello**:
-- **Lettura**: aperta a chiunque sia sulla rete lastminute.com — nessun account, nessuna password
-- **Scrittura (create/update)**: riservata a Diane, tramite un accesso separato e più semplice del login classico (meccanismo esatto — es. URL/parametro riservato — da definire in Sprint 1). Non ci sono altri ruoli (niente OM Admin/PM/Contributor/Viewer): l'editing è sempre e solo Diane
+**Model**:
+- **Read**: open to anyone on the lastminute.com network — no account, no password
+- **Write (create/update)**: reserved to Diane and Nathan, through a separate access path simpler than a classic login (exact mechanism — e.g. a private URL/parameter — to be defined in Sprint 1). There are no other roles (no OM Admin/PM/Contributor/Viewer): editing is always just Diane and Nathan
 
 **Change log**:
-- Ogni modifica registra timestamp + cosa è cambiato (campo `Updated At` / version history)
-- Non serve un audit trail multi-utente: l'unico editor è Diane, quindi il log serve a tracciare la cronologia, non a distinguere chi ha fatto cosa tra più persone
+- Every change records a timestamp + what changed (`Updated At` field / version history)
+- No multi-user audit trail needed: with only Diane and Nathan editing, the log tracks history rather than needing to distinguish between a larger team
 
 **Workflow**:
-1. Utente apre l'app dalla rete lastminute → vede subito la dashboard, nessun login
-2. Editing: solo Diane, tramite il suo accesso separato
+1. User opens the app from the lastminute network → sees the dashboard immediately, no login
+2. Editing: only Diane and Nathan, through their separate access
 
 ---
 
-## 2. LIVELLO 1: VISUALIZZAZIONE — UI/UX
+## 2. LEVEL 1: VISUALIZATION — UI/UX
 
-### 2.1 Dashboard Principale (ACTIVE Streams)
+### 2.1 Main Dashboard (ACTIVE Streams)
 
 **Layout**: 3-column Kanban-style view
 
@@ -118,7 +118,7 @@
 │ TAB: ACTIVE (2026) | ARCHIVE (History)                       │
 ├──────────────────────────────────────────────────────────────┤
 │                                                               │
-│ CLUSTER: OM Compliance-Evolution | OUTPUT: Nuovi Mercati    │
+│ CLUSTER: OM Compliance-Evolution | OUTPUT: New Markets      │
 │ Completeness: ████░░ 65%                                    │
 │                                                               │
 │ [Card 1] OMG-12 Invoicing in PT                             │
@@ -127,7 +127,7 @@
 │ ├─ Requester: Business | Priority: Urgent                   │
 │ └─ [📋 Market Details ▼] [🔗 OM Log] [EDIT]                 │
 │                                                               │
-│ [Card 2] OMG-X Apertura Newco Romania                       │
+│ [Card 2] OMG-X Opening Newco Romania                        │
 │ ├─ Status: In Progress | Init: INIT-1004                    │
 │ ├─ Markets: RO (Tier 2) | Completeness: 40%                │
 │ ├─ Requester: Corporate | Priority: Urgent                  │
@@ -136,27 +136,27 @@
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**Filtri**:
-- Cluster: dropdown (tutti, o singolo)
+**Filters**:
+- Cluster: dropdown (all, or one)
 - Output Type: dropdown
 - Status: checkboxes (New, In Progress, Paused, Closed)
-- Markets: multi-select o search
+- Markets: multi-select or search
 - Completeness range: slider (0-100%)
-- Search: text input (nome stream)
+- Search: text input (stream name)
 
-**Mostra**: 
-- Card per stream
+**Shows**:
+- One card per stream
 - Status badge (color-coded)
 - Completeness bar
 - Key info: Markets, Requester, Priority
 
 ---
 
-### 2.2 Market Details Panel (Expandibile)
+### 2.2 Market Details Panel (Expandable)
 
-**Trigger**: Click "[📋 Market Details]" su card
+**Trigger**: Click "[📋 Market Details]" on a card
 
-**Contiene** (per mercato selezionato):
+**Contains** (for the selected market):
 
 ```
 ┌──────────────────────────────────────┐
@@ -164,14 +164,14 @@
 ├──────────────────────────────────────┤
 │                                      │
 │ 📊 DISTRIBUTION CHAIN                │
-│    [diagram/screenshot da PPT]       │
+│    [diagram/screenshot from PPT]     │
 │                                      │
 │ 👤 DATA CONTROLLER                   │
 │    Name: BravoNext S.A.              │
 │    Role: EU Collecting Entity Lead   │
 │                                      │
 │ 📋 CONSENT & PROCESSING              │
-│    [matrix compliance GDPR]          │
+│    [GDPR compliance matrix]          │
 │                                      │
 │ 💼 MARKET ARCHITECTURE               │
 │    Legal entities: BravoNext S.A...  │
@@ -185,15 +185,15 @@
 └──────────────────────────────────────┘
 ```
 
-**Nota**: MVP = solo FR. Altri Tier 1 (NL, IT, ES, UK, DE) aggiunti in roadmap.
+**Note**: MVP = FR only. Other Tier 1 markets (NL, IT, ES, UK, DE) added per the roadmap.
 
 ---
 
 ### 2.3 Archive Tab (History View)
 
-**Trigger**: Click "ARCHIVE (History)" tab
+**Trigger**: Click the "ARCHIVE (History)" tab
 
-**Mostra**: Stream chiusi (Status=Closed), raggruppati per year in base al campo `EndDate` (valorizzato quando Status passa a Closed — non si usa `UpdatedAt`, che cambia per qualsiasi modifica)
+**Shows**: Closed streams (Status=Closed), grouped by year based on the `EndDate` field (set when Status becomes Closed — not `UpdatedAt`, which changes on any edit)
 
 ```
 ┌──────────────────────────────────────────┐
@@ -218,37 +218,37 @@
 └──────────────────────────────────────────┘
 ```
 
-**Metrica**: Per ogni year, conta stream completed per cluster + output type
+**Metric**: For each year, count completed streams per cluster + output type
 
 ---
 
 ## 3. Data Schema
 
-Vedi `ARCHITECTURE.md`
+See `ARCHITECTURE.md`
 
 ---
 
 ## 4. Acceptance Criteria (MVP)
 
-- ✅ Form CREARE stream con validazione
-- ✅ Edit stream + version history (sola lettura, no restore)
-- ✅ Accesso libero in rete lastminute (nessun login); editing riservato a Diane
-- ✅ Dashboard Cluster × OutputType × Completeness filtrato
+- ✅ CREATE stream form with validation
+- ✅ Edit stream + version history (read-only, no restore)
+- ✅ Open access on the lastminute network (no login); editing reserved to Diane and Nathan
+- ✅ Dashboard filtered by Cluster × OutputType × Completeness
 - ✅ Market details panel (FR only)
-- ✅ Archive tab con closed items per year (via `EndDate`)
-- ✅ Import Doc → Sheet (una tantum, a inizio progetto — non continuo)
-- ✅ Notifiche status change + completeness >20%
-- ✅ Change log (chi/cosa/quando — editor unico)
+- ✅ Archive tab with closed items per year (via `EndDate`)
+- ✅ Doc → Sheet import (one-time, at project start — not continuous)
+- ✅ Notifications on status change + completeness >20%
+- ✅ Change log (who/what/when — Diane and Nathan)
 
 ---
 
-## 5. Non in scope
+## 5. Out of Scope
 
-- **Rollback/restore versione precedente** — rimosso dallo scope: editor unico (Diane), non serve gestire conflitti tra versioni
-- **Login/ruoli multipli** — rimosso: nessun account, lettura libera in rete lastminute, editing solo Diane
-- **Sync continuo Doc → Sheet** — rimosso: il Doc serve solo per l'import iniziale una tantum
-- Multi-language (ora italiano, future: inglese)
-- Advanced analytics (trend, forecasting)
+- **Rollback/restore previous version** — removed from scope: a small fixed set of editors, no version conflicts to manage
+- **Login/multiple roles** — removed: no accounts, open read access on the lastminute network, editing limited to Diane and Nathan
+- **Continuous Doc → Sheet sync** — removed: the Doc is only for the one-time initial import
+- Multi-language (Italian for now; English in the future)
+- Advanced analytics (trends, forecasting)
 - Tier 2/3 market details
 - Mobile responsive (desktop first)
-- Export PDF/Excel
+- Export to PDF/Excel

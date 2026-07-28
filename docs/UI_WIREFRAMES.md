@@ -4,7 +4,7 @@
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│ HEADER (sticky) — nessun login, visibile a chiunque in rete    │
+│ HEADER (sticky) — no login, visible to anyone on the network   │
 │ OM GOVERNANCE PORTAL | v0.1 MVP                                │
 └────────────────────────────────────────────────────────────────┘
 
@@ -63,7 +63,7 @@
 └────────────────────────────────────────────────────────────────┘
 ```
 
-**Nota**: questa è la vista pubblica (chiunque in rete lastminute, nessun login). I bottoni `[+ NEW STREAM]`, `[EDIT]` e `[✓ DELETE]` compaiono **solo** nell'accesso separato di Diane — non sono visibili qui.
+**Note**: this is the public view (anyone on the lastminute network, no login). The `[+ NEW STREAM]`, `[EDIT]`, and `[✓ DELETE]` buttons appear **only** in Diane and Nathan's separate access — they're not visible here.
 
 ---
 
@@ -112,7 +112,7 @@
 **On success**:
 - Modal closes
 - Stream appears in list (top, highlighted in yellow for 3 seconds)
-- Toast: "Stream OMG-999 creato ✅"
+- Toast: "Stream OMG-999 created ✅"
 
 ---
 
@@ -155,11 +155,11 @@
 
 **On save**:
 - Validation same as CREATE
-- If success: "Stream aggiornato ✅" + side panel closes
-- Audit log entry added: "Diane: Status In Progress → Closed (27 Jul 2026 16:00)"
+- If success: "Stream updated ✅" + side panel closes
+- Change log entry added: "Diane: Status In Progress → Closed (27 Jul 2026 16:00)"
 - Notifications sent (Slack, email if configured)
 
-**Click [HISTORY]** (sola lettura, nessun restore):
+**Click [HISTORY]** (read-only, no restore):
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │ VERSION HISTORY: OMG-12                                       │
@@ -225,9 +225,9 @@
 └────────────────────────────────────────────────────────────────┘
 ```
 
-**Responsiveness**: 
-- Panel scrollable su desktop (max-height: 80vh)
-- Su mobile: full-screen modal (landscape: side-by-side, portrait: full)
+**Responsiveness**:
+- Panel scrollable on desktop (max-height: 80vh)
+- On mobile: full-screen modal (landscape: side-by-side, portrait: full)
 
 ---
 
@@ -282,7 +282,7 @@
 
 ## Page: Login
 
-Non esiste — niente pagina di login. Chiunque sulla rete lastminute.com apre l'URL e vede subito la dashboard, in sola lettura. L'accesso di editing di Diane è un percorso separato e più semplice (meccanismo esatto da definire in Sprint 1), non una pagina di sign-in con email/password/SSO.
+Doesn't exist — no login page. Anyone on the lastminute.com network opens the URL and sees the dashboard immediately, read-only. Diane and Nathan's editing access is a separate, simpler path (exact mechanism to be defined in Sprint 1), not a sign-in page with email/password/SSO.
 
 ---
 

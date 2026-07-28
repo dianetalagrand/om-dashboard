@@ -7,13 +7,15 @@
 This is the **single README** for the project (merged with the former `README_MVP_PLAN.md` on 28 July 2026, to stop the two from drifting out of sync). Each update logs what changed here — **NEW** marks content that's new or just revised; it gets cleared on the next update once it's no longer "new."
 
 **28 July 2026**:
-- **NEW:** No login: read access open on the lastminute.com network, editing reserved to Diane
-- **NEW:** Removed Rollback — Version History is now read-only (single editor, no version conflicts to recover from)
+- **NEW:** No login: read access open on the lastminute.com network, editing reserved to Diane and Nathan
+- **NEW:** Removed Rollback — Version History is now read-only (a small fixed set of editors, no version conflicts to recover from)
 - **NEW:** Doc → Sheet import is one-time (bootstrap only), not a continuous daily sync
 - **NEW:** Added `EndDate` field so Archive groups correctly by closing year
 - **NEW:** Roadmap phases reordered by market Tier (1 → 2 → 3) instead of mixed calendar phases
 - **NEW:** Fixed the GitHub Pages CI failure (broken submodule references from `wu-station`/`wu-station-add-diane-card`)
 - **NEW:** Merged `README_MVP_PLAN.md` into this file (see Next Steps and Repository Structure below)
+- **NEW:** Fixed clone instructions that pointed to the wrong repo/folder name
+- **NEW:** Language policy: everything in English except `conversations/`, which stays in Italian
 
 ## Overview
 
@@ -50,7 +52,7 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ✅ **Create Streams** — Add new OM activities with structured metadata  
 ✅ **Update Streams** — Edit + track changes (version history, read-only)  
-✅ **Open Access** — No login required; read access is open on the lastminute.com network. Editing is Diane-only  
+✅ **Open Access** — No login required; read access is open on the lastminute.com network. Editing is reserved to Diane and Nathan  
 
 ### Visualization
 
@@ -71,7 +73,7 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 ### Prerequisites
 
 - Access to the lastminute.com network (no login/account needed to view)
-- Google Drive access (Diane only, for the one-time Doc/Sheet import)
+- Google Drive access (Diane, for the one-time Doc/Sheet import)
 
 ### Installation
 
@@ -129,7 +131,7 @@ Since the target is a real, standalone management app — not a Google Workspace
 - A hosting/cloud environment (e.g., the company's existing Azure/AWS/GCP setup — TBD)
 - A CI/CD pipeline (build → test → deploy on merge to main)
 - Environment & secrets management (DB credentials, API keys) — not hardcoded in the repo
-- Network-level access restriction (reachable only from the lastminute.com network) — no user login; editing stays reserved to Diane through a separate, simpler access path (not exposed in the public UI)
+- Network-level access restriction (reachable only from the lastminute.com network) — no user login; editing stays reserved to Diane and Nathan through a separate, simpler access path (not exposed in the public UI)
 - A custom domain + TLS certificate
 - Monitoring, logging, and alerting (uptime, errors)
 - A backup & rollback strategy (previous build/image, DB migration rollback)
@@ -295,7 +297,7 @@ Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Strea
 
 ### Phase 1 (Aug 2026) — MVP Launch
 - ✅ Create/update streams + version history
-- ✅ Open access (no login), editing Diane-only
+- ✅ Open access (no login), editing reserved to Diane and Nathan
 - ✅ 3D dashboard view
 - ✅ FR market details panel (Tier 1)
 - ✅ Archive tab
@@ -355,7 +357,7 @@ A: Yes — use the Cluster dropdown to select one, or leave blank to see all.
 A: Switch to the Archive tab to see closed activities per year.
 
 **Q: Can Value Stream Owners edit streams?**  
-A: No — the app is read-only for everyone on the lastminute.com network. Only Diane can create/edit, through a separate access path.
+A: No — the app is read-only for everyone on the lastminute.com network. Only Diane and Nathan can create/edit, through a separate access path.
 
 ---
 
