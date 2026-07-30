@@ -24,6 +24,9 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** `Strategic Pillar` is now derived automatically from `Cluster` (fixed mapping in `config/clusters.json`) instead of being picked separately — the two fields overlapped and risked inconsistent combinations
 - **NEW:** Import maps the Doc's existing "Effective date" field to `EndDate` for closed streams — no historical data gap
 - **NEW:** `Output Type` is multi-select — a stream can have more than one
+- **NEW:** The OM Streams Log Doc actually uses Google Docs tabs (grouped by Status, one tab per stream), not a flat document — the import needs the Docs API's tab-navigation, and Status is derived from the tab group
+- **NEW:** `Description` stays a short manual summary; the Doc's rich Context/Need/Legal/DPO/Finance & Tax content stays in the Doc, linked via `Link to OM Log` (now pointing at the specific tab) rather than replicated in the app
+- **NEW:** `Markets` supports `all` and `NA` in addition to specific country codes, and is **not a dashboard filter** — it's a card attribute only, shown when `all`/specific, hidden when `NA`
 
 ## Overview
 

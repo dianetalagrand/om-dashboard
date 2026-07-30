@@ -63,7 +63,7 @@
 
 **Deliverables**:
 - [ ] Main dashboard: Cluster × OutputType × Completeness 3D view
-- [ ] Filters: Cluster dropdown, OutputType dropdown, Status checkboxes, Markets multi-select, Completeness range
+- [ ] Filters: Cluster dropdown, OutputType multi-select, Status checkboxes, Completeness range (Markets is a card attribute, not a filter)
 - [ ] Search: full-text search on Name
 - [ ] Archive tab: closed items grouped by year
 - [ ] Market details panel: FR only (Distribution Chain, Consent & Processing, Data Ownership, Market Architecture)

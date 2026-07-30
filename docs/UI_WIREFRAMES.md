@@ -18,7 +18,6 @@
 │                                                                │
 │ 🔍 Search streams...  |  Cluster: [All ▼]  | OutputType: [...]│
 │ Status: [□] New [□] In Progress [□] Paused [□] Closed         │
-│ Markets: [FR ▼] [Multi-select]                                │
 │ Completeness: [0 ■━━━━━━━━━■ 100]                            │
 │ [Apply Filters] [Reset]                                        │
 └────────────────────────────────────────────────────────────────┘

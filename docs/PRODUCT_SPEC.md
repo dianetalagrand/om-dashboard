@@ -30,7 +30,7 @@
 | **Cluster** | Dropdown | ✅ | OM Compliance-Evolution, OM Compliance-Continuity, OM Compliance-Efficiency |
 | **Output Type** | Multi-select | ✅ | Depends on Cluster (see mapping table) — a stream can have more than one |
 | **Requester** | Dropdown | ✅ | Business, Corporate, OM Governance |
-| **Markets** | Multi-select | ✅ | UK, FR, DE, IT, ES, (Tier 2) ... |
+| **Markets** | Multi-select, or `all` / `NA` | ✅ | UK, FR, DE, IT, ES, (Tier 2) ... — or `all` (applies to every market) or `NA` (no market dimension). Not a filter, just an attribute shown on the card: displayed when `all`/specific markets, hidden when `NA` |
 | **Completeness %** | Slider | ✅ | 0-100%, default 0% |
 | **Description** | Long text | ❌ | Context, need, conclusion (max 500 chars) |
 
@@ -141,7 +141,6 @@
 - Cluster: dropdown (all, or one)
 - Output Type: multi-select
 - Status: checkboxes (New, In Progress, Paused, Closed)
-- Markets: multi-select or search
 - Completeness range: slider (0-100%)
 - Search: text input (stream name)
 

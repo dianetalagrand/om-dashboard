@@ -30,7 +30,7 @@
 | G | Cluster | String | OM Compliance-Evolution | Enum: OM-CE, OM-CC, OM-CE-EFF |
 | H | Output Type | String (CSV) | Business Evolution,Market Expansion | Multi-select, comma-separated — a stream can have more than one Output Type. Enum: see clusters.json |
 | I | Requester | String | Business | Enum: Business, Corporate, OM Governance |
-| J | Markets | String (CSV) | FR,NL,IT,ES | Comma-separated market codes |
+| J | Markets | String (CSV, or `all`/`NA`) | FR,NL,IT,ES | Comma-separated market codes, or `all` (every market) or `NA` (no market dimension). Not a filter — a card attribute, shown when `all`/specific markets, hidden when `NA` |
 | K | Completeness % | Number | 100 | 0-100 |
 | L | Description | String | Designate entity as EU... | Max 500 chars |
 | M | DataControllers | JSON | {FR: "BravoNext S.A."} | JSON: {market: controller_name} |
@@ -92,7 +92,6 @@ GET /exec?...
   ?cluster=OM-CE
   &outputType=Business Evolution,Market Expansion
   &status=New,In Progress
-  &market=FR
   &completeness_min=50
   &completeness_max=100
   &search=invoicing
@@ -189,22 +188,31 @@ POST /exec
 
 This is not a continuous sync: it runs **once**, at project start, to populate the Sheet with the data already collected in the narrative Doc. After the import, the Doc is never read or updated again — every subsequent operation (create/update) happens directly in the app, on the Sheet.
 
+**Real Doc structure** (confirmed 2026-07-28 — not a flat document): the OM Streams Log is a Google Doc using native **tabs**, organized in groups by Status (e.g. PAUSED, DONE), with **one tab per stream** nested under its status group. This means:
+- `Status` is derived from which tab-group a stream sits under — not from a "Status:" paragraph in the text
+- Each stream is its own Doc tab, not a heading within one continuous document
+- The import needs the **Google Docs API's tab-navigation capability** (tabs are a distinct part of the API), not plain paragraph/heading parsing
+
+Each stream tab contains a Category/Description table. Common rows include Context, Need, Legal, DPO, Finance & Tax — plus variable "ancillary" categories added only when the specific stream needs them (e.g. "IT & Platform" for a decommissioning stream), and usually a closing "Conclusion". These sections can each run to several paragraphs — this is a rich narrative, not a short form.
+
+**Decision (confirmed 2026-07-28): this rich content is not replicated into the app.** The Sheet's `Description` column stays a **short, manually-written summary** (as originally designed, ~500 chars) — not an automatic dump of the Doc's Context/Need/Legal/DPO/Finance & Tax sections, which vary too much in length and structure to import reliably. The full detail stays in the Doc; the app links out to it via the existing "Link to OM Log" column, updated to point at the stream's specific tab. For historical streams, Diane (or whoever runs the import) writes a short summary by hand as part of the one-time import prep — there's no reliable way to auto-generate one from content this variable.
+
 **Flow (one-time)**:
-1. Diane finalizes `OM Streams Log.docx` with all existing streams
+1. Diane finalizes `OM Streams Log` with all existing streams (one tab per stream, under its status group), and prepares a short summary per stream for the `Description` column
 2. `importDocToSheet()` is run manually (no scheduled trigger)
-3. Apps Script reads the Doc
-4. Extracts metadata from structured paragraphs
-5. Creates rows in the "OM Catalog" sheet
+3. Apps Script walks the Doc's tabs via the Google Docs API
+4. For each stream tab: derives Status from the tab group, pulls Name/Init/Markets/EndDate, and takes the manually-prepared summary for Description
+5. Creates rows in the "OM Catalog" sheet, with `Link to OM Log` pointing at the specific tab
 6. Import log: success/error
 
-**Metadata extraction** (from the Doc):
-- Heading level 2 → Stream Name
-- Paragraph with "Init:" → Init code
-- Paragraph with "Status:" → Status
-- Paragraph with "Markets:" → Markets (comma-separated)
-- Paragraph with "Context:" → Description
-- "Effective date" field (already present in the Doc for closed streams) → `EndDate` column (only when Status = Closed)
-- Etc.
+**Metadata extraction** (per stream tab):
+- Tab group (PAUSED, DONE, etc.) → Status
+- Tab title → Stream Name
+- "Init:" reference → Init code
+- "Markets:" → Markets (comma-separated, or `all`/`NA`)
+- "Effective date" (present for closed streams) → `EndDate` column (only when Status = Closed)
+- Manually-prepared short summary → Description
+- Tab URL → `Link to OM Log`
 
 **Fallback**: If parsing fails, leave the field as-is (manual edit required, directly in the app)
 
