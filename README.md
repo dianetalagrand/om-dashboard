@@ -16,6 +16,9 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** Merged `README_MVP_PLAN.md` into this file (see Next Steps and Repository Structure below)
 - **NEW:** Fixed clone instructions that pointed to the wrong repo/folder name
 - **NEW:** Language policy: everything in English except `conversations/`, which stays in Italian
+- **NEW:** Editor list stays hardcoded to Diane and Nathan (no config allow-list needed) — access is by absence-cover, not concurrent use, so there's no need to distinguish who made a given change in the log
+- **NEW:** Confirmed the `Requester` field is purely descriptive (labels where the OM engagement came from), no hidden logic
+- **NEW:** Notification strategy toward Value Stream Owners is an open decision (see Next Steps) — internal Slack/Email notifications are unaffected
 
 ## Overview
 
@@ -288,8 +291,9 @@ Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Strea
 
 1. **Nathan Vené approval** — cluster taxonomy and market scope (blocking Sprint 1)
 2. **OKR granularity decision** — Objective-level (4 options) vs. Key Result-level (16 options); asked, awaiting answer
-3. **Reorganize the Google Sheet** — once approved, split it functionally (Manage Streams) × visually (Dashboard/Archive/Market Panel)
-4. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`)
+3. **Notification strategy toward Value Stream Owners** — Diane and Nathan still need to decide if/how notifications extend beyond the internal OM team (not blocking Sprint 1/2)
+4. **Reorganize the Google Sheet** — once approved, split it functionally (Manage Streams) × visually (Dashboard/Archive/Market Panel)
+5. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`)
 
 ---
 
