@@ -32,18 +32,19 @@
 | I | Requester | String | Business | Enum: Business, Corporate, OM Governance |
 | J | Markets | String (CSV, or `all`/`NA`) | FR,NL,IT,ES | Comma-separated market codes, or `all` (every market) or `NA` (no market dimension). Not a filter — a card attribute, shown when `all`/specific markets, hidden when `NA` |
 | K | Completeness % | Number | 100 | 0-100 |
-| L | Description | String | Designate entity as EU... | Max 500 chars |
+| L | Description | String | Designate entity as EU... | Short one-line blurb for the collapsed card. No hard character limit, but kept short by convention — the full narrative lives in `DetailSections` |
 | M | DataControllers | JSON | {FR: "BravoNext S.A."} | JSON: {market: controller_name} |
 | N | MarketAssets | JSON | {FR: {dist_chain_url, ...}} | JSON: {market: {asset_type: url}} |
-| O | Link to OM Log | String | https://docs.google.com/... | Link to the narrative document |
+| O | Link to OM Log | String | https://docs.google.com/... | Link to the stream's specific tab in the OM Streams Log Doc (secondary reference back to source) |
 | P | Created By | String | diane.talagrand@... | Creator email |
 | Q | Created At | Datetime | 2026-07-22T10:24:00 | ISO 8601 |
 | R | Updated By | String | diane.talagrand@... | Last editor email |
 | S | Updated At | Datetime | 2026-07-27T15:30:00 | ISO 8601 |
 | T | Version History | JSON Array | [{user, action, timestamp},...] | Change log (read-only, no restore) |
 | U | End Date | Datetime | 2026-06-26T00:00:00 | Set **only** when Status becomes Closed. Used by Archive to group by year (don't use `UpdatedAt`, which changes on any edit) |
+| V | DetailSections | JSON Array | [{category: "Context", description: "..."}, ...] | Full narrative, copied verbatim from the Doc's Category/Description table. No fixed set of categories (Context, Need, Legal, DPO, Finance & Tax are common; ancillary ones vary per stream) and no length limit. Shown when a stream's card is expanded ("exploded") on the frontend; edited via a structured template (common categories + add-ancillary) on the CREATE/UPDATE form |
 
-**JSON schema (columns M, N, T)**:
+**JSON schema (columns M, N, T, V)**:
 
 ```json
 {
@@ -60,6 +61,36 @@
       "marketArchitecture": "https://docs.google.com/..."
     }
   },
+  "DetailSections": [
+    {
+      "category": "Context",
+      "description": "The cross-analysis aims to identify all the legal and DPO constraints for the decommissioning of the Cruises business..."
+    },
+    {
+      "category": "Need",
+      "description": "- To establish clear rules and guidelines for the management and deletion/retention of data...\n- To define a guideline for similar scenarios..."
+    },
+    {
+      "category": "Legal",
+      "description": "From a contractual standpoint, the team is analysing whether it is possible to early terminate customer contracts with 2027 departures..."
+    },
+    {
+      "category": "DPO",
+      "description": "Data minimisation priority: each department head must risk-assess their data blocks to justify retention under GDPR..."
+    },
+    {
+      "category": "Finance & Tax",
+      "description": "All accounting documents already in Business Central — 10-year retention requirement met, no action needed."
+    },
+    {
+      "category": "IT & Platform",
+      "description": "CRM (VTE) & Supplier Management — Output: the supplier will officially dismiss the entire Cruise architecture..."
+    },
+    {
+      "category": "Conclusion",
+      "description": "The Cruise Tools decommissioning project has finalised its strategy to mitigate security risks and achieve compliance..."
+    }
+  ],
   "VersionHistory": [
     {
       "action": "CREATE",
@@ -195,13 +226,13 @@ This is not a continuous sync: it runs **once**, at project start, to populate t
 
 Each stream tab contains a Category/Description table. Common rows include Context, Need, Legal, DPO, Finance & Tax — plus variable "ancillary" categories added only when the specific stream needs them (e.g. "IT & Platform" for a decommissioning stream), and usually a closing "Conclusion". These sections can each run to several paragraphs — this is a rich narrative, not a short form.
 
-**Decision (confirmed 2026-07-28): this rich content is not replicated into the app.** The Sheet's `Description` column stays a **short, manually-written summary** (as originally designed, ~500 chars) — not an automatic dump of the Doc's Context/Need/Legal/DPO/Finance & Tax sections, which vary too much in length and structure to import reliably. The full detail stays in the Doc; the app links out to it via the existing "Link to OM Log" column, updated to point at the stream's specific tab. For historical streams, Diane (or whoever runs the import) writes a short summary by hand as part of the one-time import prep — there's no reliable way to auto-generate one from content this variable.
+**Decision (corrected 2026-07-28): this content lives in the app, not just in the Doc.** The full Category/Description table is copied — category by category, verbatim — into a new `DetailSections` column (JSON array of `{category, description}`, same pattern as `VersionHistory`: no fixed length, no fixed set of categories, since these vary per stream). This is a mechanical 1:1 extraction, not a summary, so it *can* be automated reliably during import. On the frontend, a stream's card shows the essentials collapsed (Status, Completeness, Markets, Requester, Priority) and **explodes** to show the full `DetailSections` content when opened. On the editing side (Diane/Nathan), the CREATE/UPDATE form offers a structured template with fields for the common categories (Context, Need, Legal, DPO, Finance & Tax) plus the ability to add extra ancillary category rows as needed. `Description` (the existing short field) stays as an optional one-line blurb for quick scanning — it doesn't replace `DetailSections`, it's the short version next to the full one. `Link to OM Log` still points at the stream's Doc tab, kept as a secondary reference back to the original source.
 
 **Flow (one-time)**:
-1. Diane finalizes `OM Streams Log` with all existing streams (one tab per stream, under its status group), and prepares a short summary per stream for the `Description` column
+1. Diane finalizes `OM Streams Log` with all existing streams (one tab per stream, under its status group)
 2. `importDocToSheet()` is run manually (no scheduled trigger)
 3. Apps Script walks the Doc's tabs via the Google Docs API
-4. For each stream tab: derives Status from the tab group, pulls Name/Init/Markets/EndDate, and takes the manually-prepared summary for Description
+4. For each stream tab: derives Status from the tab group, pulls Name/Init/Markets/EndDate, and copies every Category/Description row into `DetailSections`
 5. Creates rows in the "OM Catalog" sheet, with `Link to OM Log` pointing at the specific tab
 6. Import log: success/error
 
@@ -211,7 +242,7 @@ Each stream tab contains a Category/Description table. Common rows include Conte
 - "Init:" reference → Init code
 - "Markets:" → Markets (comma-separated, or `all`/`NA`)
 - "Effective date" (present for closed streams) → `EndDate` column (only when Status = Closed)
-- Manually-prepared short summary → Description
+- Every Category/Description row → `DetailSections` (JSON array, verbatim)
 - Tab URL → `Link to OM Log`
 
 **Fallback**: If parsing fails, leave the field as-is (manual edit required, directly in the app)

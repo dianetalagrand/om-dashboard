@@ -64,6 +64,7 @@
 
 **Functionality**:
 - **Select & Edit**: Click a stream card → side panel with edit form
+- **Structured detail template**: the form includes fields for the common categories (Context, Need, Legal, DPO, Finance & Tax) plus the ability to add extra ancillary category rows — this is `DetailSections`, see `ARCHITECTURE.md`
 - **Mutable fields**: All except `ID` (immutable)
 - **Version history**: Shows who changed what and when (read-only — no "restore to previous version": a small fixed set of editors, no version conflicts to manage)
 - **Notifications**: Alert the team if:
@@ -145,10 +146,8 @@
 - Search: text input (stream name)
 
 **Shows**:
-- One card per stream
-- Status badge (color-coded)
-- Completeness bar
-- Key info: Markets, Requester, Priority
+- One card per stream, collapsed by default with the essentials (Status badge, Completeness bar, Markets, Requester, Priority)
+- **Explode on open**: clicking a card expands it to show the full `DetailSections` narrative (Context, Need, Legal, DPO, Finance & Tax, plus any ancillary categories)
 
 ---
 
