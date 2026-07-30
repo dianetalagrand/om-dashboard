@@ -7,7 +7,7 @@
 **Backend (MVP)**: Google Apps Script + Google Sheet
 **Frontend (MVP)**: HTML/JS (vanilla, no framework — MVP lean)
 **Data Source (MVP)**: OM Streams Log (Google Doc) → OM Catalog (Google Sheet) — the Doc is imported **once** to bootstrap the Sheet; after that, the Doc is never read or updated again. All ongoing operations happen in the app.
-**Access (MVP)**: No login. Read access is open to anyone on the lastminute.com network; create/update is reserved to Diane via a separate, simpler access path (not exposed in the public UI).
+**Access (MVP)**: No login. Read access is open to anyone on the lastminute.com network; create/update is reserved to Diane and Nathan via a separate, simpler access path (not exposed in the public UI).
 
 **Real app backend**: TBD — a real framework + real database, not Apps Script. See "Real App Deployment Requirements" below.
 
@@ -15,35 +15,36 @@
 
 ## Data Model
 
-### Google Sheet: "OM Catalog" (OM Catalog)
+### Google Sheet: "OM Catalog"
 
-**Colonne**:
+**Columns**:
 
-| # | Nome | Tipo | Esempio | Note |
+| # | Name | Type | Example | Notes |
 |---|------|------|---------|------|
 | A | ID | String | OMG-7 | Immutable, unique |
 | B | Name | String | Acquiring Service Evolution | |
-| C | Init | String | LEG-891067 | Optional (null se no INIT) |
+| C | Init | String (Jira reference) | LEG-891067 | Optional (null if no INIT). A link to the corresponding Jira ticket, like the OKR bridge and today's OM digest — not free text |
 | D | Status | String | Closed | Enum: New, In Progress, Paused, Closed |
 | E | Priority | String | Urgent | Enum: Urgent, Normal |
-| F | Strategic Pillar | String | Governance & Compliance | (vedi config) |
+| F | Strategic Pillar | String | Governance & Compliance | **Derived** from Cluster (fixed mapping in `config/clusters.json`), not entered independently — the two fields overlapped, so only Cluster is picked manually |
 | G | Cluster | String | OM Compliance-Evolution | Enum: OM-CE, OM-CC, OM-CE-EFF |
-| H | Output Type | String | Business Evolution | Enum: vedi clusters.json |
+| H | Output Type | String (CSV) | Business Evolution,Market Expansion | Multi-select, comma-separated — a stream can have more than one Output Type. Enum: see clusters.json |
 | I | Requester | String | Business | Enum: Business, Corporate, OM Governance |
-| J | Markets | String (CSV) | FR,NL,IT,ES | Comma-separated market codes |
+| J | Markets | String (CSV, or `all`/`NA`) | FR,NL,IT,ES | Comma-separated market codes, or `all` (every market) or `NA` (no market dimension). Not a filter — a card attribute, shown when `all`/specific markets, hidden when `NA` |
 | K | Completeness % | Number | 100 | 0-100 |
-| L | Description | String | Designate entity as EU... | Max 500 chars |
+| L | Description | String | Designate entity as EU... | Short one-line blurb for the collapsed card. No hard character limit, but kept short by convention — the full narrative lives in `DetailSections` |
 | M | DataControllers | JSON | {FR: "BravoNext S.A."} | JSON: {market: controller_name} |
 | N | MarketAssets | JSON | {FR: {dist_chain_url, ...}} | JSON: {market: {asset_type: url}} |
-| O | Link to OM Log | String | https://docs.google.com/... | Link al documento narrativo |
-| P | Created By | String | diane.talagrand@... | Email creator |
+| O | Link to OM Log | String | https://docs.google.com/... | Link to the stream's specific tab in the OM Streams Log Doc (secondary reference back to source) |
+| P | Created By | String | diane.talagrand@... | Creator email |
 | Q | Created At | Datetime | 2026-07-22T10:24:00 | ISO 8601 |
-| R | Updated By | String | diane.talagrand@... | Email last editor |
+| R | Updated By | String | diane.talagrand@... | Last editor email |
 | S | Updated At | Datetime | 2026-07-27T15:30:00 | ISO 8601 |
-| T | Version History | JSON Array | [{user, action, timestamp},...] | Change log (sola lettura, no restore) |
-| U | End Date | Datetime | 2026-06-26T00:00:00 | Valorizzato **solo** quando Status passa a Closed. Usato da Archive per raggruppare per anno (non usare `UpdatedAt`, che cambia per qualsiasi modifica) |
+| T | Version History | JSON Array | [{user, action, timestamp},...] | Change log (read-only, no restore) |
+| U | End Date | Datetime | 2026-06-26T00:00:00 | Set **only** when Status becomes Closed. Used by Archive to group by year (don't use `UpdatedAt`, which changes on any edit) |
+| V | DetailSections | JSON Array | [{category: "Context", description: "..."}, ...] | Full narrative, copied verbatim from the Doc's Category/Description table. No fixed set of categories (Context, Need, Legal, DPO, Finance & Tax are common; ancillary ones vary per stream) and no length limit. Shown when a stream's card is expanded ("exploded") on the frontend; edited via a structured template (common categories + add-ancillary) on the CREATE/UPDATE form |
 
-**Schema JSON (per colonne M, N, T)**:
+**JSON schema (columns M, N, T, V)**:
 
 ```json
 {
@@ -60,6 +61,36 @@
       "marketArchitecture": "https://docs.google.com/..."
     }
   },
+  "DetailSections": [
+    {
+      "category": "Context",
+      "description": "The cross-analysis aims to identify all the legal and DPO constraints for the decommissioning of the Cruises business..."
+    },
+    {
+      "category": "Need",
+      "description": "- To establish clear rules and guidelines for the management and deletion/retention of data...\n- To define a guideline for similar scenarios..."
+    },
+    {
+      "category": "Legal",
+      "description": "From a contractual standpoint, the team is analysing whether it is possible to early terminate customer contracts with 2027 departures..."
+    },
+    {
+      "category": "DPO",
+      "description": "Data minimisation priority: each department head must risk-assess their data blocks to justify retention under GDPR..."
+    },
+    {
+      "category": "Finance & Tax",
+      "description": "All accounting documents already in Business Central — 10-year retention requirement met, no action needed."
+    },
+    {
+      "category": "IT & Platform",
+      "description": "CRM (VTE) & Supplier Management — Output: the supplier will officially dismiss the entire Cruise architecture..."
+    },
+    {
+      "category": "Conclusion",
+      "description": "The Cruise Tools decommissioning project has finalised its strategy to mitigate security risks and achieve compliance..."
+    }
+  ],
   "VersionHistory": [
     {
       "action": "CREATE",
@@ -90,9 +121,8 @@
 ```
 GET /exec?...
   ?cluster=OM-CE
-  &outputType=Business Evolution
+  &outputType=Business Evolution,Market Expansion
   &status=New,In Progress
-  &market=FR
   &completeness_min=50
   &completeness_max=100
   &search=invoicing
@@ -112,7 +142,7 @@ GET /exec?...
       "status": "In Progress",
       "priority": "Urgent",
       "cluster": "OM-CE",
-      "outputType": "Business Evolution",
+      "outputTypes": ["Business Evolution", "Market Expansion"],
       "markets": ["PT", "ES", "FR"],
       "completeness": 75,
       "dataControllers": {"PT": "LMNext PT"},
@@ -123,7 +153,9 @@ GET /exec?...
 }
 ```
 
-### doPost(e) — Create/Update/Delete stream
+### doPost(e) — Create/Update stream
+
+Streams are never deleted — they transition through statuses (New, In Progress, Paused) and end at Closed if they become obsolete or are done. There's no DELETE action.
 
 **Request (CREATE)**:
 ```json
@@ -131,11 +163,11 @@ POST /exec
 {
   "action": "CREATE",
   "data": {
-    "name": "Nuova attività",
+    "name": "New activity",
     "init": null,
     "status": "New",
     "cluster": "OM-CC",
-    "outputType": "Corporate Compliance",
+    "outputTypes": ["Corporate Compliance"],
     "markets": ["FR", "IT"],
     "completeness": 0
   }
@@ -147,7 +179,7 @@ POST /exec
 {
   "success": true,
   "id": "OMG-999",
-  "message": "Stream creato con successo"
+  "message": "Stream created successfully"
 }
 ```
 
@@ -168,7 +200,7 @@ POST /exec
 ```json
 {
   "success": true,
-  "message": "Stream aggiornato",
+  "message": "Stream updated",
   "versionLog": {
     "user": "diane@...",
     "timestamp": "2026-07-27T16:00:00",
@@ -183,62 +215,72 @@ POST /exec
 
 ---
 
-## Import: Google Doc (OM Streams Log) → Google Sheet (una tantum)
+## Import: Google Doc (OM Streams Log) → Google Sheet (one-time)
 
-Questo non è un sync continuo: gira **una sola volta**, a inizio progetto, per popolare lo Sheet con i dati già raccolti nel Doc narrativo. Dopo l'import, il Doc non viene più letto né aggiornato — ogni operazione successiva (create/update) avviene direttamente in app, sullo Sheet.
+This is not a continuous sync: it runs **once**, at project start, to populate the Sheet with the data already collected in the narrative Doc. After the import, the Doc is never read or updated again — every subsequent operation (create/update) happens directly in the app, on the Sheet.
 
-**Flow (una tantum)**:
-1. Diane finalizza `OM Streams Log.docx` con tutti gli stream esistenti
-2. Si esegue manualmente `importDocToSheet()` (nessun trigger schedulato)
-3. Apps Script legge il Doc
-4. Estrae metadata dai paragrafi strutturati
-5. Crea righe in "OM Catalog" sheet
-6. Log di import: success/error
+**Real Doc structure** (confirmed 2026-07-28 — not a flat document): the OM Streams Log is a Google Doc using native **tabs**, organized in groups by Status (e.g. PAUSED, DONE), with **one tab per stream** nested under its status group. This means:
+- `Status` is derived from which tab-group a stream sits under — not from a "Status:" paragraph in the text
+- Each stream is its own Doc tab, not a heading within one continuous document
+- The import needs the **Google Docs API's tab-navigation capability** (tabs are a distinct part of the API), not plain paragraph/heading parsing
 
-**Metadata extraction** (da Doc):
-- Heading level 2 → Stream Name
-- Paragrafo con "Init:" → Init code
-- Paragrafo con "Status:" → Status
-- Paragrafo con "Markets:" → Markets (comma-separated)
-- Paragrafo con "Context:" → Description
-- Etc.
+Each stream tab contains a Category/Description table. Common rows include Context, Need, Legal, DPO, Finance & Tax — plus variable "ancillary" categories added only when the specific stream needs them (e.g. "IT & Platform" for a decommissioning stream), and usually a closing "Conclusion". These sections can each run to several paragraphs — this is a rich narrative, not a short form.
 
-**Fallback**: Se parsing fallisce, lascia il campo come è (manual edit richiesto, direttamente in app)
+**Decision (corrected 2026-07-28): this content lives in the app, not just in the Doc.** The full Category/Description table is copied — category by category, verbatim — into a new `DetailSections` column (JSON array of `{category, description}`, same pattern as `VersionHistory`: no fixed length, no fixed set of categories, since these vary per stream). This is a mechanical 1:1 extraction, not a summary, so it *can* be automated reliably during import. On the frontend, a stream's card shows the essentials collapsed (Status, Completeness, Markets, Requester, Priority) and **explodes** to show the full `DetailSections` content when opened. On the editing side (Diane/Nathan), the CREATE/UPDATE form offers a structured template with fields for the common categories (Context, Need, Legal, DPO, Finance & Tax) plus the ability to add extra ancillary category rows as needed. `Description` (the existing short field) stays as an optional one-line blurb for quick scanning — it doesn't replace `DetailSections`, it's the short version next to the full one. `Link to OM Log` still points at the stream's Doc tab, kept as a secondary reference back to the original source.
+
+**Flow (one-time)**:
+1. Diane finalizes `OM Streams Log` with all existing streams (one tab per stream, under its status group)
+2. `importDocToSheet()` is run manually (no scheduled trigger)
+3. Apps Script walks the Doc's tabs via the Google Docs API
+4. For each stream tab: derives Status from the tab group, pulls Name/Init/Markets/EndDate, and copies every Category/Description row into `DetailSections`
+5. Creates rows in the "OM Catalog" sheet, with `Link to OM Log` pointing at the specific tab
+6. Import log: success/error
+
+**Metadata extraction** (per stream tab):
+- Tab group (PAUSED, DONE, etc.) → Status
+- Tab title → Stream Name
+- "Init:" reference → Init code
+- "Markets:" → Markets (comma-separated, or `all`/`NA`)
+- "Effective date" (present for closed streams) → `EndDate` column (only when Status = Closed)
+- Every Category/Description row → `DetailSections` (JSON array, verbatim)
+- Tab URL → `Link to OM Log`
+
+**Fallback**: If parsing fails, leave the field as-is (manual edit required, directly in the app)
 
 ---
 
 ## Access (no login)
 
-Niente autenticazione, niente ruoli multipli. Motivo: nessun dato sensibile nell'app, priorità a restare facilmente accessibile.
+No authentication, no multiple roles. Reason: no sensitive data in the app, priority on staying easy to access.
 
 ```
-User opens /index.html (da rete lastminute.com)
+User opens /index.html (from the lastminute.com network)
   ↓
-Dashboard visibile subito, in sola lettura — nessun redirect, nessun login
+Dashboard visible immediately, read-only — no redirect, no login
 ```
 
-**Editing (solo Diane)**:
+**Editing (Diane and Nathan only)**:
 ```
-Diane apre l'app tramite il suo accesso separato
+Diane or Nathan opens the app through their separate access
   ↓
-UI di editing (create/update) visibile solo lì — non esposta nella vista pubblica
+The editing UI (create/update) is visible only there — not exposed in the public view
   ↓
-POST a doPost() come sempre
+POST to doPost() as usual
 ```
 
-Il meccanismo esatto dell'accesso separato di Diane (es. URL/parametro riservato, o altro) è da definire in Sprint 1 — non è un sistema di login/sessione, solo un modo per non esporre i controlli di editing a chiunque altro.
+The exact mechanism for Diane and Nathan's separate access (e.g. a private URL/parameter, or something else) is to be defined in Sprint 1 — it's not a login/session system, just a way to avoid exposing editing controls to anyone else.
 
 ---
 
 ## Notifications
 
 **Trigger events**:
-1. `status_change`: Status cambiato (New → In Progress, etc.)
-2. `completeness_jump`: Completeness cambiato >20%
+1. `status_change`: Status changed (New → In Progress, etc.)
+2. `completeness_jump`: Completeness changed by >20%
 
 **Channels**:
 - Slack: #om-governance-updates
-- Email: OM Team (config in sheet "Settings")
+- Email: OM Team (configured in the "Settings" sheet)
 - In-app: Toast notification
 
 **Message template**:
@@ -256,33 +298,33 @@ See more: [link to catalog]
 
 **Stored in**: Column T (VersionHistory, JSON array)
 
-**Workflow (sola lettura)**:
-1. User clicks "[HISTORY]" on card
-2. Panel mostra list di versioni (chi, quando, cosa)
+**Workflow (read-only)**:
+1. User clicks "[HISTORY]" on a card
+2. Panel shows a list of versions (who, when, what)
 
-Niente restore/rollback: editor unico (Diane), non serve gestire conflitti tra versioni.
+No restore/rollback: a small fixed set of editors (Diane and Nathan), no version conflicts to manage.
 
 ---
 
 ## Performance & Constraints
 
-- **Sheet row limit**: 1,000 rows (MVP scope). Alert se >80%
-- **Query latency**: <2sec per fetch (Google Sheets API è lento; consider caching)
-- **Import Doc → Sheet**: una tantum, non ricorrente
-- **Concurrent edits**: editor unico (Diane), rischio di conflitto minimo; nessuna gestione dedicata necessaria in MVP
+- **Sheet row limit**: 1,000 rows (MVP scope). Alert if >80%
+- **Query latency**: <2sec per fetch (the Google Sheets API is slow; consider caching)
+- **Import Doc → Sheet**: one-time, not recurring
+- **Concurrent edits**: a small fixed set of editors, low conflict risk; no dedicated handling needed in the MVP
 
 ---
 
 ## Security
 
-- **HTTPS only**: deployed su Apps Script HTTPS domain
-- **Network restriction**: raggiungibile solo dalla rete lastminute.com (nessun login utente)
-- **CORS**: Abilitato solo per lastminute.com domain
-- **CSRF**: Token-based (set in form hidden field)
+- **HTTPS only**: deployed on the Apps Script HTTPS domain
+- **Network restriction**: reachable only from the lastminute.com network (no user login)
+- **CORS**: enabled only for the lastminute.com domain
+- **CSRF**: token-based (set in a hidden form field)
 - **SQL injection**: N/A (Google Sheet API, not SQL)
-- **XSS**: Template sanitization + CSP header
-- **Editing**: riservato a Diane tramite accesso separato, non esposto nella vista pubblica
-- **Change log**: Ogni modifica loggata con timestamp (editor unico)
+- **XSS**: template sanitization + CSP header
+- **Editing**: reserved to Diane and Nathan via separate access, not exposed in the public view
+- **Change log**: every change logged with a timestamp
 
 ---
 
@@ -290,13 +332,13 @@ Niente restore/rollback: editor unico (Diane), non serve gestire conflitti tra v
 
 **Hosting (MVP)**: Google Apps Script (free tier)
 **URL (MVP)**: `https://script.google.com/macros/d/{DEPLOYMENT_ID}/usercontent/`
-**Custom domain** (optional): Via Apps Script → Deploy → New deployment
+**Custom domain** (optional): via Apps Script → Deploy → New deployment
 
 **Versioning**:
-- Version 1: MVP (CREARE, AGGIORNARE, Dashboard, Market panel FR, no login) — Apps Script + Sheet/Doc as bootstrap database
-- Version 2: Archive tab, notifiche, market panel per il resto del Tier 1 (IT, ES, UK, DE)
+- Version 1: MVP (CREATE, UPDATE, Dashboard, Market panel FR, no login) — Apps Script + Sheet/Doc as bootstrap database
+- Version 2: Archive tab, notifications, market panel for the rest of Tier 1 (IT, ES, UK, DE)
 - Version 3: Advanced filtering, export, Tier 2 markets
-- **Real app (post-MVP)**: Retire Apps Script and the OM Log Doc/OM Catalog Sheet; the app becomes the single OM management center
+- **Real app (post-MVP)**: retire Apps Script and the OM Log Doc/OM Catalog Sheet; the app becomes the single OM management center
 
 ### Real App Deployment Requirements
 
@@ -307,7 +349,7 @@ Because the real app replaces the OM Log Doc / OM Catalog Sheet outright (not ju
 - A hosting/cloud environment (company's existing cloud infra — TBD)
 - A CI/CD pipeline (build → test → deploy on merge to `main`)
 - Environment/secrets management (DB credentials, API keys) — not hardcoded
-- Network-level access restriction (lastminute.com network only) — no user login; editing stays Diane-only via a separate, simpler access path
+- Network-level access restriction (lastminute.com network only) — no user login; editing stays reserved to Diane and Nathan via a separate, simpler access path
 - A custom domain + TLS certificate
 - Monitoring, logging, and alerting
 - A backup & rollback strategy (previous build/image, DB migration rollback)
@@ -316,13 +358,13 @@ Because the real app replaces the OM Log Doc / OM Catalog Sheet outright (not ju
 
 ## Testing Checklist
 
-- [ ] CREARE stream: validazione, storage, ID auto-generate
-- [ ] AGGIORNARE stream: edit, version history (sola lettura)
-- [ ] Accesso: lettura libera senza login, editing accessibile solo a Diane
+- [ ] CREATE stream: validation, storage, ID auto-generate
+- [ ] UPDATE stream: edit, version history (read-only)
+- [ ] Access: open read access with no login, editing accessible only to Diane and Nathan
 - [ ] Filtering: cluster, output type, status, markets, completeness
 - [ ] Market panel: FR details load, images render, links work
 - [ ] Archive: closed items per year (via EndDate), correct counts
-- [ ] Import: Doc → Sheet una tantum completato correttamente
-- [ ] Notifiche: Slack/Email inviati on status change + completeness >20%
+- [ ] Import: one-time Doc → Sheet import completes correctly
+- [ ] Notifications: Slack/Email sent on status change + completeness >20%
 - [ ] Performance: <2sec query latency
 - [ ] Security: HTTPS, CORS, no XSS, network restriction, change log

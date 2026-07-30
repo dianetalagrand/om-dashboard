@@ -1,15 +1,15 @@
-# OKR Reference — materiale per il bridge OKR ↔ OM Stream
+# OKR Reference — material for the OKR ↔ OM Stream bridge
 
-Materiale di riferimento per collegare gli stream OM agli OKR aziendali (vedi decisione in [conversations/2026-07-28-mvp-planning-recap.md](../conversations/2026-07-28-mvp-planning-recap.md) e discussione funzionale in corso).
+Reference material for linking OM streams to company OKRs (see the decision log in [conversations/2026-07-28-mvp-planning-recap.md](../conversations/2026-07-28-mvp-planning-recap.md) and the ongoing functional discussion).
 
-## Come funziona la gestione OKR in azienda (da conversazione con Diane)
+## How OKR management works at the company (from conversation with Diane)
 
-- **Fonte di verità**: Google Sheet condivisi (es. "Company OKRs_H2_2025"), non un tool dedicato.
-- **Collegamento a Jira**: le iniziative operative in Jira referenziano l'OKR con un campo tipo "Principale: OKR-164" nel ticket.
-- **ID OKR**: formato `OKR-XXX`, con link diretto al ticket Jira corrispondente (vedi screenshot fornito da Diane — colonna "Jira ID").
-- Diane userà questi ID come ponte: un campo nello stream OM che referenzia l'OKR aziendale rilevante, più un campo libero per descrivere l'output specifico creato per il business (da popolare più avanti, lista non ancora esistente).
+- **Source of truth**: shared Google Sheets (e.g. "Company OKRs_H2_2025"), not a dedicated tool.
+- **Jira link**: operational initiatives in Jira reference the OKR via a field like "Principale: OKR-164" in the ticket.
+- **OKR ID**: format `OKR-XXX`, with a direct link to the corresponding Jira ticket (see the screenshot Diane provided — "Jira ID" column).
+- Diane will use these IDs as the bridge: a field on the OM stream referencing the relevant company OKR, plus a free-text field describing the specific output created for the business (to be populated later — the list doesn't exist yet).
 
-### Esempio di righe viste nello Sheet (screenshot, 5 di N righe)
+### Example rows seen in the Sheet (screenshot, 5 of N rows)
 
 | Id | Jira ID | Objective |
 |----|---------|-----------|
@@ -19,11 +19,11 @@ Materiale di riferimento per collegare gli stream OM agli OKR aziendali (vedi de
 | 4 | OKR-164 | Scale more efficiently and increase our productivity |
 | 5 | OKR-165 | Grow our footprint in key markets |
 
-> Nota: questa lista (H2 2025?) non coincide testualmente con gli Objective 2026 qui sotto — sono presi da fonti/periodi diversi. Da chiarire quale sia la lista attuale/valida da usare come dropdown nello stream OM.
+> Note: this list (H2 2025?) doesn't textually match the 2026 Objectives below — they come from different sources/periods. Still to clarify which is the current/valid list to use as the dropdown on the OM stream.
 
-## 2026 Annual Company Objectives (da "SAW May 2026 - Company OKRs")
+## 2026 Annual Company Objectives (from "SAW May 2026 - Company OKRs")
 
-Fonte: [Google Slides — SAW May 2026 - Company OKRs](https://docs.google.com/presentation/d/1aB8-EJlmcvJ7V7HAUsrcdLSbxpNALeaiT-lwGdjM4hw/edit), letto il 28 luglio 2026.
+Source: [Google Slides — SAW May 2026 - Company OKRs](https://docs.google.com/presentation/d/1aB8-EJlmcvJ7V7HAUsrcdLSbxpNALeaiT-lwGdjM4hw/edit), read on 28 July 2026.
 
 ### GROWTH — Increase market share and volumes responsibly
 - KR1: Increase the share of DP bookings from directly-contracted supply from 36% to 50%
@@ -47,8 +47,8 @@ Fonte: [Google Slides — SAW May 2026 - Company OKRs](https://docs.google.com/p
 - KR3: Keep "Senior Leadership Index" within ±10% of Group average (Jan 2027 Pulse Check)
 - KR4: Keep EMEA remote/office connection score within ±10% of HQ result (Jan 2027 Pulse Check)
 
-## Domande aperte per il design dello stream OM
+## Open questions for the OM stream design
 
-1. Quale lista OKR è quella da usare nel dropdown dello stream — questa (2026 Annual, 4 objective/16 KR) o quella con ID `OKR-16X` (Sheet H2 2025, non ancora letto in full)?
-2. Il collegamento è a livello di **Objective** (Growth/Customer/Efficiency/People — 4 opzioni) o di singolo **Key Result** (16 opzioni, più granulare ma cambia ogni ciclo)?
-3. Chi aggiorna questa lista quando cambia ciclo OKR (es. H1→H2)? Serve un processo per tenerla sincronizzata in `config/`.
+1. Which OKR list should be used in the stream's dropdown — this one (2026 Annual, 4 objectives/16 KRs) or the one with `OKR-16X` IDs (H2 2025 Sheet, not yet read in full)?
+2. Is the link at the **Objective** level (Growth/Customer/Efficiency/People — 4 options) or the individual **Key Result** level (16 options, more granular but changes every cycle)? — **Asked Nathan, awaiting his answer.**
+3. Who updates this list when the OKR cycle changes (e.g. H1→H2)? Needs a process to keep it in sync in `config/`.

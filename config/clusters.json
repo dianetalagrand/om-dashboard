@@ -14,7 +14,9 @@
         "Business Evolution",
         "Market Expansion"
       ],
+      "strategicPillar": "Expansion & Growth",
       "hasInit": true,
+      "initCodeType": "jira-reference",
       "driverType": "external_strategic",
       "color": "#2ABEB9",
       "icon": "🚀"
@@ -33,6 +35,7 @@
         "Corporate Compliance",
         "Business Continuity"
       ],
+      "strategicPillar": "OM Governance & Compliance",
       "hasInit": false,
       "driverType": "external_compliance",
       "color": "#F2007D",
@@ -52,6 +55,7 @@
         "Operational Efficiency",
         "Cost Optimization"
       ],
+      "strategicPillar": "Cost Optimisation",
       "hasInit": false,
       "driverType": "internal_operational",
       "color": "#4a86e8",

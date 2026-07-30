@@ -7,13 +7,27 @@
 This is the **single README** for the project (merged with the former `README_MVP_PLAN.md` on 28 July 2026, to stop the two from drifting out of sync). Each update logs what changed here — **NEW** marks content that's new or just revised; it gets cleared on the next update once it's no longer "new."
 
 **28 July 2026**:
-- **NEW:** No login: read access open on the lastminute.com network, editing reserved to Diane
-- **NEW:** Removed Rollback — Version History is now read-only (single editor, no version conflicts to recover from)
+- **NEW:** No login: read access open on the lastminute.com network, editing reserved to Diane and Nathan
+- **NEW:** Removed Rollback — Version History is now read-only (a small fixed set of editors, no version conflicts to recover from)
 - **NEW:** Doc → Sheet import is one-time (bootstrap only), not a continuous daily sync
 - **NEW:** Added `EndDate` field so Archive groups correctly by closing year
 - **NEW:** Roadmap phases reordered by market Tier (1 → 2 → 3) instead of mixed calendar phases
 - **NEW:** Fixed the GitHub Pages CI failure (broken submodule references from `wu-station`/`wu-station-add-diane-card`)
 - **NEW:** Merged `README_MVP_PLAN.md` into this file (see Next Steps and Repository Structure below)
+- **NEW:** Fixed clone instructions that pointed to the wrong repo/folder name
+- **NEW:** Language policy: everything in English except `conversations/`, which stays in Italian
+- **NEW:** Editor list stays hardcoded to Diane and Nathan (no config allow-list needed) — access is by absence-cover, not concurrent use, so there's no need to distinguish who made a given change in the log
+- **NEW:** Confirmed the `Requester` field is purely descriptive (labels where the OM engagement came from), no hidden logic
+- **NEW:** Notification strategy toward Value Stream Owners is an open decision (see Next Steps) — internal Slack/Email notifications are unaffected
+- **NEW:** Removed Delete entirely — streams are never deleted, only transitioned to Closed when obsolete or done
+- **NEW:** `Init Code` is a Jira reference/link (like the OKR bridge and today's OM digest), not free text
+- **NEW:** `Strategic Pillar` is now derived automatically from `Cluster` (fixed mapping in `config/clusters.json`) instead of being picked separately — the two fields overlapped and risked inconsistent combinations
+- **NEW:** Import maps the Doc's existing "Effective date" field to `EndDate` for closed streams — no historical data gap
+- **NEW:** `Output Type` is multi-select — a stream can have more than one
+- **NEW:** The OM Streams Log Doc actually uses Google Docs tabs (grouped by Status, one tab per stream), not a flat document — the import needs the Docs API's tab-navigation, and Status is derived from the tab group
+- **NEW:** `Description` stays a short manual summary; the Doc's rich Context/Need/Legal/DPO/Finance & Tax content stays in the Doc, linked via `Link to OM Log` (now pointing at the specific tab) rather than replicated in the app
+- **NEW:** `Markets` supports `all` and `NA` in addition to specific country codes, and is **not a dashboard filter** — it's a card attribute only, shown when `all`/specific, hidden when `NA`
+- **NEW:** Correction — the Doc's full Context/Need/Legal/DPO/Finance & Tax narrative lives **in the app** (new `DetailSections` field), not just linked out to the Doc. Cards "explode" to show it; the edit form offers a structured template for it
 
 ## Overview
 
@@ -50,7 +64,7 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ✅ **Create Streams** — Add new OM activities with structured metadata  
 ✅ **Update Streams** — Edit + track changes (version history, read-only)  
-✅ **Open Access** — No login required; read access is open on the lastminute.com network. Editing is Diane-only  
+✅ **Open Access** — No login required; read access is open on the lastminute.com network. Editing is reserved to Diane and Nathan  
 
 ### Visualization
 
@@ -71,7 +85,7 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 ### Prerequisites
 
 - Access to the lastminute.com network (no login/account needed to view)
-- Google Drive access (Diane only, for the one-time Doc/Sheet import)
+- Google Drive access (Diane, for the one-time Doc/Sheet import)
 
 ### Installation
 
@@ -129,7 +143,7 @@ Since the target is a real, standalone management app — not a Google Workspace
 - A hosting/cloud environment (e.g., the company's existing Azure/AWS/GCP setup — TBD)
 - A CI/CD pipeline (build → test → deploy on merge to main)
 - Environment & secrets management (DB credentials, API keys) — not hardcoded in the repo
-- Network-level access restriction (reachable only from the lastminute.com network) — no user login; editing stays reserved to Diane through a separate, simpler access path (not exposed in the public UI)
+- Network-level access restriction (reachable only from the lastminute.com network) — no user login; editing stays reserved to Diane and Nathan through a separate, simpler access path (not exposed in the public UI)
 - A custom domain + TLS certificate
 - Monitoring, logging, and alerting (uptime, errors)
 - A backup & rollback strategy (previous build/image, DB migration rollback)
@@ -286,8 +300,9 @@ Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Strea
 
 1. **Nathan Vené approval** — cluster taxonomy and market scope (blocking Sprint 1)
 2. **OKR granularity decision** — Objective-level (4 options) vs. Key Result-level (16 options); asked, awaiting answer
-3. **Reorganize the Google Sheet** — once approved, split it functionally (Manage Streams) × visually (Dashboard/Archive/Market Panel)
-4. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`)
+3. **Notification strategy toward Value Stream Owners** — Diane and Nathan still need to decide if/how notifications extend beyond the internal OM team (not blocking Sprint 1/2)
+4. **Reorganize the Google Sheet** — once approved, split it functionally (Manage Streams) × visually (Dashboard/Archive/Market Panel)
+5. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`)
 
 ---
 
@@ -295,7 +310,7 @@ Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Strea
 
 ### Phase 1 (Aug 2026) — MVP Launch
 - ✅ Create/update streams + version history
-- ✅ Open access (no login), editing Diane-only
+- ✅ Open access (no login), editing reserved to Diane and Nathan
 - ✅ 3D dashboard view
 - ✅ FR market details panel (Tier 1)
 - ✅ Archive tab
@@ -355,7 +370,7 @@ A: Yes — use the Cluster dropdown to select one, or leave blank to see all.
 A: Switch to the Archive tab to see closed activities per year.
 
 **Q: Can Value Stream Owners edit streams?**  
-A: No — the app is read-only for everyone on the lastminute.com network. Only Diane can create/edit, through a separate access path.
+A: No — the app is read-only for everyone on the lastminute.com network. Only Diane and Nathan can create/edit, through a separate access path.
 
 ---
 
