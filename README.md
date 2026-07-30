@@ -27,6 +27,7 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** The OM Streams Log Doc actually uses Google Docs tabs (grouped by Status, one tab per stream), not a flat document — the import needs the Docs API's tab-navigation, and Status is derived from the tab group
 - **NEW:** `Description` stays a short manual summary; the Doc's rich Context/Need/Legal/DPO/Finance & Tax content stays in the Doc, linked via `Link to OM Log` (now pointing at the specific tab) rather than replicated in the app
 - **NEW:** `Markets` supports `all` and `NA` in addition to specific country codes, and is **not a dashboard filter** — it's a card attribute only, shown when `all`/specific, hidden when `NA`
+- **NEW:** Correction — the Doc's full Context/Need/Legal/DPO/Finance & Tax narrative lives **in the app** (new `DetailSections` field), not just linked out to the Doc. Cards "explode" to show it; the edit form offers a structured template for it
 
 ## Overview
 
