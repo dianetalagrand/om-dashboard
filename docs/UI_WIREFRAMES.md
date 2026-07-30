@@ -83,7 +83,8 @@
 │ [_________________ "INIT-997"]                                 │
 │                                                                │
 │ Cluster *                [OM Compliance-Evolution ▼]          │
-│ Output Type *            [Business Evolution ▼]               │
+│ Output Type * (multi-select)                                   │
+│ [✓] Business Evolution  [ ] Market Expansion                   │
 │ Status *                 [New ▼]                              │
 │ Priority *               [Urgent ▼]                           │
 │                                                                │

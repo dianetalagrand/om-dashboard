@@ -22,6 +22,8 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** Removed Delete entirely — streams are never deleted, only transitioned to Closed when obsolete or done
 - **NEW:** `Init Code` is a Jira reference/link (like the OKR bridge and today's OM digest), not free text
 - **NEW:** `Strategic Pillar` is now derived automatically from `Cluster` (fixed mapping in `config/clusters.json`) instead of being picked separately — the two fields overlapped and risked inconsistent combinations
+- **NEW:** Import maps the Doc's existing "Effective date" field to `EndDate` for closed streams — no historical data gap
+- **NEW:** `Output Type` is multi-select — a stream can have more than one
 
 ## Overview
 

@@ -28,7 +28,7 @@
 | E | Priority | String | Urgent | Enum: Urgent, Normal |
 | F | Strategic Pillar | String | Governance & Compliance | **Derived** from Cluster (fixed mapping in `config/clusters.json`), not entered independently — the two fields overlapped, so only Cluster is picked manually |
 | G | Cluster | String | OM Compliance-Evolution | Enum: OM-CE, OM-CC, OM-CE-EFF |
-| H | Output Type | String | Business Evolution | Enum: see clusters.json |
+| H | Output Type | String (CSV) | Business Evolution,Market Expansion | Multi-select, comma-separated — a stream can have more than one Output Type. Enum: see clusters.json |
 | I | Requester | String | Business | Enum: Business, Corporate, OM Governance |
 | J | Markets | String (CSV) | FR,NL,IT,ES | Comma-separated market codes |
 | K | Completeness % | Number | 100 | 0-100 |
@@ -90,7 +90,7 @@
 ```
 GET /exec?...
   ?cluster=OM-CE
-  &outputType=Business Evolution
+  &outputType=Business Evolution,Market Expansion
   &status=New,In Progress
   &market=FR
   &completeness_min=50
@@ -112,7 +112,7 @@ GET /exec?...
       "status": "In Progress",
       "priority": "Urgent",
       "cluster": "OM-CE",
-      "outputType": "Business Evolution",
+      "outputTypes": ["Business Evolution", "Market Expansion"],
       "markets": ["PT", "ES", "FR"],
       "completeness": 75,
       "dataControllers": {"PT": "LMNext PT"},
@@ -137,7 +137,7 @@ POST /exec
     "init": null,
     "status": "New",
     "cluster": "OM-CC",
-    "outputType": "Corporate Compliance",
+    "outputTypes": ["Corporate Compliance"],
     "markets": ["FR", "IT"],
     "completeness": 0
   }
@@ -203,6 +203,7 @@ This is not a continuous sync: it runs **once**, at project start, to populate t
 - Paragraph with "Status:" → Status
 - Paragraph with "Markets:" → Markets (comma-separated)
 - Paragraph with "Context:" → Description
+- "Effective date" field (already present in the Doc for closed streams) → `EndDate` column (only when Status = Closed)
 - Etc.
 
 **Fallback**: If parsing fails, leave the field as-is (manual edit required, directly in the app)

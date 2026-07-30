@@ -28,7 +28,7 @@
 | **Status** | Dropdown | ✅ | New, In Progress, Paused, Closed (default: New) |
 | **Priority** | Dropdown | ✅ | Urgent, Normal |
 | **Cluster** | Dropdown | ✅ | OM Compliance-Evolution, OM Compliance-Continuity, OM Compliance-Efficiency |
-| **Output Type** | Dropdown | ✅ | Depends on Cluster (see mapping table) |
+| **Output Type** | Multi-select | ✅ | Depends on Cluster (see mapping table) — a stream can have more than one |
 | **Requester** | Dropdown | ✅ | Business, Corporate, OM Governance |
 | **Markets** | Multi-select | ✅ | UK, FR, DE, IT, ES, (Tier 2) ... |
 | **Completeness %** | Slider | ✅ | 0-100%, default 0% |
@@ -139,7 +139,7 @@
 
 **Filters**:
 - Cluster: dropdown (all, or one)
-- Output Type: dropdown
+- Output Type: multi-select
 - Status: checkboxes (New, In Progress, Paused, Closed)
 - Markets: multi-select or search
 - Completeness range: slider (0-100%)
