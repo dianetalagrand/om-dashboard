@@ -19,6 +19,9 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** Editor list stays hardcoded to Diane and Nathan (no config allow-list needed) — access is by absence-cover, not concurrent use, so there's no need to distinguish who made a given change in the log
 - **NEW:** Confirmed the `Requester` field is purely descriptive (labels where the OM engagement came from), no hidden logic
 - **NEW:** Notification strategy toward Value Stream Owners is an open decision (see Next Steps) — internal Slack/Email notifications are unaffected
+- **NEW:** Removed Delete entirely — streams are never deleted, only transitioned to Closed when obsolete or done
+- **NEW:** `Init Code` is a Jira reference/link (like the OKR bridge and today's OM digest), not free text
+- **NEW:** `Strategic Pillar` is now derived automatically from `Cluster` (fixed mapping in `config/clusters.json`) instead of being picked separately — the two fields overlapped and risked inconsistent combinations
 
 ## Overview
 

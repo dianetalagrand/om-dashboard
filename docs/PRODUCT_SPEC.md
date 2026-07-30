@@ -24,16 +24,17 @@
 |-------|------|----------|-------|
 | **ID** | Auto-generated | ✅ | OMG-{incremental} |
 | **Name** | Text | ✅ | E.g. "Invoicing in PT", "Opening Newco Romania" |
-| **Init Code** | Text | ❌ | If an INIT exists, e.g. INIT-997, INIT-1004 (Evolution only) |
+| **Init Code** | Reference | ❌ | Link to the corresponding Jira ticket (like the OKR bridge and today's OM digest), e.g. INIT-997, INIT-1004 (Evolution only) — not free text |
 | **Status** | Dropdown | ✅ | New, In Progress, Paused, Closed (default: New) |
 | **Priority** | Dropdown | ✅ | Urgent, Normal |
-| **Strategic Pillar** | Dropdown | ✅ | Governance & Compliance, Cost Optimisation, Expansion & Growth, OM Maintenance & Review |
 | **Cluster** | Dropdown | ✅ | OM Compliance-Evolution, OM Compliance-Continuity, OM Compliance-Efficiency |
 | **Output Type** | Dropdown | ✅ | Depends on Cluster (see mapping table) |
 | **Requester** | Dropdown | ✅ | Business, Corporate, OM Governance |
 | **Markets** | Multi-select | ✅ | UK, FR, DE, IT, ES, (Tier 2) ... |
 | **Completeness %** | Slider | ✅ | 0-100%, default 0% |
 | **Description** | Long text | ❌ | Context, need, conclusion (max 500 chars) |
+
+**Note on Strategic Pillar**: not a separate field to fill in — it's derived automatically from `Cluster` via a fixed mapping (see `config/clusters.json`): Efficiency → Cost Optimisation, Continuity → OM Governance & Compliance, Evolution → Expansion & Growth. This was a deliberate fix: the two fields overlapped, and letting people pick both independently risked inconsistent combinations over time.
 
 **Validation**:
 - `Name` required

@@ -63,7 +63,7 @@
 └────────────────────────────────────────────────────────────────┘
 ```
 
-**Note**: this is the public view (anyone on the lastminute network, no login). The `[+ NEW STREAM]`, `[EDIT]`, and `[✓ DELETE]` buttons appear **only** in Diane and Nathan's separate access — they're not visible here.
+**Note**: this is the public view (anyone on the lastminute network, no login). The `[+ NEW STREAM]` and `[EDIT]` buttons appear **only** in Diane and Nathan's separate access — they're not visible here. There's no delete button: streams are never deleted, only transitioned to Closed when obsolete or done.
 
 ---
 
@@ -140,7 +140,7 @@
 │ Description                                                   │
 │ [________________________________________________]             │
 │                                                                │
-│ [SAVE CHANGES] [DISCARD] [HISTORY] [DELETE]                  │
+│ [SAVE CHANGES] [DISCARD] [HISTORY]                            │
 │                                                                │
 │ ─────────────────────────────────────────────────────────────── │
 │ Version History:                                              │

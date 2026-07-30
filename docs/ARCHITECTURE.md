@@ -23,10 +23,10 @@
 |---|------|------|---------|------|
 | A | ID | String | OMG-7 | Immutable, unique |
 | B | Name | String | Acquiring Service Evolution | |
-| C | Init | String | LEG-891067 | Optional (null if no INIT) |
+| C | Init | String (Jira reference) | LEG-891067 | Optional (null if no INIT). A link to the corresponding Jira ticket, like the OKR bridge and today's OM digest — not free text |
 | D | Status | String | Closed | Enum: New, In Progress, Paused, Closed |
 | E | Priority | String | Urgent | Enum: Urgent, Normal |
-| F | Strategic Pillar | String | Governance & Compliance | (see config) |
+| F | Strategic Pillar | String | Governance & Compliance | **Derived** from Cluster (fixed mapping in `config/clusters.json`), not entered independently — the two fields overlapped, so only Cluster is picked manually |
 | G | Cluster | String | OM Compliance-Evolution | Enum: OM-CE, OM-CC, OM-CE-EFF |
 | H | Output Type | String | Business Evolution | Enum: see clusters.json |
 | I | Requester | String | Business | Enum: Business, Corporate, OM Governance |
@@ -123,7 +123,9 @@ GET /exec?...
 }
 ```
 
-### doPost(e) — Create/Update/Delete stream
+### doPost(e) — Create/Update stream
+
+Streams are never deleted — they transition through statuses (New, In Progress, Paused) and end at Closed if they become obsolete or are done. There's no DELETE action.
 
 **Request (CREATE)**:
 ```json
