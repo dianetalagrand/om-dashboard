@@ -18,8 +18,8 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** Critical review pass on Gestione OM (full findings in `conversations/2026-08-02-gestione-om-brainstorm.md`): a draft that reaches Closed without ever publishing gets no special handling (behaves like any closed stream); "[PUBLISH]" lives directly on the stream's own card/form; mistakes are always fixed via EDIT, never a separate undo; `Init Code` needs no Jira API validation (Diane's own upstream Init census already guarantees it exists); `Completeness %` stays a pure manual field, no computed anchor, confirmed not an MVP concern; notifications will eventually split into two audiences (Admin-facing vs. Slack-for-everyone-else) — shape only, detail deferred
 - **NEW:** Working-method note: product-doc changes must be mirrored into `ARCHITECTURE.md` in the same pass, without being asked — Diane wants documentation quality here to match Nathan's own standard of precision
 - **NEW:** Removed all OKR references (`docs/OKR_REFERENCE.md` deleted, OKR mentions scrubbed from `PRODUCT_SPEC.md`/`ARCHITECTURE.md`/`config/clusters.json`/README Next Steps)
-- **NEW:** `Cluster` renamed to **`Driver`**, confirmed as a replacement (not an additional field) — enum is now exactly **OM Compliance, OM Optimisation, OM Efficiency**, and it is explicitly **never a dashboard filter**, only a card tag (same treatment as `Markets`). The "3D dashboard" (Cluster × OutputType × Completeness) framing throughout README/PRODUCT_SPEC/ARCHITECTURE is flagged as stale everywhere it appeared
-- **NEW:** `config/clusters.json` content mapped onto the 3 new Driver values by semantic/name match: **OM Compliance** ← old Continuity (legal/regulatory), **OM Efficiency** ← old Efficiency (name match), **OM Optimisation** ← old Evolution (the pairing left over once the other two matched cleanly) — descriptions, examples, Strategic Pillar mapping, and Output Type associations all carried over under the new names. Flag to Diane if the Evolution→Optimisation pairing isn't what she meant
+- **NEW:** `Cluster` renamed to **`Driver`**, confirmed as a replacement (not an additional field) — it is explicitly **never a dashboard filter**, only a card tag (same treatment as `Markets`). The "3D dashboard" (Cluster × OutputType × Completeness) framing throughout README/PRODUCT_SPEC/ARCHITECTURE is flagged as stale everywhere it appeared
+- **NEW:** Driver enum is **OM Compliance, OM Evolution, OM Efficiency, OM Optimisation** (4 values — revised same day from an initial 3-value pass that folded Evolution into Optimisation; Evolution needed its own value). `config/clusters.json` content mapped by direct name match: **OM Compliance** ← old Continuity, **OM Evolution** ← old Evolution, **OM Efficiency** ← old Efficiency — descriptions/examples/Strategic Pillar/Output Type associations all carried over under the new names. **OM Optimisation** is genuinely new, no prior cluster content exists for it — placeholder description/examples in `config/clusters.json`, pending Diane's input
 - **NEW:** Pushed everything since 30 July to both remotes: GitHub `main` is up to date; GitLab needed a **new Merge Request** (the prior one for this content was already merged into GitLab `main` on 30 July, contrary to what looked like no progress since 28 July) — opened from branch `sync-real-project`
 
 **30 July 2026** (direction from Nathan Vené — see `conversations/2026-07-30-domain-split-and-stack-pivot.md`):
@@ -55,7 +55,7 @@ This is the **single README** for the project (merged with the former `README_MV
 
 The **OM Governance Dashboard** (OM Catalog App) transforms the internal catalog of OM Streams into a business-friendly interface that visualizes organizational work. **Note (2 Aug 2026)**: the "three dimensions" framing below is stale — `Cluster` was renamed to `Driver` and is now explicitly **not** a filter/dimension, just a card tag (see `conversations/2026-08-02-gestione-om-brainstorm.md`). This section needs a proper rework once Visualizzazione OM gets its own problem-first pass; for now:
 
-- **`Driver`** (was Cluster) — a card tag, not a filter. Enum: **OM Compliance, OM Optimisation, OM Efficiency**
+- **`Driver`** (was Cluster) — a card tag, not a filter. Enum: **OM Compliance, OM Evolution, OM Efficiency, OM Optimisation**
 - **WHAT it enables** (Output Type) — Which business capability we unlock, still a filter
    - Business Evolution, Market Expansion
    - Corporate Compliance, Business Continuity
@@ -223,10 +223,11 @@ om-dashboard/
 
 ### Driver Definitions
 
-Renamed from "Cluster" 2 Aug 2026 — see `config/clusters.json`. Enum: **OM Compliance, OM Optimisation, OM Efficiency**. Mapped from the old taxonomy by semantic/name match (flag to Diane if the Evolution→Optimisation pairing below isn't what she meant — the other two matched cleanly, this one was the pairing left over):
+Renamed from "Cluster" 2 Aug 2026, revised same day to 4 values — see `config/clusters.json`. Enum: **OM Compliance, OM Evolution, OM Efficiency, OM Optimisation**:
 - **OM Compliance** (was OM Compliance-Continuity) — Regulatory compliance & stability, no INIT
-- **OM Optimisation** (was OM Compliance-Evolution) — Expansion initiatives, with INIT codes
+- **OM Evolution** (was OM Compliance-Evolution) — Expansion initiatives, with INIT codes
 - **OM Efficiency** (was OM Compliance-Efficiency) — Cross-functional optimization, no INIT
+- **OM Optimisation** — genuinely new, no prior cluster maps to it. Description/examples/Output Types are placeholders pending Diane's input
 
 ### Market Classification
 
@@ -266,7 +267,7 @@ Announce go-live via Slack (#om-governance-updates) + Email to OM Team + Value S
 ## Next Steps
 
 1. **Nathan Vené approval** — Driver taxonomy and market scope (blocking Sprint 1)
-2. **Diane to confirm the Driver content mapping** applied 2 Aug 2026 (OM Compliance←Continuity, OM Efficiency←Efficiency, OM Optimisation←Evolution) is correct — see `config/clusters.json`
+2. **Diane to provide real content for the `OM Optimisation` Driver** (description, examples, Output Types, Strategic Pillar) — currently a placeholder in `config/clusters.json`, the only one of the 4 Driver values with no prior cluster content behind it
 3. **Notification strategy toward Value Stream Owners** — Diane and Nathan still need to decide if/how notifications extend beyond the internal OM team (not blocking Sprint 1/2)
 4. **Resolve the Open Questions on the new stack** — hosting, Postgres provisioning, CI/CD ownership, frontend framework (blocking Sprint 1, see Architecture above)
 5. **Re-scope Sprint 1 effort/timeline** — `MVP_ROADMAP.md` hours still assume Apps Script; not recalculated yet, deferred by Diane on 30 July 2026
@@ -332,7 +333,7 @@ Internal tool — Lastminute.com Group only.
 A: Output Types show WHAT we ENABLE, Completeness shows HOW FAR we are — these are filters. `Driver` (was Cluster) shows WHAT TYPE of activity it is, but as a card tag only, not a filter.
 
 **Q: Can I filter by Driver?**  
-A: No — `Driver` (OM Compliance, OM Optimisation, OM Efficiency) is shown on each card but is deliberately not a filter.
+A: No — `Driver` (OM Compliance, OM Evolution, OM Efficiency, OM Optimisation) is shown on each card but is deliberately not a filter.
 
 **Q: Where is the historical data?**  
 A: Switch to the Archive tab to see closed activities per year.

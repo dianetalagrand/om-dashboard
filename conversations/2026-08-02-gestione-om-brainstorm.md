@@ -99,6 +99,17 @@ Diane ha chiesto di procedere e rendere `config/clusters.json` coerente con i 3 
 
 Propagato ovunque: `config/clusters.json` (id/name aggiornati, descrizioni/esempi/outputTypes/strategicPillar/driverType portati 1:1 sul nuovo nome, aggiunta `_migrationNote` esplicativa nel JSON), `PRODUCT_SPEC.md` (campo Driver, Strategic Pillar, regola Init Code, Output Type), `ARCHITECTURE.md` (colonne F/G/H), `README.md` (Driver Definitions, changelog, Next Steps). Segnalato ovunque che va confermata da Diane, in particolare l'abbinamento Evolution→Optimisation che non è ovvio quanto gli altri due.
 
+## Decisione 10: correzione — Driver diventano 4, non 3
+
+Diane ha corretto la Decisione 9: **"OM Evolution" va aggiunto come Driver a sé**, non ripiegato dentro "OM Optimisation" come avevo assunto per eliminazione. Enum finale: **OM Compliance, OM Evolution, OM Efficiency, OM Optimisation** (4 valori).
+
+Rimappato in `config/clusters.json`:
+- **OM Evolution** ← vecchio OM Compliance-Evolution (corrispondenza diretta di nome — espansione, nuovi mercati/entità, sempre con INIT, Pillar "Expansion & Growth")
+- **OM Compliance** ed **OM Efficiency** restano come da Decisione 9 (nessun cambiamento)
+- **OM Optimisation** è a questo punto un Driver genuinamente nuovo, senza contenuto storico da recuperare — inserito come placeholder esplicito (`description`, `examples`, `outputTypes`, `strategicPillar` vuoti/null) in attesa che Diane fornisca il contenuto reale
+
+Propagato ovunque (config, PRODUCT_SPEC, ARCHITECTURE, README) sostituendo i riferimenti alla mappatura precedente (non lasciati come "storia", dato che erano nello stesso blocco "NEW" ancora aperto di oggi).
+
 ## Esplicitamente fuori scope (confermato in questa sessione)
 
 - UI per gestire la tassonomia (Cluster→Pillar, Output Type, Markets) — resta un file di config

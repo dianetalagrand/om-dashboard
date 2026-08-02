@@ -1,5 +1,5 @@
 {
-  "_migrationNote": "Renamed 'clusters' -> 'drivers' 2 Aug 2026 per Diane's direction: exactly 3 values (OM Compliance, OM Optimisation, OM Efficiency), never a dashboard filter, card tag only. Mapping applied from the old taxonomy by name/semantic match: OM Compliance-Continuity -> OM Compliance (both = legal/regulatory), OM Compliance-Efficiency -> OM Efficiency (name match), OM Compliance-Evolution -> OM Optimisation (the only pairing left once the other two matched cleanly). See conversations/2026-08-02-gestione-om-brainstorm.md. Flag to Diane if the Evolution->Optimisation pairing isn't what she meant.",
+  "_migrationNote": "Updated 2 Aug 2026 per Diane's direction. 'clusters' -> 'drivers'; never a dashboard filter, card tag only. Now 4 values: OM Compliance (was OM Compliance-Continuity), OM Efficiency (was OM Compliance-Efficiency), OM Evolution (was OM Compliance-Evolution — direct name match), OM Optimisation (genuinely new, no prior content to carry over — description/examples/outputTypes below are placeholders, need Diane's input). See conversations/2026-08-02-gestione-om-brainstorm.md.",
   "drivers": [
     {
       "id": "OM-COMPLIANCE",
@@ -22,8 +22,8 @@
       "icon": "⚖️"
     },
     {
-      "id": "OM-OPTIMISATION",
-      "name": "OM Optimisation",
+      "id": "OM-EVOLUTION",
+      "name": "OM Evolution",
       "description": "Attività di evoluzione aziendale: nuovi mercati, nuove entità, espansioni. Driver: Company expansion strategy. Sempre con INIT specifica.",
       "examples": [
         "Invoicing in PT (INIT-997)",
@@ -61,17 +61,29 @@
       "driverType": "internal_operational",
       "color": "#4a86e8",
       "icon": "⚡"
+    },
+    {
+      "id": "OM-OPTIMISATION",
+      "name": "OM Optimisation",
+      "description": "PLACEHOLDER — added 2 Aug 2026, no prior cluster content maps to this one. Diane to provide the real description.",
+      "examples": [],
+      "outputTypes": [],
+      "strategicPillar": null,
+      "hasInit": false,
+      "driverType": null,
+      "color": "#9B59B6",
+      "icon": "🔧"
     }
   ],
   "outputTypes": {
     "Business Evolution": {
       "description": "Abilitazione di nuova capability aziendale, market entry, product expansion. Legato alla company growth strategy.",
-      "relatedDrivers": ["OM-OPTIMISATION"],
+      "relatedDrivers": ["OM-EVOLUTION"],
       "forBusinessOwner": "Abilita il tuo VS a entrare in nuovi mercati o lanciare nuovi prodotti"
     },
     "Market Expansion": {
       "description": "Supporto all'espansione geografica. Abilitazione di nuovi paesi/mercati.",
-      "relatedDrivers": ["OM-OPTIMISATION"],
+      "relatedDrivers": ["OM-EVOLUTION"],
       "forBusinessOwner": "Abilita l'operatività nel tuo mercato target con struttura OM allineata"
     },
     "Corporate Compliance": {
