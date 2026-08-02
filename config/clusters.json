@@ -3,7 +3,7 @@
     {
       "id": "OM-CE",
       "name": "OM Compliance-Evolution",
-      "description": "Attività di evoluzione aziendale: nuovi mercati, nuove entità, espansioni. Driver: Company expansion OKR. Sempre con INIT specifica.",
+      "description": "Attività di evoluzione aziendale: nuovi mercati, nuove entità, espansioni. Driver: Company expansion strategy. Sempre con INIT specifica.",
       "examples": [
         "Invoicing in PT (INIT-997)",
         "Apertura Newco Romania (INIT-1004)",
@@ -64,7 +64,7 @@
   ],
   "outputTypes": {
     "Business Evolution": {
-      "description": "Abilitazione di nuova capability aziendale, market entry, product expansion. Legato a company growth OKR.",
+      "description": "Abilitazione di nuova capability aziendale, market entry, product expansion. Legato alla company growth strategy.",
       "relatedClusters": ["OM-CE"],
       "forBusinessOwner": "Abilita il tuo VS a entrare in nuovi mercati o lanciare nuovi prodotti"
     },
