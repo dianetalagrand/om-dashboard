@@ -75,6 +75,20 @@ Su richiesta esplicita di Diane ("agisci come un esperto e dimmi criticamente co
 
 Diane ha segnalato che in un passaggio precedente ha dovuto chiedere esplicitamente di aggiornare anche `ARCHITECTURE.md` dopo una modifica a `PRODUCT_SPEC.md` — non era stato fatto in autonomia. Richiesta esplicita: ogni decisione di prodotto va sincronizzata **anche** lato tecnico nello stesso passaggio, senza aspettare di essere richiesto, e con occhio critico su cosa si scrive — Nathan è "esigente e preciso" e Diane vuole essere alla sua altezza. Salvato come memoria permanente (`feedback_proactive_tech_sync`).
 
+## Decisione 8: rimozione OKR e rename Cluster → Driver
+
+Diane ha chiesto di eliminare ogni riferimento a OKR nel progetto (rimosso `docs/OKR_REFERENCE.md`, e ogni menzione OKR da `PRODUCT_SPEC.md`, `ARCHITECTURE.md`, `config/clusters.json`, README Next Steps — lasciati intatti solo i log di conversazione storici del 28 luglio, per non riscrivere la cronologia).
+
+Il campo `Cluster` è stato **rinominato `Driver`**, e sostituisce interamente il vecchio campo (non è un campo aggiuntivo): enum ridotto a esattamente 3 valori — **OM Compliance, OM Optimisation, OM Efficiency** — confermato non essere mai un filtro, solo un tag sulla card (stesso trattamento di `Markets`). Di conseguenza la cornice "3D catalog" (Cluster × OutputType × Completeness) usata ovunque in README/PRODUCT_SPEC/ARCHITECTURE è segnata come superata in ogni punto in cui compariva.
+
+**Resta aperto, deliberatamente non indovinato**: come il contenuto della vecchia tassonomia Cluster (descrizioni, esempi, comportamento INIT-code, mapping a Strategic Pillar, associazioni con Output Type) si traduce sui 3 nuovi valori Driver. `config/clusters.json` mantiene struttura e contenuto vecchi finché Diane non conferma la mappatura — rischio troppo alto di inventare contenuto di dominio sbagliato (es. quale vecchio cluster diventa "OM Optimisation").
+
+## Sincronizzazione GitHub/GitLab (2 agosto 2026)
+
+Push di tutto il lavoro dal 30 luglio a oggi:
+- **GitHub** `main`: allineato (commit `697e193`)
+- **GitLab**: scoperto che la MR precedente per questo contenuto era già stata mergiata su `main` il 30 luglio (quindi GitLab non era fermo al 28 luglio come sembrava) — la vecchia `sync-real-project` non esisteva più (cancellata dopo il merge). Ripushato un branch `sync-real-project` pulito, un commit sopra il 30 luglio, e serve una **nuova Merge Request** (link fornito a Diane, nessun client GitLab autenticato disponibile per crearla in automatico)
+
 ## Esplicitamente fuori scope (confermato in questa sessione)
 
 - UI per gestire la tassonomia (Cluster→Pillar, Output Type, Markets) — resta un file di config

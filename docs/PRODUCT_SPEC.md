@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Purpose**: Build an app usable by the business (Value Streams Owner) that displays the catalog of OM activities three-dimensionally, showing **what the OM office does** and **what benefit it returns to the company** through cross-functional strategic decisions (legal, tax, DPO, finance).
+**Purpose**: Build an app usable by the business (Value Streams Owner) that displays the catalog of OM activities, showing **what the OM office does** and **what benefit it returns to the company** through cross-functional strategic decisions (legal, tax, DPO, finance). **Note (2 Aug 2026)**: the "three-dimensionally" framing (Cluster × OutputType × Completeness) is stale now that `Driver` (Cluster's replacement) is explicitly not a filter dimension — the actual dashboard dimensions are being reworked, see §2.1.
 
 **Users**:
 - **Anyone on the lastminute.com network** (including reviewers like Sergio Stievano) → read-only access via Visualizzazione OM, no login required
@@ -37,11 +37,11 @@ Both sections below are kept functionally separate for this reason, even where t
 |-------|------|----------|-------|
 | **ID** | Auto-generated | ✅ | OMG-{incremental} |
 | **Name** | Text | ✅ | E.g. "Invoicing in PT", "Opening Newco Romania" |
-| **Init Code** | Reference | ❌ | Link to the corresponding Jira ticket (like today's OM digest), e.g. INIT-997, INIT-1004 (Evolution only) — not free text. **Confirmed 2 Aug 2026: no Jira API validation needed.** Diane runs the Init census/budget-request process for OM Inits herself, upstream of this app — by the time a code is entered here, its existence is already guaranteed. Format-only, no integration dependency |
+| **Init Code** | Reference | ❌ | Link to the corresponding Jira ticket (like today's OM digest), e.g. INIT-997, INIT-1004 (recommended for one specific Driver value — see pending mapping note below) — not free text. **Confirmed 2 Aug 2026: no Jira API validation needed.** Diane runs the Init census/budget-request process for OM Inits herself, upstream of this app — by the time a code is entered here, its existence is already guaranteed. Format-only, no integration dependency |
 | **Status** | Dropdown | ✅ | New, In Progress, Paused, Closed (default: New) |
 | **Priority** | Dropdown | ✅ | Urgent, Normal |
-| **Cluster** | Dropdown | ✅ | OM Compliance-Evolution, OM Compliance-Continuity, OM Compliance-Efficiency |
-| **Output Type** | Multi-select | ✅ | Depends on Cluster (see mapping table) — a stream can have more than one |
+| **Driver** | Dropdown | ✅ | Renamed from `Cluster` 2 Aug 2026 (see `conversations/2026-08-02-gestione-om-brainstorm.md`). Enum: **OM Compliance, OM Optimisation, OM Efficiency** — exactly these 3, nothing else. **Not a filter** — a card attribute/tag only, same treatment as `Markets`. Content mapping from the old Cluster taxonomy (descriptions, examples, Output Type associations) is pending Diane's confirmation — see `config/clusters.json` |
+| **Output Type** | Multi-select | ✅ | Depends on Driver (see mapping table) — a stream can have more than one. Whether this dependency still holds as-is under the new Driver taxonomy is part of the pending confirmation above |
 | **Requester** | Dropdown | ✅ | Business, Corporate, OM Governance |
 | **Markets** | Multi-select, or `all` / `NA` | ✅ | UK, FR, DE, IT, ES, (Tier 2) ... — or `all` (applies to every market) or `NA` (no market dimension). Not a filter, just an attribute shown on the card: displayed when `all`/specific markets, hidden when `NA` |
 | **Completeness %** | Slider | ✅ | 0-100%, default 0%. Purely subjective, set by Admin's own judgment — confirmed 2 Aug 2026 not to need any computed anchor (e.g. tying it to how many `DetailSections` categories are filled). Not an MVP concern |
@@ -50,13 +50,13 @@ Both sections below are kept functionally separate for this reason, even where t
 | **DetailSections → Context, Legal, Finance & Tax, DPO, Conclusion, ancillary** | Long text | ❌ | Same structured template as Need, but genuinely optional at CREATE — a stream is routinely censito with only a subset of these filled in; the rest are added later via UPDATE as the analysis comes in |
 | **Go-live Date** | Date | ❌ | Added 2 Aug 2026. Records when an associated deployment (if any) goes into production — distinct from `EndDate`/Effective Date, which marks when the *stream itself* closes. A stream can go live before it's fully closed |
 
-**Note on Strategic Pillar**: not a separate field to fill in — it's derived automatically from `Cluster` via a fixed mapping (see `config/clusters.json`): Efficiency → Cost Optimisation, Continuity → OM Governance & Compliance, Evolution → Expansion & Growth. This was a deliberate fix: the two fields overlapped, and letting people pick both independently risked inconsistent combinations over time.
+**Note on Strategic Pillar**: not a separate field to fill in — derived automatically from `Driver` via a fixed mapping (see `config/clusters.json`). This was a deliberate fix: the two fields overlapped, and letting people pick both independently risked inconsistent combinations over time. **Pending** (2 Aug 2026): the actual Efficiency/Optimisation/Compliance → Strategic Pillar mapping needs re-confirming now that `Driver` has replaced `Cluster` — the old mapping (Efficiency → Cost Optimisation, Continuity → OM Governance & Compliance, Evolution → Expansion & Growth) doesn't carry over cleanly onto the new 3 values without Diane confirming which old content goes where.
 
 **Validation**:
 - `Name` required
 - At least 1 market selected
-- `Cluster` + `Output Type` required
-- If `Cluster = Evolution` → `Init Code` recommended (but not required)
+- `Driver` + `Output Type` required
+- If `Driver = <the value replacing old Evolution>` → `Init Code` recommended (but not required). **Pending**: which of the 3 new Driver values (OM Compliance/Optimisation/Efficiency) corresponds to the old "always has an Init code, expansion/new-market" behavior — needs Diane's confirmation before this rule can be re-applied
 - `DetailSections → Need` required — the only mandatory narrative category; every other category (Context, Legal, Finance & Tax, DPO, Conclusion, ancillary) is optional at CREATE and filled in over time via UPDATE
 
 **Storage**:
@@ -153,7 +153,7 @@ Both sections below are kept functionally separate for this reason, even where t
 
 ### 1.5 LEVEL 2E: ADMIN KANBAN VIEW
 
-**Description**: A Gestione OM–only working view of everything Admin still has to manage — separate from the public Cluster × OutputType dashboard.
+**Description**: A Gestione OM–only working view of everything Admin still has to manage — separate from the public dashboard.
 
 **Layout**: Kanban board, columns = `Status` — **New**, **In Progress**, **Paused** only. `Closed` is not a column here: closing a stream stays an explicit action on the UPDATE form (§1.2), not a drag target, and once closed a stream leaves this view entirely (it shows up in the Archive on Visualizzazione OM instead).
 
@@ -170,23 +170,23 @@ Both sections below are kept functionally separate for this reason, even where t
 
 ### 2.1 Main Dashboard (ACTIVE Streams)
 
-**Layout**: 3-column Kanban-style view
+**Layout**: 3-column Kanban-style view. **Pending rework** (2 Aug 2026): this layout was originally structured around 3 Cluster columns — now that `Driver` (its replacement) is explicitly not a filter/grouping mechanism, this layout needs to be redesigned once Domain B gets its own problem-first pass (not done yet). The mockup below is left as-is for now except for the mechanical Cluster→Driver terminology fixes
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ FILTER BAR                                                   │
-│ Cluster: [OM Compliance-Evolution ▼] OutputType: [...] ... │
+│ OutputType: [...] Status: [...] Completeness: [...] Search  │
 └─────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────┐
 │ TAB: ACTIVE (2026) | ARCHIVE (History)                       │
 ├──────────────────────────────────────────────────────────────┤
 │                                                               │
-│ CLUSTER: OM Compliance-Evolution | OUTPUT: New Markets      │
+│ OUTPUT: New Markets                                          │
 │ Completeness: ████░░ 65%                                    │
 │                                                               │
 │ [Card 1] OMG-12 Invoicing in PT                             │
-│ ├─ Status: In Progress | Init: INIT-997                     │
+│ ├─ Status: In Progress | Init: INIT-997 | Driver: OM Compliance │
 │ ├─ Markets: PT, ES, FR | Completeness: 75%                  │
 │ ├─ Requester: Business | Priority: Urgent                   │
 │ └─ [📋 Market Details ▼] [🔗 OM Log] [EDIT]                 │
@@ -201,14 +201,14 @@ Both sections below are kept functionally separate for this reason, even where t
 ```
 
 **Filters**:
-- Cluster: dropdown (all, or one)
 - Output Type: multi-select
 - Status: checkboxes (New, In Progress, Paused, Closed)
 - Completeness range: slider (0-100%)
 - Search: text input (stream name)
+- **`Driver` is deliberately not a filter** (2 Aug 2026) — shown only as a card tag, same treatment as `Markets`
 
 **Shows**:
-- One card per stream, collapsed by default with the essentials (Status badge, Completeness bar, Markets, Requester, Priority)
+- One card per stream, collapsed by default with the essentials (Status badge, Driver tag, Completeness bar, Markets, Requester, Priority)
 - **Explode on open**: clicking a card expands it to show the full `DetailSections` narrative (Context, Need, Legal, DPO, Finance & Tax, plus any ancillary categories)
 
 ---
@@ -279,7 +279,7 @@ Both sections below are kept functionally separate for this reason, even where t
 └──────────────────────────────────────────┘
 ```
 
-**Metric**: For each year, count completed streams per cluster + output type
+**Metric**: For each year, count completed streams per Output Type. **Pending** (2 Aug 2026): whether to also break down by `Driver` even though it's not a filter elsewhere — decide as part of Domain B's full pass
 
 **Nice-to-have, low priority** (2 Aug 2026): the single most-recently-closed stream (highest `EndDate`) gets a subtle visual accent (e.g. a light yellow highlight) so it reads as "just landed here" among older closed entries. Purely a display detail — derived by sorting on `EndDate`, no new data needed.
 
@@ -298,7 +298,7 @@ See `ARCHITECTURE.md`
 - ✅ Open access on the lastminute network (no login); editing reserved to a single Admin role (Diane and Nathan)
 - ✅ Draft/Publish: a stream can be created and edited before it's visible on Visualizzazione OM
 - ✅ Admin Kanban view: drag streams between Status columns (New/In Progress/Paused), manual reorder within a column
-- ✅ Dashboard filtered by Cluster × OutputType × Completeness
+- ✅ Dashboard filtered by Output Type × Status × Completeness (`Driver` shown as a card tag, not a filter — see §2.1)
 - ✅ Market details panel (FR only)
 - ✅ Archive tab with closed items per year (via `EndDate`)
 - ✅ Doc → Sheet import (one-time, at project start — not continuous)
@@ -313,7 +313,7 @@ See `ARCHITECTURE.md`
 - **Login/multiple roles** — removed: no accounts, open read access on the lastminute network, editing limited to a single Admin role (Diane and Nathan)
 - **Continuous Doc → Sheet sync** — removed: the Doc is only for the one-time initial import
 - **In-app review/approval gate** (e.g. for Sergio Stievano) — removed: Admin gathers any needed input outside the app and closes the stream themselves; no blocking review state
-- **Taxonomy management UI** (Cluster→Pillar mapping, Output Type list, Market list) — stays a config file (`config/clusters.json`, `config/markets.json`), not an in-app editing screen
+- **Taxonomy management UI** (Driver→Pillar mapping, Output Type list, Market list) — stays a config file (`config/clusters.json`, `config/markets.json`), not an in-app editing screen
 - **Aggregated/cross-stream version history view** — stays per-stream (§1.2), no catalog-wide change log screen
 - Multi-language (Italian for now; English in the future)
 - Advanced analytics (trends, forecasting)

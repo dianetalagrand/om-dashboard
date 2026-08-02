@@ -34,9 +34,9 @@ The column list below carries over unchanged from the original Sheet-based desig
 | C | Init | String (Jira reference) | LEG-891067 | Optional (null if no INIT). A link to the corresponding Jira ticket, like today's OM digest — not free text. **Confirmed 2 Aug 2026: no Jira API call to validate this.** Diane's own upstream Init census/budget-request process guarantees the code already exists before it's ever entered here — store and display as a plain string/link, no Jira integration or credentials needed |
 | D | Status | String | Closed | Enum: New, In Progress, Paused, Closed |
 | E | Priority | String | Urgent | Enum: Urgent, Normal |
-| F | Strategic Pillar | String | Governance & Compliance | **Derived** from Cluster (fixed mapping in `config/clusters.json`), not entered independently — the two fields overlapped, so only Cluster is picked manually |
-| G | Cluster | String | OM Compliance-Evolution | Enum: OM-CE, OM-CC, OM-CE-EFF |
-| H | Output Type | String (CSV) | Business Evolution,Market Expansion | Multi-select, comma-separated — a stream can have more than one Output Type. Enum: see clusters.json |
+| F | Strategic Pillar | String | Governance & Compliance | **Derived** from `Driver` (fixed mapping in `config/clusters.json`), not entered independently — the two fields overlapped, so only Driver is picked manually. **Pending 2 Aug 2026**: the actual mapping table needs re-confirming now that Driver replaced Cluster (see column G) |
+| G | Driver | String | OM Compliance | **Renamed from `Cluster` 2 Aug 2026** (see `conversations/2026-08-02-gestione-om-brainstorm.md`) — not a filter, a card tag only (§2.1 in `PRODUCT_SPEC.md`). Enum: OM Compliance, OM Optimisation, OM Efficiency — exactly these 3. IDs/examples/Output Type associations in `config/clusters.json` are pending Diane's confirmation of the old→new content mapping |
+| H | Output Type | String (CSV) | Business Evolution,Market Expansion | Multi-select, comma-separated — a stream can have more than one Output Type. Enum: see clusters.json. Whether this still derives from `Driver` the same way is part of the pending mapping above |
 | I | Requester | String | Business | Enum: Business, Corporate, OM Governance |
 | J | Markets | String (CSV, or `all`/`NA`) | FR,NL,IT,ES | Comma-separated market codes, or `all` (every market) or `NA` (no market dimension). Not a filter — a card attribute, shown when `all`/specific markets, hidden when `NA` |
 | K | Completeness % | Number | 100 | 0-100. Purely manual/subjective — confirmed 2 Aug 2026 not to need any computed anchor (e.g. derived from how many `DetailSections` categories are filled). Not an MVP concern, no backend logic beyond storing the number |
@@ -133,18 +133,17 @@ Always implicitly filtered to `WHERE PublishedAt IS NOT NULL` — draft streams 
 
 **Archive nice-to-have** (§2.3 in `PRODUCT_SPEC.md`, low priority): the most-recently-closed stream gets a visual highlight on the frontend. No backend support needed beyond `ORDER BY EndDate DESC` — the frontend just flags whichever row sorts first among `status=Closed` results.
 
-**Request**:
+**Request**: **no `driver` filter param** (2 Aug 2026) — `Driver` is a card tag, not something Visualizzazione OM can filter by
 ```
 GET /streams?
-    cluster=OM-CE
-  & outputType=Business Evolution,Market Expansion
+    outputType=Business Evolution,Market Expansion
   & status=New,In Progress
   & completeness_min=50
   & completeness_max=100
   & search=invoicing
 ```
 
-**Response**:
+**Response**: `driver` is still returned (it's a real field, just not a filter param)
 ```json
 {
   "success": true,
@@ -156,7 +155,7 @@ GET /streams?
       "init": "INIT-997",
       "status": "In Progress",
       "priority": "Urgent",
-      "cluster": "OM-CE",
+      "driver": "OM Compliance",
       "outputTypes": ["Business Evolution", "Market Expansion"],
       "markets": ["PT", "ES", "FR"],
       "completeness": 75,
@@ -181,7 +180,7 @@ POST /streams
     "name": "New activity",
     "init": null,
     "status": "New",
-    "cluster": "OM-CC",
+    "driver": "OM Compliance",
     "outputTypes": ["Corporate Compliance"],
     "markets": ["FR", "IT"],
     "completeness": 0
@@ -400,7 +399,7 @@ Since the MVP is now the real app (Node/Postgres from day one, not a Google Apps
 - [ ] Draft/Publish: draft stream invisible on `GET /streams`, visible after `PATCH /streams/{id}/publish`, publish is one-way
 - [ ] Admin Kanban: drag between Status columns updates `status` correctly, Closed not draggable, draft streams appear alongside published ones
 - [ ] Access: open read access with no login, editing accessible only to a single Admin role (Diane and Nathan)
-- [ ] Filtering: cluster, output type, status, markets, completeness
+- [ ] Filtering: output type, status, completeness (NOT `driver` — confirm it never appears as a filter, only as a card tag)
 - [ ] Market panel: FR details load, images render, links work
 - [ ] Archive: closed items per year (via EndDate), correct counts
 - [ ] Import: one-time Doc → Postgres import completes correctly

@@ -1,6 +1,6 @@
 # 🛰️ OM Governance Dashboard
 
-> A three-dimensional catalog viewer for Operations Management activities, enabling Value Stream Owners to understand what the OM office delivers and why.
+> A catalog viewer for Operations Management activities, enabling Value Stream Owners to understand what the OM office delivers and why.
 
 ## Recently Updated
 
@@ -10,14 +10,16 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** Gestione OM has a **single role**: **Admin** (Diane and Nathan, fully symmetric permissions) — not two separately-defined editors. Sergio Stievano and any `Requester` (Business/Corporate/OM Governance) are Visualizzazione OM users only; they never get write access, even when they're the ones raising the need for a stream
 - **NEW:** Added a **Draft/Publish** step ahead of a stream going live: a new `PublishedAt` field (null = draft, hidden from Visualizzazione OM). Admin can build up a stream's data before it's visible on the network, then publish it — one-way, no un-publish
 - **NEW:** Added an **Admin Kanban view** (Gestione OM only) — columns by Status (New / In Progress / Paused; Closed is excluded, that stays a form action), drag-and-drop to change status, manual reordering within a column to reflect real-world urgency. Exact interaction between the manual order and the existing `Priority` field (Urgent/Normal) is deferred until the stack/architecture is consolidated
-- **NEW:** Explicitly out of scope for now: a UI for editing the cluster/output-type/market taxonomy (stays a config file), and an aggregated cross-stream version-history view (stays per-stream)
+- **NEW:** Explicitly out of scope for now: a UI for editing the Driver/output-type/market taxonomy (stays a config file), and an aggregated cross-stream version-history view (stays per-stream)
 - **NEW:** `DetailSections` categories verified directly against the live OM Streams Log Doc (via Claude in Chrome) — matches what was already documented (Context, Need, Legal, Finance & Tax, DPO, a per-stream ancillary category, Conclusion). Confirmed: `Need` is the only mandatory category at CREATE; everything else is legitimately filled in later, and the exploded card view only ever shows categories that actually have content
 - **NEW:** Added `Go-live Date` (optional) — distinct from the existing `EndDate`/Effective Date, records when an associated deployment (if any) goes into production, which can happen before the stream itself reaches `Closed`
 - **NEW:** Notifications: two directions are being kept in mind but not decided yet — in-app notifications beyond the existing toast, and a date-triggered automatic reminder (e.g. Slack message as `Go-live Date` approaches)
 - **NEW:** Admin Access Gate revised: **one single app URL for everyone** (not a separate admin link) — device recognition, not login, gates the editing UI; the recognition marker is still checked server-side on every write request. A "Preview as viewer" button for Admin is kept in mind, not committed. Diane's expectation (to confirm with Nathan): network restriction alone should be enough, no VPN/proxy needed. Recommended recognition mechanism (Claude's proposal, pending Nathan): Google Sign-In restricted to Diane's and Nathan's two `@lastminute.com` addresses, rather than a bespoke token scheme
 - **NEW:** Critical review pass on Gestione OM (full findings in `conversations/2026-08-02-gestione-om-brainstorm.md`): a draft that reaches Closed without ever publishing gets no special handling (behaves like any closed stream); "[PUBLISH]" lives directly on the stream's own card/form; mistakes are always fixed via EDIT, never a separate undo; `Init Code` needs no Jira API validation (Diane's own upstream Init census already guarantees it exists); `Completeness %` stays a pure manual field, no computed anchor, confirmed not an MVP concern; notifications will eventually split into two audiences (Admin-facing vs. Slack-for-everyone-else) — shape only, detail deferred
 - **NEW:** Working-method note: product-doc changes must be mirrored into `ARCHITECTURE.md` in the same pass, without being asked — Diane wants documentation quality here to match Nathan's own standard of precision
-- **NEW:** Removed all OKR references (`docs/OKR_REFERENCE.md` deleted, OKR mentions scrubbed from `PRODUCT_SPEC.md`/`ARCHITECTURE.md`/`config/clusters.json`/README Next Steps). Diane is replacing the categorization taxonomy with exactly 3 labels — **OM Compliance, OM Optimisation, OM Efficiency** — used purely as a "ticket type" tag on each stream, never a dashboard filter. Exact mapping onto the existing `Cluster`/`Strategic Pillar`/`Output Type` fields is still being clarified before `config/clusters.json` and the "3D dashboard" framing get rewritten
+- **NEW:** Removed all OKR references (`docs/OKR_REFERENCE.md` deleted, OKR mentions scrubbed from `PRODUCT_SPEC.md`/`ARCHITECTURE.md`/`config/clusters.json`/README Next Steps)
+- **NEW:** `Cluster` renamed to **`Driver`**, confirmed as a replacement (not an additional field) — enum is now exactly **OM Compliance, OM Optimisation, OM Efficiency**, and it is explicitly **never a dashboard filter**, only a card tag (same treatment as `Markets`). The "3D dashboard" (Cluster × OutputType × Completeness) framing throughout README/PRODUCT_SPEC/ARCHITECTURE is flagged as stale everywhere it appeared. **Still pending**: how the old Cluster taxonomy's content (descriptions, examples, INIT-code behavior, Strategic Pillar mapping, Output Type associations) maps onto the 3 new Driver values — `config/clusters.json` keeps its old structure/content until Diane confirms the mapping
+- **NEW:** Pushed everything since 30 July to both remotes: GitHub `main` is up to date; GitLab needed a **new Merge Request** (the prior one for this content was already merged into GitLab `main` on 30 July, contrary to what looked like no progress since 28 July) — opened from branch `sync-real-project`
 
 **30 July 2026** (direction from Nathan Vené — see `conversations/2026-07-30-domain-split-and-stack-pivot.md`):
 - Architecture is analyzed as **two separate domains**, not one shared screen: **Gestione OM** (write/workflow — Diane/Nathan create/update streams) and **Visualizzazione OM** (read/discovery — anyone on the network browses the catalog). Each is built as its own vertical rather than starting from a shared data model.
@@ -50,19 +52,14 @@ This is the **single README** for the project (merged with the former `README_MV
 
 ## Overview
 
-The **OM Governance Dashboard** (OM Catalog App) transforms the internal catalog of OM Streams into a business-friendly interface that visualizes organizational work across three dimensions:
+The **OM Governance Dashboard** (OM Catalog App) transforms the internal catalog of OM Streams into a business-friendly interface that visualizes organizational work. **Note (2 Aug 2026)**: the "three dimensions" framing below is stale — `Cluster` was renamed to `Driver` and is now explicitly **not** a filter/dimension, just a card tag (see `conversations/2026-08-02-gestione-om-brainstorm.md`). This section needs a proper rework once Visualizzazione OM gets its own problem-first pass; for now:
 
-1. **WHAT we do** (Cluster) — Which type of OM activity
-   - OM Compliance-Evolution (new markets, new entities)
-   - OM Compliance-Continuity (regulatory compliance, review cycles)
-   - OM Compliance-Efficiency (fiscal optimization, cost centralization)
-
-2. **WHAT it enables** (Output Type) — Which business capability we unlock
+- **`Driver`** (was Cluster) — a card tag, not a filter. Enum: **OM Compliance, OM Optimisation, OM Efficiency**
+- **WHAT it enables** (Output Type) — Which business capability we unlock, still a filter
    - Business Evolution, Market Expansion
    - Corporate Compliance, Business Continuity
    - Operational Efficiency, Cost Optimization
-
-3. **HOW FAR we are** (Completeness) — Progress tracking (0-100%)
+- **HOW FAR we are** (Completeness) — Progress tracking (0-100%), still a filter
 
 ### The Problem
 
@@ -73,7 +70,7 @@ Operations Management work is often misunderstood by the business:
 
 ### The Solution
 
-A **3D catalog viewer** that answers: *"What is OM doing for my business, and why?"*
+A **catalog viewer** that answers: *"What is OM doing for my business, and why?"* (the "3D" framing is stale, see Overview note above)
 
 ---
 
@@ -89,7 +86,7 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ### Visualization
 
-✅ **Dashboard (3D View)** — Filter by Cluster × OutputType × Completeness  
+✅ **Dashboard** — Filter by Output Type × Completeness (`Driver` shown as a card tag, not a filter — see Overview note above)  
 ✅ **Archive** — Historical view of completed activities per year  
 ✅ **Market Details Panel** — Legal/Tax/DPO context for each market  
 
@@ -179,7 +176,7 @@ Since the MVP is now the real app, these are no longer "later" concerns:
 **Postgres table: `om_catalog`**
 
 ```
-| ID | Name | Init | Status | Cluster | OutputType | 
+| ID | Name | Init | Status | Driver | OutputType | 
 | Markets | Completeness | DataControllers | MarketAssets | ... |
 ```
 
@@ -212,7 +209,7 @@ om-dashboard/
 ├── conversations/ (decision log)
 │
 ├── config/
-│   ├── clusters.json (3 cluster OM-driven + output type mapping)
+│   ├── clusters.json (3 Driver values + output type mapping — filename kept as-is, content renamed 2 Aug 2026)
 │   └── markets.json (Tier 1/2/3 classification)
 │
 ├── Code.gs (superseded — Apps Script prototype, kept as historical reference only)
@@ -223,12 +220,12 @@ om-dashboard/
 
 ## Configuration
 
-### Cluster Definitions
+### Driver Definitions
 
-See `config/clusters.json`:
-- **OM Compliance-Evolution** — Expansion initiatives (with INIT codes)
-- **OM Compliance-Continuity** — Regulatory compliance & stability
-- **OM Compliance-Efficiency** — Cross-functional optimization
+Renamed from "Cluster" 2 Aug 2026 — see `config/clusters.json`. Enum: **OM Compliance, OM Optimisation, OM Efficiency**. The old definitions below (Evolution/Continuity/Efficiency) are the *previous* taxonomy, kept here only until Diane confirms how their content (descriptions, examples, INIT-code behavior, Output Type associations) maps onto the new 3 values:
+- ~~OM Compliance-Evolution~~ — Expansion initiatives (with INIT codes)
+- ~~OM Compliance-Continuity~~ — Regulatory compliance & stability
+- ~~OM Compliance-Efficiency~~ — Cross-functional optimization
 
 ### Market Classification
 
@@ -267,11 +264,12 @@ Announce go-live via Slack (#om-governance-updates) + Email to OM Team + Value S
 
 ## Next Steps
 
-1. **Nathan Vené approval** — cluster taxonomy and market scope (blocking Sprint 1)
-2. **Notification strategy toward Value Stream Owners** — Diane and Nathan still need to decide if/how notifications extend beyond the internal OM team (not blocking Sprint 1/2)
-3. **Resolve the Open Questions on the new stack** — hosting, Postgres provisioning, CI/CD ownership, frontend framework (blocking Sprint 1, see Architecture above)
-4. **Re-scope Sprint 1 effort/timeline** — `MVP_ROADMAP.md` hours still assume Apps Script; not recalculated yet, deferred by Diane on 30 July 2026
-5. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`), once 3 and 4 are resolved
+1. **Nathan Vené approval** — Driver taxonomy and market scope (blocking Sprint 1)
+2. **Confirm Driver content mapping** — how the old Cluster taxonomy's descriptions/examples/Output Type associations map onto the new `Driver` values (OM Compliance, OM Optimisation, OM Efficiency), before `config/clusters.json` and the dashboard framing can be finalized
+3. **Notification strategy toward Value Stream Owners** — Diane and Nathan still need to decide if/how notifications extend beyond the internal OM team (not blocking Sprint 1/2)
+4. **Resolve the Open Questions on the new stack** — hosting, Postgres provisioning, CI/CD ownership, frontend framework (blocking Sprint 1, see Architecture above)
+5. **Re-scope Sprint 1 effort/timeline** — `MVP_ROADMAP.md` hours still assume Apps Script; not recalculated yet, deferred by Diane on 30 July 2026
+6. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`), once 4 and 5 are resolved
 
 ---
 
@@ -329,11 +327,11 @@ Internal tool — Lastminute.com Group only.
 
 ## FAQ
 
-**Q: Why three dimensions?**  
-A: Clusters show WHAT we do, Output Types show WHAT we ENABLE, Completeness shows HOW FAR we are. Together, they answer: "What is OM delivering for my business?"
+**Q: Why these dimensions?** *(updated 2 Aug 2026 — the old "three dimensions" answer is stale)*  
+A: Output Types show WHAT we ENABLE, Completeness shows HOW FAR we are — these are filters. `Driver` (was Cluster) shows WHAT TYPE of activity it is, but as a card tag only, not a filter.
 
-**Q: Can I filter by multiple clusters?**  
-A: Yes — use the Cluster dropdown to select one, or leave blank to see all.
+**Q: Can I filter by Driver?**  
+A: No — `Driver` (OM Compliance, OM Optimisation, OM Efficiency) is shown on each card but is deliberately not a filter.
 
 **Q: Where is the historical data?**  
 A: Switch to the Archive tab to see closed activities per year.
