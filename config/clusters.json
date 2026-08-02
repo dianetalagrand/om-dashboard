@@ -1,8 +1,29 @@
 {
-  "clusters": [
+  "_migrationNote": "Renamed 'clusters' -> 'drivers' 2 Aug 2026 per Diane's direction: exactly 3 values (OM Compliance, OM Optimisation, OM Efficiency), never a dashboard filter, card tag only. Mapping applied from the old taxonomy by name/semantic match: OM Compliance-Continuity -> OM Compliance (both = legal/regulatory), OM Compliance-Efficiency -> OM Efficiency (name match), OM Compliance-Evolution -> OM Optimisation (the only pairing left once the other two matched cleanly). See conversations/2026-08-02-gestione-om-brainstorm.md. Flag to Diane if the Evolution->Optimisation pairing isn't what she meant.",
+  "drivers": [
     {
-      "id": "OM-CE",
-      "name": "OM Compliance-Evolution",
+      "id": "OM-COMPLIANCE",
+      "name": "OM Compliance",
+      "description": "Attività di osservanza legale e cicli di revisione. Driver: Regulatory compliance, risk mitigation. NO INIT — compliance baseline generale.",
+      "examples": [
+        "Osservanza leggi locali",
+        "Cicli di revisione periodici",
+        "Compliance framework per market",
+        "Risk baseline mitigation"
+      ],
+      "outputTypes": [
+        "Corporate Compliance",
+        "Business Continuity"
+      ],
+      "strategicPillar": "OM Governance & Compliance",
+      "hasInit": false,
+      "driverType": "external_compliance",
+      "color": "#F2007D",
+      "icon": "⚖️"
+    },
+    {
+      "id": "OM-OPTIMISATION",
+      "name": "OM Optimisation",
       "description": "Attività di evoluzione aziendale: nuovi mercati, nuove entità, espansioni. Driver: Company expansion strategy. Sempre con INIT specifica.",
       "examples": [
         "Invoicing in PT (INIT-997)",
@@ -22,28 +43,8 @@
       "icon": "🚀"
     },
     {
-      "id": "OM-CC",
-      "name": "OM Compliance-Continuity",
-      "description": "Attività di osservanza legale e cicli di revisione. Driver: Regulatory compliance, risk mitigation. NO INIT — compliance baseline generale.",
-      "examples": [
-        "Osservanza leggi locali",
-        "Cicli di revisione periodici",
-        "Compliance framework per market",
-        "Risk baseline mitigation"
-      ],
-      "outputTypes": [
-        "Corporate Compliance",
-        "Business Continuity"
-      ],
-      "strategicPillar": "OM Governance & Compliance",
-      "hasInit": false,
-      "driverType": "external_compliance",
-      "color": "#F2007D",
-      "icon": "⚖️"
-    },
-    {
-      "id": "OM-CE-EFF",
-      "name": "OM Compliance-Efficiency",
+      "id": "OM-EFFICIENCY",
+      "name": "OM Efficiency",
       "description": "Attività di analisi e ottimizzazione cross-funzionale. Driver: Cost reduction, process optimization. NO INIT — improvement generale.",
       "examples": [
         "Analisi miglioramento fiscalità infragruppo",
@@ -65,32 +66,32 @@
   "outputTypes": {
     "Business Evolution": {
       "description": "Abilitazione di nuova capability aziendale, market entry, product expansion. Legato alla company growth strategy.",
-      "relatedClusters": ["OM-CE"],
+      "relatedDrivers": ["OM-OPTIMISATION"],
       "forBusinessOwner": "Abilita il tuo VS a entrare in nuovi mercati o lanciare nuovi prodotti"
     },
     "Market Expansion": {
       "description": "Supporto all'espansione geografica. Abilitazione di nuovi paesi/mercati.",
-      "relatedClusters": ["OM-CE"],
+      "relatedDrivers": ["OM-OPTIMISATION"],
       "forBusinessOwner": "Abilita l'operatività nel tuo mercato target con struttura OM allineata"
     },
     "Corporate Compliance": {
       "description": "Conformità alle leggi e regulatory requirement. Osservanza normative locali.",
-      "relatedClusters": ["OM-CC"],
+      "relatedDrivers": ["OM-COMPLIANCE"],
       "forBusinessOwner": "Garantisce che la tua operatività sia legalmente compliant in ogni market"
     },
     "Business Continuity": {
       "description": "Risk mitigation e stabilità operativa. Strutture per continuare il business in caso di change.",
-      "relatedClusters": ["OM-CC"],
+      "relatedDrivers": ["OM-COMPLIANCE"],
       "forBusinessOwner": "Garantisce che il tuo VS continua a operare in caso di disruption o regulatory change"
     },
     "Operational Efficiency": {
       "description": "Ottimizzazione processi, cost reduction, automation di attività. Cross-funzionale.",
-      "relatedClusters": ["OM-CE-EFF"],
+      "relatedDrivers": ["OM-EFFICIENCY"],
       "forBusinessOwner": "Migliora l'efficienza dei tuoi processi e riduce i costi operativi"
     },
     "Cost Optimization": {
       "description": "Riduzione costi attraverso miglioramento fiscalità infragruppo, centralizzazione servizi.",
-      "relatedClusters": ["OM-CE-EFF"],
+      "relatedDrivers": ["OM-EFFICIENCY"],
       "forBusinessOwner": "Riduce i costi infragruppo del tuo VS senza impattare la qualità del servizio"
     }
   },

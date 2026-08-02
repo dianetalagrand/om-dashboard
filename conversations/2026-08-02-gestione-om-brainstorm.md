@@ -89,6 +89,16 @@ Push di tutto il lavoro dal 30 luglio a oggi:
 - **GitHub** `main`: allineato (commit `697e193`)
 - **GitLab**: scoperto che la MR precedente per questo contenuto era già stata mergiata su `main` il 30 luglio (quindi GitLab non era fermo al 28 luglio come sembrava) — la vecchia `sync-real-project` non esisteva più (cancellata dopo il merge). Ripushato un branch `sync-real-project` pulito, un commit sopra il 30 luglio, e serve una **nuova Merge Request** (link fornito a Diane, nessun client GitLab autenticato disponibile per crearla in automatico)
 
+## Decisione 9: mappatura Driver risolta
+
+Diane ha chiesto di procedere e rendere `config/clusters.json` coerente con i 3 Driver, senza aspettare oltre. Mappatura applicata per corrispondenza semantica/nome (nessun vecchio contenuto scartato, solo re-intestato):
+
+- **OM Compliance** ← vecchio OM Compliance-Continuity (legale/regolatorio — corrispondenza diretta)
+- **OM Efficiency** ← vecchio OM Compliance-Efficiency (stesso nome — corrispondenza diretta)
+- **OM Optimisation** ← vecchio OM Compliance-Evolution (l'unico abbinamento rimasto per eliminazione — espansione/nuovi mercati/entità, sempre con INIT)
+
+Propagato ovunque: `config/clusters.json` (id/name aggiornati, descrizioni/esempi/outputTypes/strategicPillar/driverType portati 1:1 sul nuovo nome, aggiunta `_migrationNote` esplicativa nel JSON), `PRODUCT_SPEC.md` (campo Driver, Strategic Pillar, regola Init Code, Output Type), `ARCHITECTURE.md` (colonne F/G/H), `README.md` (Driver Definitions, changelog, Next Steps). Segnalato ovunque che va confermata da Diane, in particolare l'abbinamento Evolution→Optimisation che non è ovvio quanto gli altri due.
+
 ## Esplicitamente fuori scope (confermato in questa sessione)
 
 - UI per gestire la tassonomia (Cluster→Pillar, Output Type, Markets) — resta un file di config

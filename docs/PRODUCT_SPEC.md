@@ -37,11 +37,11 @@ Both sections below are kept functionally separate for this reason, even where t
 |-------|------|----------|-------|
 | **ID** | Auto-generated | ✅ | OMG-{incremental} |
 | **Name** | Text | ✅ | E.g. "Invoicing in PT", "Opening Newco Romania" |
-| **Init Code** | Reference | ❌ | Link to the corresponding Jira ticket (like today's OM digest), e.g. INIT-997, INIT-1004 (recommended for one specific Driver value — see pending mapping note below) — not free text. **Confirmed 2 Aug 2026: no Jira API validation needed.** Diane runs the Init census/budget-request process for OM Inits herself, upstream of this app — by the time a code is entered here, its existence is already guaranteed. Format-only, no integration dependency |
+| **Init Code** | Reference | ❌ | Link to the corresponding Jira ticket (like today's OM digest), e.g. INIT-997, INIT-1004 (recommended when `Driver = OM Optimisation`) — not free text. **Confirmed 2 Aug 2026: no Jira API validation needed.** Diane runs the Init census/budget-request process for OM Inits herself, upstream of this app — by the time a code is entered here, its existence is already guaranteed. Format-only, no integration dependency |
 | **Status** | Dropdown | ✅ | New, In Progress, Paused, Closed (default: New) |
 | **Priority** | Dropdown | ✅ | Urgent, Normal |
-| **Driver** | Dropdown | ✅ | Renamed from `Cluster` 2 Aug 2026 (see `conversations/2026-08-02-gestione-om-brainstorm.md`). Enum: **OM Compliance, OM Optimisation, OM Efficiency** — exactly these 3, nothing else. **Not a filter** — a card attribute/tag only, same treatment as `Markets`. Content mapping from the old Cluster taxonomy (descriptions, examples, Output Type associations) is pending Diane's confirmation — see `config/clusters.json` |
-| **Output Type** | Multi-select | ✅ | Depends on Driver (see mapping table) — a stream can have more than one. Whether this dependency still holds as-is under the new Driver taxonomy is part of the pending confirmation above |
+| **Driver** | Dropdown | ✅ | Renamed from `Cluster` 2 Aug 2026 (see `conversations/2026-08-02-gestione-om-brainstorm.md`). Enum: **OM Compliance, OM Optimisation, OM Efficiency** — exactly these 3, nothing else. **Not a filter** — a card attribute/tag only, same treatment as `Markets`. Mapped from the old Cluster taxonomy by semantic/name match (see `config/clusters.json`): **OM Compliance** ← old Continuity (legal/regulatory), **OM Efficiency** ← old Efficiency (same name), **OM Optimisation** ← old Evolution (the pairing left once the other two matched cleanly — flag if this isn't what was meant) |
+| **Output Type** | Multi-select | ✅ | Depends on Driver (see mapping table in `config/clusters.json`) — a stream can have more than one. Same dependency structure as before, just re-pointed at the new Driver values |
 | **Requester** | Dropdown | ✅ | Business, Corporate, OM Governance |
 | **Markets** | Multi-select, or `all` / `NA` | ✅ | UK, FR, DE, IT, ES, (Tier 2) ... — or `all` (applies to every market) or `NA` (no market dimension). Not a filter, just an attribute shown on the card: displayed when `all`/specific markets, hidden when `NA` |
 | **Completeness %** | Slider | ✅ | 0-100%, default 0%. Purely subjective, set by Admin's own judgment — confirmed 2 Aug 2026 not to need any computed anchor (e.g. tying it to how many `DetailSections` categories are filled). Not an MVP concern |
@@ -50,13 +50,13 @@ Both sections below are kept functionally separate for this reason, even where t
 | **DetailSections → Context, Legal, Finance & Tax, DPO, Conclusion, ancillary** | Long text | ❌ | Same structured template as Need, but genuinely optional at CREATE — a stream is routinely censito with only a subset of these filled in; the rest are added later via UPDATE as the analysis comes in |
 | **Go-live Date** | Date | ❌ | Added 2 Aug 2026. Records when an associated deployment (if any) goes into production — distinct from `EndDate`/Effective Date, which marks when the *stream itself* closes. A stream can go live before it's fully closed |
 
-**Note on Strategic Pillar**: not a separate field to fill in — derived automatically from `Driver` via a fixed mapping (see `config/clusters.json`). This was a deliberate fix: the two fields overlapped, and letting people pick both independently risked inconsistent combinations over time. **Pending** (2 Aug 2026): the actual Efficiency/Optimisation/Compliance → Strategic Pillar mapping needs re-confirming now that `Driver` has replaced `Cluster` — the old mapping (Efficiency → Cost Optimisation, Continuity → OM Governance & Compliance, Evolution → Expansion & Growth) doesn't carry over cleanly onto the new 3 values without Diane confirming which old content goes where.
+**Note on Strategic Pillar**: not a separate field to fill in — derived automatically from `Driver` via a fixed mapping (see `config/clusters.json`): **OM Efficiency → Cost Optimisation, OM Compliance → OM Governance & Compliance, OM Optimisation → Expansion & Growth**. This was a deliberate fix: the two fields overlapped, and letting people pick both independently risked inconsistent combinations over time.
 
 **Validation**:
 - `Name` required
 - At least 1 market selected
 - `Driver` + `Output Type` required
-- If `Driver = <the value replacing old Evolution>` → `Init Code` recommended (but not required). **Pending**: which of the 3 new Driver values (OM Compliance/Optimisation/Efficiency) corresponds to the old "always has an Init code, expansion/new-market" behavior — needs Diane's confirmation before this rule can be re-applied
+- If `Driver = OM Optimisation` → `Init Code` recommended (but not required) — carries over the old Evolution cluster's "always has an Init code, expansion/new-market" behavior
 - `DetailSections → Need` required — the only mandatory narrative category; every other category (Context, Legal, Finance & Tax, DPO, Conclusion, ancillary) is optional at CREATE and filled in over time via UPDATE
 
 **Storage**:

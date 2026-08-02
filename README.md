@@ -18,7 +18,8 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** Critical review pass on Gestione OM (full findings in `conversations/2026-08-02-gestione-om-brainstorm.md`): a draft that reaches Closed without ever publishing gets no special handling (behaves like any closed stream); "[PUBLISH]" lives directly on the stream's own card/form; mistakes are always fixed via EDIT, never a separate undo; `Init Code` needs no Jira API validation (Diane's own upstream Init census already guarantees it exists); `Completeness %` stays a pure manual field, no computed anchor, confirmed not an MVP concern; notifications will eventually split into two audiences (Admin-facing vs. Slack-for-everyone-else) — shape only, detail deferred
 - **NEW:** Working-method note: product-doc changes must be mirrored into `ARCHITECTURE.md` in the same pass, without being asked — Diane wants documentation quality here to match Nathan's own standard of precision
 - **NEW:** Removed all OKR references (`docs/OKR_REFERENCE.md` deleted, OKR mentions scrubbed from `PRODUCT_SPEC.md`/`ARCHITECTURE.md`/`config/clusters.json`/README Next Steps)
-- **NEW:** `Cluster` renamed to **`Driver`**, confirmed as a replacement (not an additional field) — enum is now exactly **OM Compliance, OM Optimisation, OM Efficiency**, and it is explicitly **never a dashboard filter**, only a card tag (same treatment as `Markets`). The "3D dashboard" (Cluster × OutputType × Completeness) framing throughout README/PRODUCT_SPEC/ARCHITECTURE is flagged as stale everywhere it appeared. **Still pending**: how the old Cluster taxonomy's content (descriptions, examples, INIT-code behavior, Strategic Pillar mapping, Output Type associations) maps onto the 3 new Driver values — `config/clusters.json` keeps its old structure/content until Diane confirms the mapping
+- **NEW:** `Cluster` renamed to **`Driver`**, confirmed as a replacement (not an additional field) — enum is now exactly **OM Compliance, OM Optimisation, OM Efficiency**, and it is explicitly **never a dashboard filter**, only a card tag (same treatment as `Markets`). The "3D dashboard" (Cluster × OutputType × Completeness) framing throughout README/PRODUCT_SPEC/ARCHITECTURE is flagged as stale everywhere it appeared
+- **NEW:** `config/clusters.json` content mapped onto the 3 new Driver values by semantic/name match: **OM Compliance** ← old Continuity (legal/regulatory), **OM Efficiency** ← old Efficiency (name match), **OM Optimisation** ← old Evolution (the pairing left over once the other two matched cleanly) — descriptions, examples, Strategic Pillar mapping, and Output Type associations all carried over under the new names. Flag to Diane if the Evolution→Optimisation pairing isn't what she meant
 - **NEW:** Pushed everything since 30 July to both remotes: GitHub `main` is up to date; GitLab needed a **new Merge Request** (the prior one for this content was already merged into GitLab `main` on 30 July, contrary to what looked like no progress since 28 July) — opened from branch `sync-real-project`
 
 **30 July 2026** (direction from Nathan Vené — see `conversations/2026-07-30-domain-split-and-stack-pivot.md`):
@@ -222,10 +223,10 @@ om-dashboard/
 
 ### Driver Definitions
 
-Renamed from "Cluster" 2 Aug 2026 — see `config/clusters.json`. Enum: **OM Compliance, OM Optimisation, OM Efficiency**. The old definitions below (Evolution/Continuity/Efficiency) are the *previous* taxonomy, kept here only until Diane confirms how their content (descriptions, examples, INIT-code behavior, Output Type associations) maps onto the new 3 values:
-- ~~OM Compliance-Evolution~~ — Expansion initiatives (with INIT codes)
-- ~~OM Compliance-Continuity~~ — Regulatory compliance & stability
-- ~~OM Compliance-Efficiency~~ — Cross-functional optimization
+Renamed from "Cluster" 2 Aug 2026 — see `config/clusters.json`. Enum: **OM Compliance, OM Optimisation, OM Efficiency**. Mapped from the old taxonomy by semantic/name match (flag to Diane if the Evolution→Optimisation pairing below isn't what she meant — the other two matched cleanly, this one was the pairing left over):
+- **OM Compliance** (was OM Compliance-Continuity) — Regulatory compliance & stability, no INIT
+- **OM Optimisation** (was OM Compliance-Evolution) — Expansion initiatives, with INIT codes
+- **OM Efficiency** (was OM Compliance-Efficiency) — Cross-functional optimization, no INIT
 
 ### Market Classification
 
@@ -265,7 +266,7 @@ Announce go-live via Slack (#om-governance-updates) + Email to OM Team + Value S
 ## Next Steps
 
 1. **Nathan Vené approval** — Driver taxonomy and market scope (blocking Sprint 1)
-2. **Confirm Driver content mapping** — how the old Cluster taxonomy's descriptions/examples/Output Type associations map onto the new `Driver` values (OM Compliance, OM Optimisation, OM Efficiency), before `config/clusters.json` and the dashboard framing can be finalized
+2. **Diane to confirm the Driver content mapping** applied 2 Aug 2026 (OM Compliance←Continuity, OM Efficiency←Efficiency, OM Optimisation←Evolution) is correct — see `config/clusters.json`
 3. **Notification strategy toward Value Stream Owners** — Diane and Nathan still need to decide if/how notifications extend beyond the internal OM team (not blocking Sprint 1/2)
 4. **Resolve the Open Questions on the new stack** — hosting, Postgres provisioning, CI/CD ownership, frontend framework (blocking Sprint 1, see Architecture above)
 5. **Re-scope Sprint 1 effort/timeline** — `MVP_ROADMAP.md` hours still assume Apps Script; not recalculated yet, deferred by Diane on 30 July 2026
