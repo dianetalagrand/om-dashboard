@@ -1,112 +1,44 @@
 {
-  "_migrationNote": "Updated 2 Aug 2026 per Diane's direction. 'clusters' -> 'drivers'; never a dashboard filter, card tag only. Now 4 values: OM Compliance (was OM Compliance-Continuity), OM Efficiency (was OM Compliance-Efficiency), OM Evolution (was OM Compliance-Evolution — direct name match), OM Optimisation (genuinely new, no prior content to carry over — description/examples/outputTypes below are placeholders, need Diane's input). See conversations/2026-08-02-gestione-om-brainstorm.md.",
+  "_status": "SUPERSEDED 3 Aug 2026 by the accepted domain reframe — see docs/proposal/README.md. Driver is now 3 values, counted from the real 34 streams, not designed: OM Governance (24 + the 2 previously mis-split as 'OM Compliance' = 26), OM Market Expansion (5), OM Efficiency (3). Descriptions/examples/output-type mappings below are placeholders — M1 ('seed from evidence') derives the real ones from the 34 stream tabs + 3 other source documents, per the rule that a field not backed by actual evidence gets cut, not invented.",
   "drivers": [
     {
-      "id": "OM-COMPLIANCE",
-      "name": "OM Compliance",
-      "description": "Attività di osservanza legale e cicli di revisione. Driver: Regulatory compliance, risk mitigation. NO INIT — compliance baseline generale.",
-      "examples": [
-        "Osservanza leggi locali",
-        "Cicli di revisione periodici",
-        "Compliance framework per market",
-        "Risk baseline mitigation"
-      ],
-      "outputTypes": [
-        "Corporate Compliance",
-        "Business Continuity"
-      ],
-      "strategicPillar": "OM Governance & Compliance",
-      "hasInit": false,
-      "driverType": "external_compliance",
+      "id": "OM-GOVERNANCE",
+      "name": "OM Governance",
+      "description": "PLACEHOLDER — to derive from the 26 real streams tagged Governance or (the now-merged) Compliance during M1.",
+      "examples": [],
+      "outputTypes": [],
+      "strategicPillar": null,
+      "hasInit": null,
+      "driverType": null,
       "color": "#F2007D",
       "icon": "⚖️"
     },
     {
-      "id": "OM-EVOLUTION",
-      "name": "OM Evolution",
-      "description": "Attività di evoluzione aziendale: nuovi mercati, nuove entità, espansioni. Driver: Company expansion strategy. Sempre con INIT specifica.",
-      "examples": [
-        "Invoicing in PT (INIT-997)",
-        "Apertura Newco Romania (INIT-1004)",
-        "Market entry nuovi paesi",
-        "Nuove product lines"
-      ],
-      "outputTypes": [
-        "Business Evolution",
-        "Market Expansion"
-      ],
-      "strategicPillar": "Expansion & Growth",
-      "hasInit": true,
-      "initCodeType": "jira-reference",
-      "driverType": "external_strategic",
+      "id": "OM-MARKET-EXPANSION",
+      "name": "OM Market Expansion",
+      "description": "PLACEHOLDER — to derive from the 5 real streams tagged Market Expansion during M1.",
+      "examples": [],
+      "outputTypes": [],
+      "strategicPillar": null,
+      "hasInit": null,
+      "driverType": null,
       "color": "#2ABEB9",
       "icon": "🚀"
     },
     {
       "id": "OM-EFFICIENCY",
       "name": "OM Efficiency",
-      "description": "Attività di analisi e ottimizzazione cross-funzionale. Driver: Cost reduction, process optimization. NO INIT — improvement generale.",
-      "examples": [
-        "Analisi miglioramento fiscalità infragruppo",
-        "Remunerazione inter-company pricing",
-        "Accentramenti costi e servizi",
-        "Ottimizzazione strutture"
-      ],
-      "outputTypes": [
-        "Operational Efficiency",
-        "Cost Optimization"
-      ],
-      "strategicPillar": "Cost Optimisation",
-      "hasInit": false,
-      "driverType": "internal_operational",
-      "color": "#4a86e8",
-      "icon": "⚡"
-    },
-    {
-      "id": "OM-OPTIMISATION",
-      "name": "OM Optimisation",
-      "description": "PLACEHOLDER — added 2 Aug 2026, no prior cluster content maps to this one. Diane to provide the real description.",
+      "description": "PLACEHOLDER — to derive from the 3 real streams tagged Efficiency during M1.",
       "examples": [],
       "outputTypes": [],
       "strategicPillar": null,
-      "hasInit": false,
+      "hasInit": null,
       "driverType": null,
-      "color": "#9B59B6",
-      "icon": "🔧"
+      "color": "#4a86e8",
+      "icon": "⚡"
     }
   ],
-  "outputTypes": {
-    "Business Evolution": {
-      "description": "Abilitazione di nuova capability aziendale, market entry, product expansion. Legato alla company growth strategy.",
-      "relatedDrivers": ["OM-EVOLUTION"],
-      "forBusinessOwner": "Abilita il tuo VS a entrare in nuovi mercati o lanciare nuovi prodotti"
-    },
-    "Market Expansion": {
-      "description": "Supporto all'espansione geografica. Abilitazione di nuovi paesi/mercati.",
-      "relatedDrivers": ["OM-EVOLUTION"],
-      "forBusinessOwner": "Abilita l'operatività nel tuo mercato target con struttura OM allineata"
-    },
-    "Corporate Compliance": {
-      "description": "Conformità alle leggi e regulatory requirement. Osservanza normative locali.",
-      "relatedDrivers": ["OM-COMPLIANCE"],
-      "forBusinessOwner": "Garantisce che la tua operatività sia legalmente compliant in ogni market"
-    },
-    "Business Continuity": {
-      "description": "Risk mitigation e stabilità operativa. Strutture per continuare il business in caso di change.",
-      "relatedDrivers": ["OM-COMPLIANCE"],
-      "forBusinessOwner": "Garantisce che il tuo VS continua a operare in caso di disruption o regulatory change"
-    },
-    "Operational Efficiency": {
-      "description": "Ottimizzazione processi, cost reduction, automation di attività. Cross-funzionale.",
-      "relatedDrivers": ["OM-EFFICIENCY"],
-      "forBusinessOwner": "Migliora l'efficienza dei tuoi processi e riduce i costi operativi"
-    },
-    "Cost Optimization": {
-      "description": "Riduzione costi attraverso miglioramento fiscalità infragruppo, centralizzazione servizi.",
-      "relatedDrivers": ["OM-EFFICIENCY"],
-      "forBusinessOwner": "Riduce i costi infragruppo del tuo VS senza impattare la qualità del servizio"
-    }
-  },
+  "outputTypes": {},
   "statusEnum": [
     "New",
     "In Progress",

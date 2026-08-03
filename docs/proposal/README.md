@@ -1,6 +1,8 @@
-# Proposal — a reframe of the model, not yet agreed
+# Domain reframe — ACCEPTED 3 August 2026
 
-**Status: proposal. Nothing here has replaced anything in `docs/`.**
+**Status: accepted by Diane. This now supersedes the data model in `docs/ARCHITECTURE.md`, the `Driver` list and `DetailSections` in `docs/PRODUCT_SPEC.md`, the category definitions in `../../config/clusters.json`, the dashboard layout in `PRODUCT_SPEC.md` §2.1, and `../MVP_ROADMAP.md` (replaced by the Map 3 milestone plan). Those files are marked superseded, not deleted — see each for the pointer back here.**
+
+**One correction to the taxonomy on acceptance (Diane, 3 Aug 2026): `OM Compliance` and `OM Governance` are not two separate Drivers — everything Nathan counted as `OM Compliance` (2 streams) is `OM Governance`. The Driver list is 3 values, not 4: OM Governance, OM Market Expansion, OM Efficiency.**
 
 ## What is in here
 
@@ -28,7 +30,7 @@ have no room for:
 It also found that the four categories already exist, consistently tagged, across the 34 real
 streams — and that they are not the four in the current spec.
 
-## What it would replace, if agreed
+## What it replaces
 
 The data model in `../ARCHITECTURE.md`; the `Driver` list and `DetailSections` in
 `../PRODUCT_SPEC.md`; the category definitions in `../../config/clusters.json`; the dashboard layout
@@ -40,8 +42,4 @@ carries over unchanged.
 
 ## Before anything moves
 
-Two decisions, both listed in section 8 of `om-maps.html`:
-
-- **Diane** — is a function's input filed by function or by kind of impact? This shapes everything
-  else.
-- **Nathan** — agreement on the vocabulary and the four categories.
+**Accepted 3 Aug 2026 by Diane**, including Nathan's recommended defaults on the open questions in section 8 of `om-maps.html` (function-keyed assessment with an impact-type facet; controlled function list; Stream keeps its name) — except the Driver taxonomy, corrected above (3 values, Governance absorbs Compliance). Still open, tracked in `PROJECT.md` and the 30-July infra questions doc: Nathan's own sign-off items (2-4 in section 8), and the 7 stack/infra questions.

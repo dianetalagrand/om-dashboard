@@ -1,5 +1,7 @@
 # OM Catalog — Product Specification
 
+> **Partially superseded (3 August 2026)**: Nathan's domain-reframe proposal is **accepted** — see `docs/proposal/README.md`. It replaces the `Driver` list below (now 3 values: OM Governance, OM Market Expansion, OM Efficiency — not the 4 here), `DetailSections`'s fixed-category model, and the Domain B dashboard layout in §2.1. The behavioral spec (Admin role, Draft/Publish, Kanban, access, notifications) is **not** superseded — Nathan's proposal explicitly carries it over unchanged. Kept here for reference until the accepted model is written up in full; don't build against the `Driver`/`DetailSections`/dashboard sections below.
+
 ## Overview
 
 **Purpose**: Build an app usable by the business (Value Streams Owner) that displays the catalog of OM activities, showing **what the OM office does** and **what benefit it returns to the company** through cross-functional strategic decisions (legal, tax, DPO, finance). **Note (2 Aug 2026)**: the "three-dimensionally" framing (Cluster × OutputType × Completeness) is stale now that `Driver` (Cluster's replacement) is explicitly not a filter dimension — the actual dashboard dimensions are being reworked, see §2.1.

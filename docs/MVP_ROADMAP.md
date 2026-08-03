@@ -1,6 +1,6 @@
 # OM Catalog — MVP Roadmap
 
-> **Superseded (30 July 2026)**: this roadmap's sprints, deliverables, and hours below still assume the Google Apps Script + Sheet stack. Nathan's direction is now TypeScript/Node + PostgreSQL from the start, with the app split into two domains (Gestione OM / Visualizzazione OM) — see `conversations/2026-07-30-domain-split-and-stack-pivot.md`. Effort/timeline have **not** been recalculated for the new stack yet (deferred deliberately by Diane); the numbers below are stale until that happens. Do not use the 25 Aug 2026 go-live date as current.
+> **Superseded (30 July 2026, then fully replaced 3 August 2026)**: this roadmap's sprints, deliverables, and hours below still assume the Google Apps Script + Sheet stack, and were never recalculated. **As of 3 Aug 2026 this entire file is replaced by the Map 3 milestone plan** in `docs/proposal/OM_DOMAIN_MAPS.md` §3 (M0 Unblock → M1 Seed from evidence → M2 Coordination core → M3 Decisions → M4 Read surface → M5 Digest → M6 As-Is registry), accepted by Diane — see `docs/proposal/README.md`. Do not plan against this file; use the milestone plan instead. Kept only for historical reference.
 
 ## Overview
 

@@ -1,5 +1,7 @@
 # OM Catalog — Architecture
 
+> **Data model superseded (3 August 2026)**: Nathan's domain-reframe proposal is **accepted** — see `docs/proposal/README.md`. The single `om_catalog` table below is replaced by Stream/Assessment/Decision/Forum/Milestone objects (`docs/proposal/OM_DOMAIN_MAPS.md` Map 1-2); the `Driver` enum is 3 values now (OM Governance, OM Market Expansion, OM Efficiency), not the 4 here. Access/Admin/notifications sections below are **not** superseded. Kept for reference until the accepted schema is written up.
+
 ## Overview
 
 **Vision**: this app is the **single management center for Operations Management**, replacing the OM Streams Log Doc and the other siloed OM tracking documents — not running alongside them. OM work should be created, updated, and reported on only in the app once it's live.
