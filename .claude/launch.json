@@ -1,11 +1,5 @@
 {
   "version": "0.0.1",
-  "configurations": [
-    {
-      "name": "wu-station",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"],
-      "port": 1234
-    }
-  ]
+  "_comment": "No dev server yet — app/ is a scaffold with no dependencies (see app/README.md). The previous entry pointed at a 'wu-station' project that does not exist in this repo; it was left over from the onboarding template and would have failed on launch. Add an entry here once app/ actually runs.",
+  "configurations": []
 }

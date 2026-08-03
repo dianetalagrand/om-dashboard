@@ -16,4 +16,4 @@
 - Blocked on Nathan: 7 infra questions (`conversations/2026-07-30-domande-per-nathan-stack-infra.md`) + agreement on vocabulary and the 4 categories
 - Blocked on Diane, decides the central table: is a function's input filed by function, or by kind of impact?
 - Real driver tags, counted from the 34 streams in the Log: OM Governance 24, OM Market Expansion 5, OM Efficiency 3, OM Compliance 2. `OM Optimisation` in config/clusters.json does not exist in the real material
-- Stale in repo, not fixed: `.claude/launch.json` points at a `wu-station` project that isn't here
+- `.claude/launch.json`: empty until `app/` runs (stale wu-station entry removed 3 Aug 2026)
