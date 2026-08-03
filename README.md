@@ -197,25 +197,49 @@ See `docs/ARCHITECTURE.md` for the full schema.
 
 ## Repository Structure
 
+Reorganised 3 August 2026. Nothing was deleted — the Apps Script prototype moved into `archive/`,
+and a new `app/` folder holds the application itself.
+
 ```
-om-dashboard/
+om-governance-dashboard/
 ├── README.md (this file — overview, architecture, dev, deployment)
+├── PROJECT.md (durable project facts — the one file Claude keeps updated)
+├── CLAUDE.md (team rules — humans only)
 │
-├── docs/
+├── app/                    THE APPLICATION — scaffold only, no code yet
+│   ├── README.md           what's decided, what's blocking, why there are no dependencies
+│   ├── package.json        Node version only
+│   ├── .env.example        shape of the config; never commit a real .env
+│   ├── src/README.md       where code goes, and the vocabulary to use
+│   └── db/README.md        the tables sketch, and the question that blocks the schema
+│
+├── docs/                   THE AGREED SPEC (current)
 │   ├── PRODUCT_SPEC.md
 │   ├── ARCHITECTURE.md
 │   ├── UI_WIREFRAMES.md
-│   └── MVP_ROADMAP.md
+│   ├── MVP_ROADMAP.md
+│   └── proposal/           A REFRAME, NOT YET AGREED — read its README first
+│       ├── om-maps.html    open by double-click; no server, works offline
+│       └── OM_DOMAIN_MAPS.md
 │
-├── conversations/ (decision log)
+├── conversations/          decision log, in Italian — why choices were made
 │
 ├── config/
-│   ├── clusters.json (3 Driver values + output type mapping — filename kept as-is, content renamed 2 Aug 2026)
-│   └── markets.json (Tier 1/2/3 classification)
+│   ├── clusters.json       Driver values + output type mapping (filename kept as-is)
+│   └── markets.json        Tier 1/2/3 classification
 │
-├── Code.gs (superseded — Apps Script prototype, kept as historical reference only)
-└── index.html (superseded — Apps Script prototype, kept as historical reference only)
+└── archive/                kept for reference, not in use
+    └── apps-script-prototype/   Code.gs, index.html, .clasp.json — see its README
 ```
+
+**Where to start**, depending on what you need:
+
+| You want to | Read |
+|---|---|
+| Understand what the app is meant to do, and in what order | `docs/proposal/om-maps.html` |
+| Know what was formally specified and agreed so far | `docs/PRODUCT_SPEC.md` |
+| Know why a decision was made | `conversations/` |
+| Start building | `app/README.md` |
 
 ---
 

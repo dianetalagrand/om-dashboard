@@ -1,0 +1,11 @@
+{
+  "name": "om-app",
+  "version": "0.0.0",
+  "private": true,
+  "description": "OM application — coordination, decisions and lookup for Operating Model work",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "comment": "No dependencies yet, on purpose. The frontend framework is still an open question for Nathan, and installing an HTTP framework or ORM before that is answered means installing and then removing. See README.md in this folder."
+}
