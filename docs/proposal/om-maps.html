@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OM App — what we are building, and in what order</title>
+<style>
+/* ---------------------------------------------------------------
+   TOKENS — light is the base; dark redefines tokens only.
+   The viewer's toggle stamps data-theme on :root and wins last.
+   --------------------------------------------------------------- */
+:root {
+  color-scheme: light dark;
+  --paper:        #f7f8fa;
+  --paper-raised: #ffffff;
+  --paper-sunken: #eef0f4;
+  --ink:          #14181f;
+  --ink-2:        #4a5262;
+  --ink-3:        #7c8494;
+  --rule:         #dde1e8;
+  --rule-strong:  #c3c9d4;
+  --accent:       #f2007d;
+  --accent-quiet: #fdeaf3;
+  --accent-ink:   #a8005a;
+
+  --d-governance: #5a6472;
+  --d-expansion:  #2abeb9;
+  --d-efficiency: #4a86e8;
+  --d-compliance: #b5730e;
+
+  --later:        #8a6fb0;
+  --later-quiet:  #f1ecf7;
+  --pain:         #c0392b;
+
+  --shadow: 0 1px 2px rgba(20,24,31,.05), 0 8px 24px -12px rgba(20,24,31,.12);
+
+  --step--1: .8125rem;
+  --step-0:  1rem;
+  --step-1:  1.1875rem;
+  --step-2:  1.5rem;
+  --step-3:  2rem;
+  --step-4:  2.75rem;
+
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --sidebar: 268px;
+  --measure: 68ch;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:#101318; --paper-raised:#171b22; --paper-sunken:#0b0e12;
+    --ink:#e6e9ef; --ink-2:#a8b0be; --ink-3:#737c8b;
+    --rule:#262c36; --rule-strong:#39414e;
+    --accent:#ff3d97; --accent-quiet:#2a0f20; --accent-ink:#ff7ab8;
+    --d-governance:#8b95a5; --d-expansion:#35d6d0; --d-efficiency:#6b9ff0; --d-compliance:#d69a2e;
+    --later:#a98fce; --later-quiet:#1f1a29; --pain:#e8705f;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper:#101318; --paper-raised:#171b22; --paper-sunken:#0b0e12;
+  --ink:#e6e9ef; --ink-2:#a8b0be; --ink-3:#737c8b;
+  --rule:#262c36; --rule-strong:#39414e;
+  --accent:#ff3d97; --accent-quiet:#2a0f20; --accent-ink:#ff7ab8;
+  --d-governance:#8b95a5; --d-expansion:#35d6d0; --d-efficiency:#6b9ff0; --d-compliance:#d69a2e;
+  --later:#a98fce; --later-quiet:#1f1a29; --pain:#e8705f;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --paper:#f7f8fa; --paper-raised:#ffffff; --paper-sunken:#eef0f4;
+  --ink:#14181f; --ink-2:#4a5262; --ink-3:#7c8494;
+  --rule:#dde1e8; --rule-strong:#c3c9d4;
+  --accent:#f2007d; --accent-quiet:#fdeaf3; --accent-ink:#a8005a;
+  --d-governance:#5a6472; --d-expansion:#2abeb9; --d-efficiency:#4a86e8; --d-compliance:#b5730e;
+  --later:#8a6fb0; --later-quiet:#f1ecf7; --pain:#c0392b;
+  --shadow: 0 1px 2px rgba(20,24,31,.05), 0 8px 24px -12px rgba(20,24,31,.12);
+}
+
+*,*::before,*::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin:0; background: var(--paper); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height:1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1,h2,h3,h4 { margin:0; font-weight:600; text-wrap: balance; line-height:1.2; }
+p { margin:0; }
+a { color: var(--accent-ink); text-underline-offset:2px; }
+a:hover { color: var(--accent); }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+code,.mono { font-family: var(--font-mono); font-size:.9em; }
+
+/* ------------------------------- shell ------------------------------- */
+.shell { display:grid; grid-template-columns: var(--sidebar) minmax(0,1fr); align-items:start; }
+.sidebar {
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column; gap:1.5rem;
+  padding:2rem 1.25rem; border-right:1px solid var(--rule); background: var(--paper-sunken);
+}
+.brand { display:flex; flex-direction:column; gap:.3rem; }
+.brand-kicker { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3); }
+.brand-name { font-family:var(--font-display); font-size:var(--step-1); letter-spacing:-.01em; }
+.nav { display:flex; flex-direction:column; gap:.1rem; }
+.nav-label { font-family:var(--font-mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); padding:0 .5rem .5rem; }
+.nav a {
+  display:flex; align-items:baseline; gap:.55rem; padding:.4rem .5rem; border-radius:3px;
+  color:var(--ink-2); text-decoration:none; font-size:var(--step--1); border-left:2px solid transparent;
+}
+.nav a .num { font-family:var(--font-mono); font-size:.6875rem; color:var(--ink-3); min-width:1.1em; }
+.nav a:hover { background:var(--paper-raised); color:var(--ink); }
+.nav a[aria-current="true"] { color:var(--ink); font-weight:600; border-left-color:var(--accent); background:var(--paper-raised); }
+.nav a[aria-current="true"] .num { color:var(--accent); }
+.controls { margin-top:auto; display:flex; flex-direction:column; gap:.7rem; padding-top:1.5rem; border-top:1px solid var(--rule); }
+.ctrl { display:flex; align-items:center; gap:.55rem; font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-2); cursor:pointer; }
+.ctrl input { accent-color:var(--accent); margin:0; cursor:pointer; }
+.ctrl-btn {
+  appearance:none; border:1px solid var(--rule-strong); background:var(--paper-raised); color:var(--ink-2);
+  border-radius:3px; padding:.45rem .6rem; font-family:var(--font-mono); font-size:.6875rem;
+  letter-spacing:.06em; text-transform:uppercase; cursor:pointer; text-align:left;
+}
+.ctrl-btn:hover { color:var(--ink); border-color:var(--ink-3); }
+.sidebar-foot { font-size:.6875rem; color:var(--ink-3); font-family:var(--font-mono); line-height:1.5; }
+
+.main { min-width:0; padding:3.5rem clamp(1.5rem,4vw,4rem) 8rem; }
+.main > * + * { margin-top:4rem; }
+
+/* ------------------------------ masthead ----------------------------- */
+.masthead { display:flex; flex-direction:column; gap:1.25rem; max-width:var(--measure); }
+.status-line { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+.tag { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; padding:.2rem .5rem; border-radius:3px; border:1px solid var(--rule-strong); color:var(--ink-2); }
+.tag--live { border-color:var(--accent); color:var(--accent-ink); background:var(--accent-quiet); }
+.masthead h1 { font-family:var(--font-display); font-size:var(--step-4); letter-spacing:-.02em; }
+.lede { font-size:var(--step-1); color:var(--ink-2); line-height:1.5; }
+.thesis { border-left:2px solid var(--accent); padding:.25rem 0 .25rem 1.25rem; font-family:var(--font-display); font-size:var(--step-2); line-height:1.35; letter-spacing:-.01em; max-width:56ch; }
+
+/* ------------------------------ sections ----------------------------- */
+.section { scroll-margin-top:1.5rem; }
+.section > * + * { margin-top:1.5rem; }
+.section-head { display:flex; flex-direction:column; gap:.5rem; padding-bottom:1rem; border-bottom:1px solid var(--rule); }
+.section-num { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); }
+.section-head h2 { font-family:var(--font-display); font-size:var(--step-3); letter-spacing:-.015em; }
+.section-head p { color:var(--ink-2); max-width:var(--measure); }
+h3.sub { font-size:var(--step-1); letter-spacing:-.005em; margin-top:2.5rem; }
+h4.sub { font-family:var(--font-mono); font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin-top:2rem; }
+.prose { max-width:var(--measure); }
+.prose > * + * { margin-top:1rem; }
+.prose ul,.prose ol { margin:0; padding-left:1.25rem; }
+.prose li + li { margin-top:.4rem; }
+
+/* ------------------------------- figures ----------------------------- */
+.figure { display:flex; flex-direction:column; gap:.75rem; }
+.figure-frame { overflow-x:auto; background:var(--paper-raised); border:1px solid var(--rule); border-radius:4px; padding:1.5rem; box-shadow:var(--shadow); }
+.figure-frame svg { display:block; min-width:660px; width:100%; height:auto; }
+figcaption { font-size:var(--step--1); color:var(--ink-3); max-width:var(--measure); }
+figcaption b { color:var(--ink-2); font-weight:600; }
+
+.dg text { font-family:var(--font-mono); fill:var(--ink); }
+.dg .box { fill:var(--paper-raised); stroke:var(--rule-strong); stroke-width:1.25; }
+.dg .box--hero { stroke:var(--accent); stroke-width:2; fill:var(--accent-quiet); }
+.dg .box--band { fill:var(--paper-sunken); stroke:var(--rule); }
+.dg .box--muted { fill:var(--paper-sunken); stroke:var(--rule); }
+.dg .t { font-size:12px; font-weight:600; }
+.dg .t--hero { font-size:13px; letter-spacing:.04em; }
+.dg .s { font-size:10px; fill:var(--ink-3); font-weight:400; }
+.dg .lbl { font-size:9.5px; fill:var(--ink-3); letter-spacing:.08em; }
+.dg .band-lbl { font-size:10px; fill:var(--ink-3); letter-spacing:.14em; font-weight:600; }
+.dg .link { stroke:var(--rule-strong); stroke-width:1.5; fill:none; }
+.dg .link--soft { stroke:var(--ink-3); stroke-width:1.25; stroke-dasharray:4 3; fill:none; }
+.dg .diamond { fill:var(--paper-raised); stroke:var(--ink-3); stroke-width:1.25; }
+.dg .pain { fill:var(--pain); font-size:10px; }
+.dg .pain-mark { fill:none; stroke:var(--pain); stroke-width:1.5; stroke-dasharray:3 2; }
+.dg .later rect,.dg .later .box { stroke:var(--later); stroke-dasharray:5 3; fill:var(--later-quiet); }
+.dg .later text { fill:var(--ink-2); }
+.dg .later .s { fill:var(--later); }
+.dg .hit { cursor:pointer; }
+.dg .hit:hover .box { stroke:var(--accent); }
+.dg .hit:focus-visible .box { stroke:var(--accent); stroke-width:2; }
+
+body.mvp-only .later { opacity:.22; }
+body.mvp-only .is-later { opacity:.3; }
+.later,.is-later { transition:opacity .18s ease; }
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+
+/* ------------------------------- tables ------------------------------ */
+.table-frame { overflow-x:auto; border:1px solid var(--rule); border-radius:4px; background:var(--paper-raised); }
+table { border-collapse:collapse; width:100%; min-width:560px; font-size:var(--step--1); }
+caption { text-align:left; padding:.85rem 1rem; font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); border-bottom:1px solid var(--rule); }
+th,td { text-align:left; padding:.7rem 1rem; vertical-align:top; border-bottom:1px solid var(--rule); }
+thead th { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); font-weight:600; background:var(--paper-sunken); }
+tbody tr:last-child th,tbody tr:last-child td { border-bottom:0; }
+.rowhead { font-weight:600; width:1%; white-space:nowrap; }
+.num-cell { font-variant-numeric:tabular-nums; font-family:var(--font-mono); white-space:nowrap; }
+.q-key { font-family:var(--font-mono); font-weight:600; color:var(--accent-ink); white-space:nowrap; }
+.swatch { display:inline-flex; align-items:center; gap:.45rem; white-space:nowrap; }
+.swatch::before { content:""; width:9px; height:9px; border-radius:2px; background:var(--sw,var(--ink-3)); flex:none; }
+.sw-gov{--sw:var(--d-governance)} .sw-exp{--sw:var(--d-expansion)} .sw-eff{--sw:var(--d-efficiency)} .sw-com{--sw:var(--d-compliance)}
+
+/* --------------------- the capability x release matrix ---------------- */
+.matrix-frame { overflow-x:auto; border:1px solid var(--rule); border-radius:4px; background:var(--paper-raised); box-shadow:var(--shadow); }
+table.matrix { min-width:760px; }
+table.matrix th.cap { width:38%; font-family:var(--font-body); font-size:var(--step--1); text-transform:none; letter-spacing:0; color:var(--ink); font-weight:500; background:transparent; line-height:1.4; }
+table.matrix thead th.relcol { text-align:center; width:9%; white-space:nowrap; }
+table.matrix thead th.relcol span { display:block; font-size:.625rem; color:var(--ink-3); letter-spacing:.04em; text-transform:none; font-weight:400; }
+table.matrix td { text-align:center; padding:.55rem .5rem; }
+table.matrix tbody tr:hover th.cap,table.matrix tbody tr:hover td { background:var(--paper-sunken); }
+.dot { display:inline-block; width:11px; height:11px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--accent-quiet); }
+.bar { display:inline-block; width:22px; height:3px; border-radius:2px; background:var(--rule-strong); }
+.dot--later { background:var(--later); box-shadow:0 0 0 3px var(--later-quiet); }
+.grp th { background:var(--paper-sunken); font-family:var(--font-mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); padding:.5rem 1rem; }
+.legend { display:flex; flex-wrap:wrap; gap:1.25rem; font-size:var(--step--1); color:var(--ink-3); }
+.legend span { display:inline-flex; align-items:center; gap:.45rem; }
+
+/* ------------------------------- cards ------------------------------- */
+.grid { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); }
+.card { border:1px solid var(--rule); border-radius:4px; background:var(--paper-raised); padding:1rem 1.15rem; display:flex; flex-direction:column; gap:.4rem; }
+.card:target,.card.flash { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-quiet); }
+.card-name { font-family:var(--font-mono); font-size:var(--step--1); font-weight:600; letter-spacing:.02em; }
+.card-what { font-size:var(--step--1); color:var(--ink-2); }
+.card-ev { font-size:.75rem; color:var(--ink-3); font-family:var(--font-mono); line-height:1.5; }
+.card.is-later .card-name::after {
+  content:"later"; margin-left:.5rem; font-size:.625rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--later); border:1px solid var(--later); padding:.05rem .3rem; border-radius:2px; font-weight:400;
+}
+.who { display:flex; flex-direction:column; gap:.45rem; }
+.who-role { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink); }
+.who-name { font-size:var(--step-0); font-weight:600; }
+.who-need { font-size:var(--step--1); color:var(--ink-2); }
+.who-serves { font-size:.75rem; color:var(--ink-3); font-family:var(--font-mono); }
+
+/* ------------------------------ callouts ----------------------------- */
+.callout { border:1px solid var(--rule); border-left:2px solid var(--accent); border-radius:0 4px 4px 0; background:var(--paper-raised); padding:1.15rem 1.35rem; max-width:var(--measure); display:flex; flex-direction:column; gap:.6rem; }
+.callout-label { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-ink); }
+.callout.later-note { border-left-color:var(--later); }
+.callout.later-note .callout-label { color:var(--later); }
+.callout.pain-note { border-left-color:var(--pain); }
+.callout.pain-note .callout-label { color:var(--pain); }
+
+/* ------------------------------ releases ----------------------------- */
+.rel-list { display:flex; flex-direction:column; gap:1.25rem; }
+.rel {
+  border:1px solid var(--rule); border-radius:4px; background:var(--paper-raised);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.rel-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:.75rem; padding:1rem 1.35rem; border-bottom:1px solid var(--rule); background:var(--paper-sunken); }
+.rel-id { font-family:var(--font-mono); font-size:.75rem; letter-spacing:.1em; color:var(--accent-ink); font-weight:600; }
+.rel-title { font-size:var(--step-1); font-weight:600; letter-spacing:-.005em; }
+.rel-when { font-family:var(--font-mono); font-size:.6875rem; color:var(--ink-3); margin-left:auto; }
+.rel-body { display:grid; gap:0; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+.slot { padding:1.1rem 1.35rem; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); display:flex; flex-direction:column; gap:.5rem; }
+.slot:last-child { border-right:0; }
+.slot-label { font-family:var(--font-mono); font-size:.625rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); }
+.slot ul { margin:0; padding-left:1.1rem; font-size:var(--step--1); }
+.slot li + li { margin-top:.3rem; }
+.slot--can .slot-label { color:var(--accent-ink); }
+.slot--can li { color:var(--ink); }
+.slot--outside li,.slot--stop li { color:var(--ink-2); }
+.brief { grid-column:1 / -1; border-right:0; border-bottom:0; background:var(--paper-sunken); }
+.brief .slot-label { color:var(--ink-2); }
+.brief-text { font-family:var(--font-mono); font-size:.75rem; line-height:1.7; color:var(--ink-2); background:var(--paper-raised); border:1px solid var(--rule); border-radius:3px; padding:.85rem 1rem; }
+.rel.is-later .rel-head { background:var(--later-quiet); }
+.rel.is-later .rel-id { color:var(--later); }
+
+/* ------------------------------ questions ---------------------------- */
+.qlist { display:flex; flex-direction:column; gap:.85rem; max-width:var(--measure); counter-reset:q; }
+.q { display:grid; grid-template-columns:auto 1fr; gap:.85rem; align-items:start; }
+.q::before {
+  counter-increment:q; content:counter(q); font-family:var(--font-mono); font-size:.75rem; color:var(--ink-3);
+  border:1px solid var(--rule-strong); border-radius:3px; width:1.5rem; height:1.5rem;
+  display:grid; place-items:center; flex:none; margin-top:.1rem;
+}
+.q-body > * + * { margin-top:.3rem; }
+.q-rec { font-size:var(--step--1); color:var(--ink-2); }
+.q-rec .mono { color:var(--accent-ink); }
+
+@media (max-width:900px) {
+  .shell { grid-template-columns:1fr; }
+  .sidebar { position:static; height:auto; border-right:0; border-bottom:1px solid var(--rule); }
+  .controls { margin-top:1rem; }
+  .main { padding-top:2rem; }
+  .slot { border-right:0; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-kicker">OM Governance</span>
+      <span class="brand-name">The OM App</span>
+    </div>
+
+    <nav class="nav" id="nav" aria-label="Sections">
+      <span class="nav-label">Contents</span>
+      <a href="#what"><span class="num">1</span> What we are building</a>
+      <a href="#who"><span class="num">2</span> Who it is for</a>
+      <a href="#today"><span class="num">3</span> How OM works today</a>
+      <a href="#does"><span class="num">4</span> What the app does</a>
+      <a href="#words"><span class="num">5</span> The words we use</a>
+      <a href="#matrix"><span class="num">6</span> What lands when</a>
+      <a href="#releases"><span class="num">7</span> The releases</a>
+      <a href="#decide"><span class="num">8</span> Decisions needed</a>
+      <a href="#reference"><span class="num">9</span> Reference &mdash; for Nathan</a>
+    </nav>
+
+    <div class="controls">
+      <label class="ctrl"><input type="checkbox" id="mvpToggle"> Hide what comes later</label>
+      <button class="ctrl-btn" id="themeToggle" type="button" aria-live="polite">Theme: auto</button>
+      <p class="sidebar-foot">Proposal &middot; 3 Aug 2026<br>Not yet agreed<br>Opens offline, no install</p>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="masthead">
+      <div class="status-line">
+        <span class="tag tag--live">Proposal</span>
+        <span class="tag">3 August 2026</span>
+        <span class="tag">Nothing built yet</span>
+      </div>
+      <h1>The OM App</h1>
+      <p class="lede">
+        What we are building, who for, and in what order &mdash; written from what the OM Office
+        actually does today, taken from the Perimeter doc, the Streams Log, the Decisional
+        Framework and the Market Architecture.
+      </p>
+      <p class="thesis">
+        A Stream is a change to the operating model, from the moment something triggers it
+        to the moment the operating model has absorbed it.
+      </p>
+    </header>
+
+    <!-- ============================== 1 ============================== -->
+    <section class="section" id="what">
+      <div class="section-head">
+        <span class="section-num">Section 1</span>
+        <h2>What we are building</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The OM Office coordinates changes to how the group is set up &mdash; which company sells what,
+          in which market, under which tax and legal rules. It does not deliver those changes itself.
+          It works out what a change means across Legal, Tax, DPO, Finance and the other functions,
+          gets a decision made, then makes sure the change actually lands.
+        </p>
+        <p>
+          That work produces two things today: a running log of what is in flight, and a record of what
+          was decided and why. Both are Google Docs, both are maintained by hand, and both overlap.
+          Everything that is not written down lives in one person&rsquo;s head.
+        </p>
+        <p><strong>The app has one job: hold that work, so that it does not depend on remembering it.</strong></p>
+      </div>
+
+      <h3 class="sub">Three questions it has to answer</h3>
+      <div class="table-frame">
+        <table>
+          <caption>What people actually ask, and what answers it today</caption>
+          <thead>
+            <tr><th style="width:6%"></th><th style="width:34%">The question</th><th style="width:32%">Who asks it</th><th>Answered today by</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="q-key">Q1</td>
+              <td>&ldquo;Where are we on X?&rdquo;</td>
+              <td>Whoever raised it, the functions, the C-Team</td>
+              <td>The Streams Log &mdash; badly. Status is buried in prose.</td>
+            </tr>
+            <tr>
+              <td class="q-key">Q2</td>
+              <td>&ldquo;What was decided on Y, and why?&rdquo;</td>
+              <td>Anyone revisiting an old topic</td>
+              <td>The Decisional Framework &mdash; well written, but you cannot search it.</td>
+            </tr>
+            <tr class="is-later">
+              <td class="q-key">Q3</td>
+              <td>&ldquo;How is Z set up today, and what is in flight that would change it?&rdquo;</td>
+              <td>New leaders, Legal, Tax, anyone touching a market</td>
+              <td><strong>Nobody. You ask Diane.</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label">The one that matters most</span>
+        <p>
+          Q3 is the whole point of the Perimeter doc&rsquo;s promise &mdash;
+          <em>new leaders get up to speed in days, not months</em>. It is also the one that needs the most
+          new content, so it lands last. Sections 6 and 7 are honest about that.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 2 ============================== -->
+    <section class="section" id="who">
+      <div class="section-head">
+        <span class="section-num">Section 2</span>
+        <h2>Who it is for</h2>
+        <p>
+          Five groups, and only one of them writes. That is why the reading side matters as much as
+          the working side &mdash; it serves four of the five.
+        </p>
+      </div>
+
+      <div class="grid">
+        <div class="card who">
+          <span class="who-role">Writes</span>
+          <span class="who-name">Diane and Nathan</span>
+          <span class="who-need">Run the coordination: open streams, chase the functions, escalate, keep track until the change lands.</span>
+          <span class="who-serves">the working surface</span>
+        </div>
+        <div class="card who">
+          <span class="who-role">Reads</span>
+          <span class="who-name">The functions</span>
+          <span class="who-need">Legal, Tax, DPO, Finance, HR, IT and the rest. They need to know what is being asked of them, and on what.</span>
+          <span class="who-serves">Q1</span>
+        </div>
+        <div class="card who">
+          <span class="who-role">Reads</span>
+          <span class="who-name">The C-Team</span>
+          <span class="who-need">Decide when something is escalated, and later check what was decided. They want the summary, not the working detail.</span>
+          <span class="who-serves">Q2</span>
+        </div>
+        <div class="card who">
+          <span class="who-role">Reads</span>
+          <span class="who-name">Whoever raised it</span>
+          <span class="who-need">Business or Corporate asked for something. They want to know where it got to, without asking.</span>
+          <span class="who-serves">Q1</span>
+        </div>
+        <div class="card who is-later">
+          <span class="who-role">Reads</span>
+          <span class="who-name">Anyone new</span>
+          <span class="who-need">Needs to understand how the group is set up in a market before touching anything &mdash; and what is about to change.</span>
+          <span class="who-serves">Q3</span>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label">Already decided, worth restating</span>
+        <p>
+          The functions never get write access. If a stream needs deeper input from someone, Diane or
+          Nathan collect it outside the app and enter it. There is no approval step inside the app,
+          and no per-person accounts &mdash; two people, one role.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 3 ============================== -->
+    <section class="section" id="today">
+      <div class="section-head">
+        <span class="section-num">Section 3</span>
+        <h2>How OM works today</h2>
+        <p>
+          The Perimeter doc describes the flow as intake, triage, dossier, escalation. That is one
+          direction. Across the 34 real streams the common direction is the other one: something gets
+          decided somewhere else, and OM absorbs it.
+        </p>
+      </div>
+
+      <figure class="figure">
+        <div class="figure-frame">
+          <svg class="dg" viewBox="0 0 1100 430" role="img" aria-label="How a stream flows: three kinds of trigger converge on a triage step; out of scope is recorded and redirected; in scope goes to coordination of the functions, then a gate asking whether a C-Team decision is needed; if yes a dossier produces a decision; either way follow-up leads to the change coming into force, which can happen in phases, and then closure.">
+            <defs>
+              <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="var(--rule-strong)"></path>
+              </marker>
+              <marker id="ar-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="var(--ink-3)"></path>
+              </marker>
+            </defs>
+
+            <path class="link" d="M170 48 C200 48 206 96 226 128" marker-end="url(#ar)"></path>
+            <line class="link" x1="170" y1="170" x2="188" y2="170" marker-end="url(#ar)"></line>
+            <path class="link" d="M170 292 C200 292 206 244 226 212" marker-end="url(#ar)"></path>
+            <line class="link" x1="306" y1="170" x2="344" y2="170" marker-end="url(#ar)"></line>
+            <path class="link" d="M250 226 L250 300 L258 318" marker-end="url(#ar)"></path>
+            <line class="link" x1="510" y1="170" x2="548" y2="170" marker-end="url(#ar)"></line>
+            <line class="link" x1="610" y1="114" x2="610" y2="74" marker-end="url(#ar)"></line>
+            <line class="link" x1="690" y1="45" x2="714" y2="45" marker-end="url(#ar)"></line>
+            <path class="link" d="M795 70 C852 70 900 100 952 128" marker-end="url(#ar)"></path>
+            <line class="link" x1="666" y1="170" x2="894" y2="170" marker-end="url(#ar)"></line>
+            <line class="link" x1="990" y1="208" x2="990" y2="244" marker-end="url(#ar)"></line>
+            <line class="link" x1="990" y1="314" x2="990" y2="340" marker-end="url(#ar)"></line>
+            <path class="link--soft" d="M900 268 C856 268 856 300 896 300" marker-end="url(#ar-soft)"></path>
+
+            <text class="lbl" x="316" y="162">IN SCOPE</text>
+            <text class="lbl" x="256" y="266">NOT OURS</text>
+            <text class="lbl" x="620" y="100">YES</text>
+            <text class="lbl" x="676" y="162">NO</text>
+            <text class="lbl" x="806" y="292" text-anchor="end">can happen in phases</text>
+
+            <text class="band-lbl" x="20" y="16">WHAT SETS IT OFF</text>
+            <g><rect class="box box--muted" x="20" y="26" width="150" height="44" rx="3"></rect>
+              <text class="s" x="34" y="46">a decision taken</text><text class="t" x="34" y="61">somewhere else</text></g>
+            <g><rect class="box box--muted" x="20" y="148" width="150" height="44" rx="3"></rect>
+              <text class="s" x="34" y="168">an outside</text><text class="t" x="34" y="183">authority</text></g>
+            <g><rect class="box box--muted" x="20" y="270" width="150" height="44" rx="3"></rect>
+              <text class="s" x="34" y="290">OM spots a risk</text><text class="t" x="34" y="305">or a chance</text></g>
+
+            <polygon class="diamond" points="250,114 306,170 250,226 194,170"></polygon>
+            <text class="t" x="250" y="166" text-anchor="middle">IS IT OURS?</text>
+            <text class="s" x="250" y="182" text-anchor="middle">triage</text>
+
+            <g><rect class="box box--muted" x="200" y="318" width="130" height="46" rx="3"></rect>
+              <text class="s" x="214" y="338">sent elsewhere,</text><text class="s" x="214" y="352">but recorded</text></g>
+
+            <g><rect class="box" x="344" y="132" width="166" height="76" rx="3"></rect>
+              <text class="t" x="360" y="160">GET THE INPUT</text>
+              <text class="s" x="360" y="178">Legal, Tax, DPO,</text>
+              <text class="s" x="360" y="191">Finance, HR, IT&hellip;</text></g>
+            <path class="pain-mark" d="M352 214 L502 214"></path>
+            <text class="pain" x="360" y="230">chased by hand, in Slack and meetings</text>
+
+            <polygon class="diamond" points="610,114 666,170 610,226 554,170"></polygon>
+            <text class="s" x="610" y="163" text-anchor="middle">needs a C-Team</text>
+            <text class="s" x="610" y="177" text-anchor="middle">decision?</text>
+
+            <g><rect class="box" x="540" y="20" width="150" height="50" rx="3"></rect>
+              <text class="t" x="554" y="42">THE DOSSIER</text>
+              <text class="s" x="554" y="58">options and impacts</text></g>
+            <g><rect class="box" x="714" y="20" width="150" height="50" rx="3"></rect>
+              <text class="t" x="728" y="42">THE DECISION</text>
+              <text class="s" x="728" y="58">and the date it was taken</text></g>
+
+            <g><rect class="box" x="894" y="132" width="186" height="76" rx="3"></rect>
+              <text class="t" x="910" y="160">CHASE DELIVERY</text>
+              <text class="s" x="910" y="178">other teams do the work,</text>
+              <text class="s" x="910" y="191">OM keeps the visibility</text></g>
+
+            <g><rect class="box box--hero" x="894" y="244" width="186" height="70" rx="3"></rect>
+              <text class="t t--hero" x="910" y="272">IT LANDS</text>
+              <text class="s" x="910" y="290">the change is in force,</text>
+              <text class="s" x="910" y="303">the setup is now different</text></g>
+
+            <g><rect class="box box--muted" x="894" y="340" width="186" height="44" rx="3"></rect>
+              <text class="t" x="910" y="367">DONE</text></g>
+          </svg>
+        </div>
+        <figcaption>
+          <b>A stream is not finished when the decision is taken.</b> It is finished when the change is
+          actually in force &mdash; which is the OM Office&rsquo;s own wording:
+          <em>chasing execution milestones after C-Team decisions</em>. And it can land in stages: Greece
+          went live in two, on 13/08/2025 and 01/06/2026.
+        </figcaption>
+      </figure>
+
+      <div class="callout pain-note">
+        <span class="callout-label">Where it breaks today</span>
+        <p>
+          <strong>Getting the input is chased by hand.</strong> There is no list of who owes what. It is held
+          in memory, in Slack threads, and in whether Diane happens to remember to ask again.
+        </p>
+        <p>
+          <strong>Two documents, overlapping.</strong> Greece, PT and LMNext US each appear in both the Streams
+          Log and the Decisional Framework, described differently. Keeping them consistent is manual work
+          that produces nothing.
+        </p>
+        <p>
+          <strong>The current setup is not written down anywhere queryable.</strong> Which company is the
+          Principal for Hotel NET in Spain, under which VAT rule, is knowable &mdash; by asking one person.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 4 ============================== -->
+    <section class="section" id="does">
+      <div class="section-head">
+        <span class="section-num">Section 4</span>
+        <h2>What the app does</h2>
+        <p>Four groups of things. Nothing here is new work invented for the app &mdash; it is the work above, held somewhere.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <span class="card-name">Take work in</span>
+          <span class="card-what">Open a stream and record what set it off &mdash; which table decided what, or which authority asked. Say whether it is ours, and if not, record where it went instead.</span>
+        </div>
+        <div class="card">
+          <span class="card-name">Run the coordination</span>
+          <span class="card-what">One line per function per stream: asked, received, blocking, or no impact. The list of who owes what stops being a memory exercise.</span>
+        </div>
+        <div class="card">
+          <span class="card-name">Get decisions made and recorded</span>
+          <span class="card-what">Build the escalation package out of what is already there, then record the decision, the date, the forum and the reasoning &mdash; once, in one place.</span>
+        </div>
+        <div class="card">
+          <span class="card-name">Follow through and report</span>
+          <span class="card-what">Track the delivery steps owned by other teams, mark when the change is in force, and produce the monthly Digest from what is already recorded.</span>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label">What we are not building</span>
+        <p>
+          Not a project tool. The Perimeter doc is explicit that OM is
+          <em>not a replacement for Project Managers</em> and does <em>not manage vertical business content</em>.
+          Streams carry delivery steps, but those steps belong to other teams &mdash; the app records who owns
+          them and what is known, not who is assigned to do the work.
+        </p>
+        <p>
+          Also out: a screen for editing the categories, a company-wide change log, and any approval
+          gate before a stream can close.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 5 ============================== -->
+    <section class="section" id="words">
+      <div class="section-head">
+        <span class="section-num">Section 5</span>
+        <h2>The words we use</h2>
+        <p>
+          Seven words, used the same way everywhere &mdash; in the app, in this document, and when
+          briefing Claude. Click a box to jump to its definition.
+        </p>
+      </div>
+
+      <figure class="figure">
+        <div class="figure-frame">
+          <svg class="dg" viewBox="0 0 960 560" role="img" aria-label="A Forum takes a Decision. A Decision can trigger a Stream, or a Stream can escalate and obtain one. A Stream gathers Assessments, tracks Delivery steps, and says which parts of the Setup it will change. The Setup registry comes later. Streams and Decisions feed the Digest.">
+            <line class="link" x1="220" y1="72" x2="292" y2="72" marker-end="url(#ar)"></line>
+            <path class="link" d="M360 104 C360 150 380 160 388 198" marker-end="url(#ar)"></path>
+            <path class="link" d="M540 198 C548 160 462 150 462 106" marker-end="url(#ar)"></path>
+            <path class="link" d="M344 244 C280 244 248 300 244 336" marker-end="url(#ar)"></path>
+            <path class="link" d="M576 244 C640 244 676 300 680 336" marker-end="url(#ar)"></path>
+            <line class="link" x1="460" y1="276" x2="460" y2="336" marker-end="url(#ar)"></line>
+            <line class="link--soft" x1="460" y1="416" x2="460" y2="466" marker-end="url(#ar-soft)"></line>
+            <line class="link" x1="500" y1="72" x2="732" y2="72" marker-end="url(#ar)"></line>
+            <path class="link" d="M580 214 L830 214 L830 110" marker-end="url(#ar)"></path>
+
+            <text class="lbl" x="366" y="150">SETS IT OFF</text>
+            <text class="lbl" x="474" y="150">ASKS FOR ONE</text>
+            <text class="lbl" x="600" y="65">feeds</text>
+            <text class="lbl" x="470" y="446" text-anchor="middle">checked against</text>
+
+            <g class="hit" tabindex="0" role="link" data-target="w-forum">
+              <rect class="box" x="40" y="40" width="180" height="64" rx="3"></rect>
+              <text class="t" x="56" y="66">Forum</text>
+              <text class="s" x="56" y="84">C-Team &middot; OM Committee</text>
+              <text class="s" x="56" y="97">OM Table &middot; GDPR Core &middot; ERM</text>
+            </g>
+            <g class="hit" tabindex="0" role="link" data-target="w-decision">
+              <rect class="box" x="292" y="40" width="208" height="64" rx="3"></rect>
+              <text class="t" x="308" y="66">Decision</text>
+              <text class="s" x="308" y="84">what was chosen, why,</text>
+              <text class="s" x="308" y="97">by whom and when</text>
+            </g>
+            <g class="hit" tabindex="0" role="link" data-target="w-digest">
+              <rect class="box" x="732" y="40" width="188" height="70" rx="3"></rect>
+              <text class="t" x="748" y="66">Digest</text>
+              <text class="s" x="748" y="84">the monthly update,</text>
+              <text class="s" x="748" y="97">built from the above</text>
+            </g>
+            <g class="hit" tabindex="0" role="link" data-target="w-stream">
+              <rect class="box box--hero" x="344" y="198" width="232" height="78" rx="3"></rect>
+              <text class="t t--hero" x="362" y="228">STREAM</text>
+              <text class="s" x="362" y="248">a change to how</text>
+              <text class="s" x="362" y="261">the group is set up</text>
+            </g>
+            <g class="hit" tabindex="0" role="link" data-target="w-assessment">
+              <rect class="box" x="40" y="336" width="204" height="80" rx="3"></rect>
+              <text class="t" x="56" y="362">Assessment</text>
+              <text class="s" x="56" y="380">one function&rsquo;s input</text>
+              <text class="s" x="56" y="393">on one stream</text>
+              <text class="s" x="56" y="406">asked &middot; in &middot; blocking &middot; n/a</text>
+            </g>
+            <g class="hit" tabindex="0" role="link" data-target="w-target">
+              <rect class="box" x="344" y="336" width="232" height="80" rx="3"></rect>
+              <text class="t" x="362" y="362">What it changes</text>
+              <text class="s" x="362" y="380">market &times; product &times; the bit</text>
+              <text class="s" x="362" y="393">of the setup that moves</text>
+              <text class="s" x="362" y="406">picked from a list, not typed</text>
+            </g>
+            <g class="hit" tabindex="0" role="link" data-target="w-delivery">
+              <rect class="box" x="680" y="336" width="204" height="80" rx="3"></rect>
+              <text class="t" x="696" y="362">Delivery step</text>
+              <text class="s" x="696" y="380">owned by another team</text>
+              <text class="s" x="696" y="393">OM records what is known,</text>
+              <text class="s" x="696" y="406">and when it was last checked</text>
+            </g>
+            <g class="hit later" tabindex="0" role="link" data-target="w-setup">
+              <rect class="box" x="344" y="466" width="232" height="70" rx="3"></rect>
+              <text class="t" x="362" y="492">The Setup</text>
+              <text class="s" x="362" y="510">how the group is arranged today</text>
+              <text class="s" x="362" y="523">comes later</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>
+          <b>Decision appears twice on purpose.</b> A decision taken elsewhere is what
+          <em>sets a stream off</em>; a decision OM goes and asks for is what a stream
+          <em>produces</em>. Same thing, two positions &mdash; which is why one word covers both directions.
+          LMNext PT had both: it started with the Portuguese regulator, and ended with a C-Team call on
+          priority.
+        </figcaption>
+      </figure>
+
+      <div class="grid">
+        <div class="card" id="w-stream">
+          <span class="card-name">Stream</span>
+          <span class="card-what">A change to how the group is set up, from what triggered it to the moment it is in force. Not a project, and not just &ldquo;an OM activity&rdquo;.</span>
+          <span class="card-ev">34 of them in the Streams Log today</span>
+        </div>
+        <div class="card" id="w-decision">
+          <span class="card-name">Decision</span>
+          <span class="card-what">What was chosen, why, by whom, and on what date. It either sets a stream off, or is what the stream went and got.</span>
+          <span class="card-ev">4 written up in the Decisional Framework</span>
+        </div>
+        <div class="card" id="w-forum">
+          <span class="card-name">Forum</span>
+          <span class="card-what">The table where a decision was taken. Small thing to record, and it is how people search: &ldquo;what did GDPR Core decide?&rdquo;</span>
+          <span class="card-ev">C-Team &middot; OM Committee &middot; OM Table &middot; GDPR Core &middot; ERM</span>
+        </div>
+        <div class="card" id="w-assessment">
+          <span class="card-name">Assessment</span>
+          <span class="card-what">One function&rsquo;s input on one stream, with its state and its text. This is the thing that turns chasing into a list.</span>
+          <span class="card-ev">15 functions seen so far across the log</span>
+        </div>
+        <div class="card" id="w-delivery">
+          <span class="card-name">Delivery step</span>
+          <span class="card-what">Something that has to happen for the change to land, owned by a team outside OM. The app records the owner and what is known, not an assignment.</span>
+          <span class="card-ev">PT system work &middot; Greece two releases &middot; Cruise checklists</span>
+        </div>
+        <div class="card" id="w-target">
+          <span class="card-name">What it changes</span>
+          <span class="card-what">Which parts of the setup this stream will move, picked from lists rather than typed. Recorded from the start, even before the Setup registry exists.</span>
+          <span class="card-ev">e.g. Germany &times; Dynamic Package &times; selling company</span>
+        </div>
+        <div class="card is-later" id="w-setup">
+          <span class="card-name">The Setup</span>
+          <span class="card-what">How the group is arranged right now, per market and product: who sells, who invoices, which VAT rule, who is the data controller, which licences.</span>
+          <span class="card-ev">Written up for France and Spain only</span>
+        </div>
+        <div class="card" id="w-digest">
+          <span class="card-name">Digest</span>
+          <span class="card-what">The monthly update to stakeholders. Built from what is already recorded, then edited &mdash; rather than written from scratch each month.</span>
+          <span class="card-ev">Listed as a main accountability in the Perimeter doc</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 6 ============================== -->
+    <section class="section" id="matrix">
+      <div class="section-head">
+        <span class="section-num">Section 6</span>
+        <h2>What lands when</h2>
+        <p>
+          Each row is something you will be able to do. The dot marks the release where it becomes
+          possible; the line after it means you still have it. Read down a column to see what that
+          release adds; read across a row to see when you get it.
+        </p>
+      </div>
+
+      <div class="matrix-frame">
+        <table class="matrix">
+          <caption>Capability by release</caption>
+          <thead>
+            <tr>
+              <th class="cap">What you can do</th>
+              <th class="relcol">R1<span>seed</span></th>
+              <th class="relcol">R2<span>coordinate</span></th>
+              <th class="relcol">R3<span>decide</span></th>
+              <th class="relcol">R4<span>open up</span></th>
+              <th class="relcol">R5<span>report</span></th>
+              <th class="relcol">R6<span>the setup</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="grp"><th colspan="7">Taking work in</th></tr>
+            <tr>
+              <th class="cap">See all 34 streams as real data, not prose</th>
+              <td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Open a new stream and record what set it off</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Record something as not ours, and where it went instead</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Work on a stream before anyone else can see it</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+
+            <tr class="grp"><th colspan="7">Running the coordination</th></tr>
+            <tr>
+              <th class="cap">See who owes you which input, across every stream</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Mark an input as blocking, and see what is stuck</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Move a stream between stages by dragging it</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Put streams in your own order of urgency</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">See how complete a stream&rsquo;s input is, without judging it yourself</th>
+              <td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+
+            <tr class="grp"><th colspan="7">Decisions</th></tr>
+            <tr>
+              <th class="cap">Record a decision with its reasoning, forum and date</th>
+              <td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Produce the C-Team package from what is already there</th>
+              <td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Track the delivery steps other teams owe, after the decision</th>
+              <td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Mark a change as in force &mdash; including in stages</th>
+              <td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+
+            <tr class="grp"><th colspan="7">Everyone else</th></tr>
+            <tr>
+              <th class="cap">Publish a stream so the network can see it</th>
+              <td></td><td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Someone finds &ldquo;where are we on X&rdquo; without asking you &mdash; <span class="q-key">Q1</span></th>
+              <td></td><td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Someone finds &ldquo;what was decided on Y&rdquo; by searching &mdash; <span class="q-key">Q2</span></th>
+              <td></td><td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr>
+              <th class="cap">Read a closed stream as a full story, like a Doc tab</th>
+              <td></td><td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td><td><span class="bar"></span></td>
+            </tr>
+
+            <tr class="grp"><th colspan="7">Reporting and the setup</th></tr>
+            <tr>
+              <th class="cap">Generate the monthly Digest instead of writing it</th>
+              <td></td><td></td><td></td><td></td><td><span class="dot"></span></td><td><span class="bar"></span></td>
+            </tr>
+            <tr class="is-later">
+              <th class="cap">Look up how a market is set up today &mdash; <span class="q-key">Q3</span></th>
+              <td></td><td></td><td></td><td></td><td></td><td><span class="dot dot--later"></span></td>
+            </tr>
+            <tr class="is-later">
+              <th class="cap">See what is in flight that would change that setup &mdash; <span class="q-key">Q3</span></th>
+              <td></td><td></td><td></td><td></td><td></td><td><span class="dot dot--later"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="legend">
+        <span><span class="dot"></span> becomes possible here</span>
+        <span><span class="bar"></span> you still have it</span>
+        <span><span class="dot dot--later"></span> comes later, needs new content first</span>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label">How to read the shape</span>
+        <p>
+          <strong>R2 is the release that changes your week.</strong> Nine things land there, and they are all
+          things you currently hold in your head. Everything before it is preparation; everything after it
+          is other people getting served.
+        </p>
+        <p>
+          <strong>Nothing is visible outside OM until R4.</strong> That is deliberate &mdash; you get to run the
+          real work in the app for a while before anyone is looking at it.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 7 ============================== -->
+    <section class="section" id="releases">
+      <div class="section-head">
+        <span class="section-num">Section 7</span>
+        <h2>The releases</h2>
+        <p>
+          Six of them, each answering the same four questions. The last box in each is the plain-English
+          brief &mdash; what to hand Claude when you build it.
+        </p>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label">Before any of it &mdash; R0, and it is on Nathan</span>
+        <p>
+          Two things are needed to start: agreement on the words in Section 5 and the four categories in
+          Section 9, and either the answers to the seven infrastructure questions from 30 July, or a
+          go-ahead to build on your own machine while those get sorted.
+          <strong>R1 needs nothing from infrastructure at all</strong> &mdash; it can start the moment the words
+          are agreed.
+        </p>
+      </div>
+
+      <div class="rel-list">
+
+        <!-- R1 -->
+        <article class="rel">
+          <div class="rel-head">
+            <span class="rel-id">R1</span>
+            <span class="rel-title">Get the real work into real data</span>
+            <span class="rel-when">no app yet &middot; no infrastructure needed</span>
+          </div>
+          <div class="rel-body">
+            <div class="slot slot--can">
+              <span class="slot-label">What you can do</span>
+              <ul>
+                <li>See all 34 streams and 4 dossiers as structured data, side by side for the first time</li>
+                <li>See which fields are actually filled in across the real work, and which are wishful thinking</li>
+                <li>Check the four categories against the real tags rather than against an idea</li>
+              </ul>
+            </div>
+            <div class="slot slot--outside">
+              <span class="slot-label">Still outside the app</span>
+              <ul><li>All of it &mdash; this release produces a file, not a screen</li></ul>
+            </div>
+            <div class="slot slot--stop">
+              <span class="slot-label">What you stop doing</span>
+              <ul><li>Nothing yet. This is the release that keeps you from building the wrong thing.</li></ul>
+            </div>
+            <div class="slot brief">
+              <span class="slot-label">What to ask Claude for</span>
+              <p class="brief-text">
+                &ldquo;Read the OM Streams Log and the OM Decisional Framework. For every stream, pull out:
+                the name, the category tag at the top, the status section it sits under, the Init code if
+                there is one, every functional heading with its text, and every date with its label. Put it
+                all in one structured file. Then tell me: which fields were empty for most streams, which
+                functional headings appear often enough to be a real list, and anything in my model that
+                nothing in these documents supports.&rdquo;
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- R2 -->
+        <article class="rel">
+          <div class="rel-head">
+            <span class="rel-id">R2</span>
+            <span class="rel-title">Run the coordination in the app</span>
+            <span class="rel-when">the release that changes your week</span>
+          </div>
+          <div class="rel-body">
+            <div class="slot slot--can">
+              <span class="slot-label">What you can do</span>
+              <ul>
+                <li>Open a stream, record what set it off and which table decided it</li>
+                <li><strong>See who owes you which input, across every stream, on one screen</strong></li>
+                <li>Mark an input as blocking, and see everything that is stuck</li>
+                <li>Drag a stream between stages; order a column by your own sense of urgency</li>
+                <li>Work on a stream before anyone outside OM can see it</li>
+                <li>See how complete a stream is without having to judge a percentage yourself</li>
+              </ul>
+            </div>
+            <div class="slot slot--outside">
+              <span class="slot-label">Still outside the app</span>
+              <ul>
+                <li>Actually asking the functions &mdash; Slack, meetings, the OM Table</li>
+                <li>Writing up what they tell you; you still type their input in</li>
+                <li>The escalation package and the Digest</li>
+              </ul>
+            </div>
+            <div class="slot slot--stop">
+              <span class="slot-label">What you stop doing</span>
+              <ul>
+                <li><strong>Maintaining the OM Streams Log</strong></li>
+                <li>Holding &ldquo;who still owes me what&rdquo; in your head</li>
+              </ul>
+            </div>
+            <div class="slot brief">
+              <span class="slot-label">What to ask Claude for</span>
+              <p class="brief-text">
+                &ldquo;Build the working side. One card per stream with its category, stage, what set it off,
+                which markets and products it touches, and what it will change. Under each stream, one row
+                per function &mdash; Legal, Tax, DPO and the rest &mdash; each with a state: asked, in,
+                blocking, or not relevant, plus a text box for what they said. Give me a board with columns
+                for the stages I can drag between, and let me reorder within a column by hand. Give me one
+                screen that lists every function input that is asked or blocking, across all streams, so I
+                can see what to chase. Streams stay invisible to everyone else until I publish them.&rdquo;
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- R3 -->
+        <article class="rel">
+          <div class="rel-head">
+            <span class="rel-id">R3</span>
+            <span class="rel-title">Decisions and following through</span>
+            <span class="rel-when">retires the second document</span>
+          </div>
+          <div class="rel-body">
+            <div class="slot slot--can">
+              <span class="slot-label">What you can do</span>
+              <ul>
+                <li>Record a decision with its options, impacts, reasoning, forum and date</li>
+                <li>Produce the C-Team package out of what the stream already holds</li>
+                <li>Link a decision either way: the one that set the stream off, or the one it went and got</li>
+                <li>Track the delivery steps other teams owe, with who owns each and when you last checked</li>
+                <li>Mark a change as in force &mdash; more than once, when it lands in stages</li>
+              </ul>
+            </div>
+            <div class="slot slot--outside">
+              <span class="slot-label">Still outside the app</span>
+              <ul>
+                <li>The C-Team meeting itself</li>
+                <li>Chasing the other teams for their delivery steps</li>
+                <li>The Digest</li>
+              </ul>
+            </div>
+            <div class="slot slot--stop">
+              <span class="slot-label">What you stop doing</span>
+              <ul>
+                <li><strong>Maintaining the OM Decisional Framework</strong></li>
+                <li>Writing the same topic up twice, in two documents, differently</li>
+                <li>Rebuilding the escalation package by hand each time</li>
+              </ul>
+            </div>
+            <div class="slot brief">
+              <span class="slot-label">What to ask Claude for</span>
+              <p class="brief-text">
+                &ldquo;Add decisions. A decision records the forum, the date it was taken, the options that
+                were on the table, the impacts, the reasoning and the outcome. A stream can point to a
+                decision as the thing that set it off, or as the thing it obtained &mdash; or both. Add a
+                view that lays a stream out as a C-Team package: the need, the options, the impacts grouped
+                by type, and a short summary. Add delivery steps to a stream, each with an owner outside OM
+                and a date I last checked. Let a stream record the date a change came into force more than
+                once, for changes that land in phases.&rdquo;
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- R4 -->
+        <article class="rel">
+          <div class="rel-head">
+            <span class="rel-id">R4</span>
+            <span class="rel-title">Open it up to everyone else</span>
+            <span class="rel-when">the first release that serves people outside OM</span>
+          </div>
+          <div class="rel-body">
+            <div class="slot slot--can">
+              <span class="slot-label">What you can do</span>
+              <ul>
+                <li>Publish a stream so anyone on the network can see it</li>
+                <li>Send someone a link instead of answering &ldquo;where are we on X&rdquo; &mdash; <span class="q-key">Q1</span></li>
+                <li>Have people find &ldquo;what was decided on telesales&rdquo; by searching for it &mdash; <span class="q-key">Q2</span></li>
+                <li>Point at a closed stream that reads as a full story, the way a Doc tab does</li>
+              </ul>
+            </div>
+            <div class="slot slot--outside">
+              <span class="slot-label">Still outside the app</span>
+              <ul>
+                <li>The Digest</li>
+                <li>Anything about how a market is set up today</li>
+              </ul>
+            </div>
+            <div class="slot slot--stop">
+              <span class="slot-label">What you stop doing</span>
+              <ul>
+                <li>Being the search engine for old decisions</li>
+                <li>Answering status questions one by one</li>
+              </ul>
+            </div>
+            <div class="slot brief">
+              <span class="slot-label">What to ask Claude for</span>
+              <p class="brief-text">
+                &ldquo;Build the reading side, open to anyone on the network, no login. The main way in is
+                search: by topic, market, entity, product, category or forum &mdash; not a wall of filters.
+                A result opens as a full readable page: what it was, what each function said, what was
+                decided and why, what changed and when. It has to read as well as a Doc tab does, because
+                that is what it is replacing. Only published streams show here. Closed ones are grouped by
+                the year the change came into force.&rdquo;
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- R5 -->
+        <article class="rel">
+          <div class="rel-head">
+            <span class="rel-id">R5</span>
+            <span class="rel-title">The Digest builds itself</span>
+            <span class="rel-when">small release, visible every month</span>
+          </div>
+          <div class="rel-body">
+            <div class="slot slot--can">
+              <span class="slot-label">What you can do</span>
+              <ul>
+                <li>Generate the monthly Digest from what is already recorded, then edit it</li>
+                <li>Show what moved this month, what was decided, and what landed</li>
+              </ul>
+            </div>
+            <div class="slot slot--outside">
+              <span class="slot-label">Still outside the app</span>
+              <ul>
+                <li>Sending it, and the judgement about what to highlight</li>
+                <li>Anything about how a market is set up today</li>
+              </ul>
+            </div>
+            <div class="slot slot--stop">
+              <span class="slot-label">What you stop doing</span>
+              <ul><li><strong>Writing the Digest from scratch every month</strong></li></ul>
+            </div>
+            <div class="slot brief">
+              <span class="slot-label">What to ask Claude for</span>
+              <p class="brief-text">
+                &ldquo;Add a Digest view for a chosen month: streams that changed stage, decisions taken,
+                changes that came into force, and new streams opened. Group it the way the current Digest
+                is grouped. Let me edit the text before it goes out &mdash; it is a starting point, not the
+                final word.&rdquo;
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- R6 -->
+        <article class="rel is-later">
+          <div class="rel-head">
+            <span class="rel-id">R6</span>
+            <span class="rel-title">How the group is set up, and what is about to change it</span>
+            <span class="rel-when">needs new content first &mdash; see the note below</span>
+          </div>
+          <div class="rel-body">
+            <div class="slot slot--can">
+              <span class="slot-label">What you can do</span>
+              <ul>
+                <li>Look up a market and see who sells, who invoices, which VAT rule, who is data controller &mdash; <span class="q-key">Q3</span></li>
+                <li>See, on that same screen, which streams in flight would change it</li>
+                <li>Stop being the only route to that answer</li>
+              </ul>
+            </div>
+            <div class="slot slot--outside">
+              <span class="slot-label">Still outside the app</span>
+              <ul><li>Collecting the setup for every market that is not France or Spain</li></ul>
+            </div>
+            <div class="slot slot--stop">
+              <span class="slot-label">What you stop doing</span>
+              <ul>
+                <li><strong>Being asked how a market works</strong></li>
+                <li>Maintaining the setup in a Google Site and a spreadsheet</li>
+              </ul>
+            </div>
+            <div class="slot brief">
+              <span class="slot-label">What to ask Claude for</span>
+              <p class="brief-text">
+                &ldquo;Add the setup: for each market and product, who sells, who procures, who is the
+                principal, who invoices, the revenue model, the VAT rule, the liability model, the insolvency
+                cover, the data controller and the licences. Start with France and Spain, which are already
+                written up. Then join it to the streams: on any part of the setup, show which streams in
+                flight say they will change it &mdash; using the tags I have been recording since R2.&rdquo;
+              </p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="callout later-note">
+        <span class="callout-label">Why R6 is last, and it is not a technical reason</span>
+        <p>
+          The setup is only written up for <strong>France and Spain</strong>. Everywhere else, it does not
+          exist as content yet &mdash; getting it means going round Legal, Tax and DPO market by market.
+          No choice of tooling shortens that.
+        </p>
+        <p>
+          <strong>But one small thing has to be in from R2:</strong> every stream records which parts of the
+          setup it will change, picked from lists. It costs almost nothing then, and it is the only piece
+          that would otherwise have to be filled in again across 34 streams later. That single habit is
+          what makes R6 a join rather than a rebuild.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 8 ============================== -->
+    <section class="section" id="decide">
+      <div class="section-head">
+        <span class="section-num">Section 8</span>
+        <h2>Decisions needed</h2>
+        <p>Split by who can actually answer. Nothing here should be guessed by the app.</p>
+      </div>
+
+      <h4 class="sub">Diane &mdash; about the work itself</h4>
+      <div class="qlist">
+        <div class="q"><div class="q-body">
+          <p><b>Is a function&rsquo;s input filed under the function, or under the kind of impact?</b> The Streams Log files it by function &mdash; &ldquo;Legal:&rdquo;, &ldquo;Fiscal:&rdquo;, &ldquo;DPO:&rdquo;. The C-Team package files it by impact &mdash; financial, legal, reputational.</p>
+          <p class="q-rec">Suggestion: file it by function, tag each one with the kind of impact, and let the C-Team view group by impact. This is the one decision that shapes everything else, so it is worth ten minutes.</p>
+        </div></div>
+        <div class="q"><div class="q-body">
+          <p><b>Is the list of functions fixed, or can anyone add one?</b> Fifteen show up in the log so far.</p>
+          <p class="q-rec">Suggestion: a fixed list you can extend deliberately. If people can type anything, the &ldquo;who owes me what&rdquo; screen stops being trustworthy &mdash; which is the whole value of R2.</p>
+        </div></div>
+        <div class="q"><div class="q-body">
+          <p><b>Which parts of a market&rsquo;s setup do streams actually change?</b> Needed at R2 to build the lists, long before the setup registry exists.</p>
+          <p class="q-rec">From the Market Architecture: who sells, who is principal, who invoices, revenue model, VAT rule, liability model, insolvency cover, data controller, licences. Add what is missing, cut what never moves.</p>
+        </div></div>
+        <div class="q"><div class="q-body">
+          <p><b>Does &ldquo;Stream&rdquo; stay the word?</b> It behaves a bit like a project, but calling it one invites the wrong expectations &mdash; the Perimeter doc is clear OM does not replace PMs.</p>
+          <p class="q-rec">Suggestion: keep it. Everyone already says it, the C-Team recognises it, and 34 of them exist under that name. Change what it means, not what it is called.</p>
+        </div></div>
+      </div>
+
+      <h4 class="sub">Nathan &mdash; to unblock</h4>
+      <div class="qlist">
+        <div class="q"><div class="q-body">
+          <p><b>Agree the words in Section 5 and the four categories in Section 9.</b></p>
+          <p class="q-rec">This is what R1 waits on, and it is a short conversation.</p>
+        </div></div>
+        <div class="q"><div class="q-body">
+          <p><b>Can Diane start R1 and R2 on her own machine</b>, without waiting for hosting?</p>
+          <p class="q-rec">R1 needs no infrastructure whatsoever. R2 needs somewhere to keep data, which can be local at first.</p>
+        </div></div>
+        <div class="q"><div class="q-body">
+          <p><b>The seven infrastructure questions from 30 July.</b></p>
+          <p class="q-rec"><span class="mono">conversations/2026-07-30-domande-per-nathan-stack-infra.md</span> &mdash; hosting, database, pipeline, secrets, framework, network, backup.</p>
+        </div></div>
+        <div class="q"><div class="q-body">
+          <p><b>How the app recognises Diane and Nathan</b> so they get the editing view without logging in.</p>
+          <p class="q-rec">Suggestion: Google sign-in limited to your two <span class="mono">@lastminute.com</span> addresses, rather than building a token scheme. Needed by R2, not before.</p>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- ============================== 9 ============================== -->
+    <section class="section" id="reference">
+      <div class="section-head">
+        <span class="section-num">Section 9 &middot; Reference</span>
+        <h2>Reference &mdash; for Nathan</h2>
+        <p>
+          The counts, the categories, and the corrections to the current specs. This is the part that is
+          deliberately technical; nothing above depends on reading it.
+        </p>
+      </div>
+
+      <h3 class="sub">The four categories, counted from the real tags</h3>
+      <div class="table-frame">
+        <table>
+          <caption>Every stream in the log is already tagged &mdash; these are the tags</caption>
+          <thead><tr><th>Category</th><th class="num-cell">Streams</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><th class="rowhead"><span class="swatch sw-gov">OM Governance</span></th><td class="num-cell">24</td>
+              <td>Chiasso Moving &middot; Newco Romania &middot; ICO Asset Inventory &middot; OTA OM Review in France</td></tr>
+            <tr><th class="rowhead"><span class="swatch sw-exp">OM Market Expansion</span></th><td class="num-cell">5</td>
+              <td>Greece VAT Representative &middot; New Market Prioritisation &middot; LMNext US B2B</td></tr>
+            <tr><th class="rowhead"><span class="swatch sw-eff">OM Efficiency</span></th><td class="num-cell">3</td>
+              <td>Telesales &amp; Rumbo review &middot; PT Invoicing &middot; Hotel FR potential switch</td></tr>
+            <tr><th class="rowhead"><span class="swatch sw-com">OM Compliance</span></th><td class="num-cell">2</td>
+              <td>Cruise Applications Decommissioning &middot; CAA Audit ATOL</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose" style="font-size:var(--step--1); color:var(--ink-3)">
+        The current spec has <span class="mono">OM Compliance, OM Evolution, OM Efficiency, OM Optimisation</span>.
+        <span class="mono">OM Optimisation</span> appears nowhere in the real material &mdash; which is why it sat
+        as an empty placeholder for a week. <span class="mono">OM Evolution</span> is Market Expansion under
+        another name. And <span class="mono">OM Governance</span>, the largest group by a wide margin, is absent
+        from the spec entirely. Colour note: teal and blue carry over from
+        <span class="mono">config/clusters.json</span>; graphite and ochre are new, because the old colours were
+        attached to names that no longer exist.
+      </p>
+
+      <h3 class="sub">Corrections to the current specs</h3>
+      <div class="table-frame">
+        <table>
+          <caption>Field by field</caption>
+          <thead><tr><th style="width:22%">Field</th><th>Correction</th></tr></thead>
+          <tbody>
+            <tr><th class="rowhead"><span class="mono">Driver</span></th>
+              <td>Four values as counted above. Stays a tag on the card, not a filter.</td></tr>
+            <tr><th class="rowhead"><span class="mono">Status</span></th>
+              <td>Real values are TO DO, IN PROGRESS, PAUSED, DONE. The spec invented <span class="mono">New</span>.</td></tr>
+            <tr><th class="rowhead"><span class="mono">DetailSections</span></th>
+              <td>Becomes one row per function per stream, each with an owner, a state and its text &mdash; not five fixed categories plus an ancillary. Fifteen functions observed.</td></tr>
+            <tr><th class="rowhead"><span class="mono">Completeness&nbsp;%</span></th>
+              <td>Stops being a manual slider. Derived twice: how much input is in, and how much delivery is done.</td></tr>
+            <tr><th class="rowhead">Dates</th>
+              <td>Three, all distinct: when the decision was taken, when the change came into force (repeatable &mdash; phased landings), and any technical go-live. Closing the stream is a fourth, separate event. Mapping <span class="mono">Effective date</span> onto <span class="mono">EndDate</span> was wrong.</td></tr>
+            <tr><th class="rowhead"><span class="mono">Trigger</span></th>
+              <td>New, and the biggest gap: origin type plus a link to the decision and forum that set the stream off. Absent from the current spec.</td></tr>
+            <tr><th class="rowhead"><span class="mono">Requester</span></th>
+              <td>Absorbed into the trigger. It was already only descriptive.</td></tr>
+            <tr><th class="rowhead">Link to the setup</th>
+              <td>New: market &times; product &times; attribute tags, from R2, against controlled lists. The registry itself waits for R6.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label">What survives from the existing specs, unchanged</span>
+        <p>
+          Every decision about how the app <em>behaves</em> carries over: one Admin role for both of you,
+          no login with read access on the network, one-way publish, the drag board with manual ordering,
+          read-only history, no delete and no rollback, two audiences for notifications, categories stay
+          in a config file.
+        </p>
+        <p>What changes is the shape of the data and the category list underneath &mdash; not the thinking about behaviour.</p>
+      </div>
+
+      <h3 class="sub">What this replaces, once agreed</h3>
+      <div class="prose">
+        <p>
+          Nothing in <span class="mono">docs/</span> has been touched. Once agreed, this replaces: the data
+          model in <span class="mono">ARCHITECTURE.md</span>; the <span class="mono">Driver</span> list and
+          <span class="mono">DetailSections</span> in <span class="mono">PRODUCT_SPEC.md</span>; the category
+          definitions in <span class="mono">config/clusters.json</span>; the dashboard layout in
+          <span class="mono">PRODUCT_SPEC.md</span> &sect;2.1, already flagged as needing rework; and
+          <span class="mono">MVP_ROADMAP.md</span>, replaced by Sections 6 and 7.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var btn = document.getElementById("themeToggle");
+  var modes = ["auto", "light", "dark"];
+  var mode = "auto";
+  function paint() {
+    if (mode === "auto") { root.removeAttribute("data-theme"); }
+    else { root.setAttribute("data-theme", mode); }
+    btn.textContent = "Theme: " + mode;
+  }
+  btn.addEventListener("click", function () {
+    mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+    paint();
+  });
+  paint();
+
+  var mvp = document.getElementById("mvpToggle");
+  mvp.addEventListener("change", function () {
+    document.body.classList.toggle("mvp-only", mvp.checked);
+  });
+
+  function reveal(id) {
+    var el = document.getElementById(id);
+    if (!el) { return; }
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.classList.add("flash");
+    window.setTimeout(function () { el.classList.remove("flash"); }, 1600);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".dg .hit"), function (g) {
+    var target = g.getAttribute("data-target");
+    g.addEventListener("click", function () { reveal(target); });
+    g.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); reveal(target); }
+    });
+  });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll("#nav a"));
+  var sections = links.map(function (a) {
+    return document.getElementById(a.getAttribute("href").slice(1));
+  }).filter(Boolean);
+
+  function spy() {
+    var probe = window.innerHeight * 0.28;
+    var current = sections[0];
+    sections.forEach(function (s) {
+      if (s.getBoundingClientRect().top <= probe) { current = s; }
+    });
+    links.forEach(function (a) {
+      if (a.getAttribute("href") === "#" + current.id) { a.setAttribute("aria-current", "true"); }
+      else { a.removeAttribute("aria-current"); }
+    });
+  }
+  var queued = false;
+  window.addEventListener("scroll", function () {
+    if (queued) { return; }
+    queued = true;
+    window.requestAnimationFrame(function () { spy(); queued = false; });
+  }, { passive: true });
+  spy();
+})();
+</script>
+</body>
+</html>
