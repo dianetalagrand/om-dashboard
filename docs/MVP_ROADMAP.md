@@ -1,5 +1,7 @@
 # OM Catalog — MVP Roadmap
 
+> **Superseded (30 July 2026)**: this roadmap's sprints, deliverables, and hours below still assume the Google Apps Script + Sheet stack. Nathan's direction is now TypeScript/Node + PostgreSQL from the start, with the app split into two domains (Gestione OM / Visualizzazione OM) — see `conversations/2026-07-30-domain-split-and-stack-pivot.md`. Effort/timeline have **not** been recalculated for the new stack yet (deferred deliberately by Diane); the numbers below are stale until that happens. Do not use the 25 Aug 2026 go-live date as current.
+
 ## Overview
 
 **Goal**: Launch a working MVP in 4 weeks (1 month) that lets the business consult the OM catalog three-dimensionally (Cluster × OutputType × Completeness).

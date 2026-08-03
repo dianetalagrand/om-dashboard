@@ -1,10 +1,32 @@
 # 🛰️ OM Governance Dashboard
 
-> A three-dimensional catalog viewer for Operations Management activities, enabling Value Stream Owners to understand what the OM office delivers and why.
+> A catalog viewer for Operations Management activities, enabling Value Stream Owners to understand what the OM office delivers and why.
 
 ## Recently Updated
 
 This is the **single README** for the project (merged with the former `README_MVP_PLAN.md` on 28 July 2026, to stop the two from drifting out of sync). Each update logs what changed here — **NEW** marks content that's new or just revised; it gets cleared on the next update once it's no longer "new."
+
+**2 August 2026** (Gestione OM brainstorm with Diane — see `conversations/2026-08-02-gestione-om-brainstorm.md`):
+- **NEW:** Gestione OM has a **single role**: **Admin** (Diane and Nathan, fully symmetric permissions) — not two separately-defined editors. Sergio Stievano and any `Requester` (Business/Corporate/OM Governance) are Visualizzazione OM users only; they never get write access, even when they're the ones raising the need for a stream
+- **NEW:** Added a **Draft/Publish** step ahead of a stream going live: a new `PublishedAt` field (null = draft, hidden from Visualizzazione OM). Admin can build up a stream's data before it's visible on the network, then publish it — one-way, no un-publish
+- **NEW:** Added an **Admin Kanban view** (Gestione OM only) — columns by Status (New / In Progress / Paused; Closed is excluded, that stays a form action), drag-and-drop to change status, manual reordering within a column to reflect real-world urgency. Exact interaction between the manual order and the existing `Priority` field (Urgent/Normal) is deferred until the stack/architecture is consolidated
+- **NEW:** Explicitly out of scope for now: a UI for editing the Driver/output-type/market taxonomy (stays a config file), and an aggregated cross-stream version-history view (stays per-stream)
+- **NEW:** `DetailSections` categories verified directly against the live OM Streams Log Doc (via Claude in Chrome) — matches what was already documented (Context, Need, Legal, Finance & Tax, DPO, a per-stream ancillary category, Conclusion). Confirmed: `Need` is the only mandatory category at CREATE; everything else is legitimately filled in later, and the exploded card view only ever shows categories that actually have content
+- **NEW:** Added `Go-live Date` (optional) — distinct from the existing `EndDate`/Effective Date, records when an associated deployment (if any) goes into production, which can happen before the stream itself reaches `Closed`
+- **NEW:** Notifications: two directions are being kept in mind but not decided yet — in-app notifications beyond the existing toast, and a date-triggered automatic reminder (e.g. Slack message as `Go-live Date` approaches)
+- **NEW:** Admin Access Gate revised: **one single app URL for everyone** (not a separate admin link) — device recognition, not login, gates the editing UI; the recognition marker is still checked server-side on every write request. A "Preview as viewer" button for Admin is kept in mind, not committed. Diane's expectation (to confirm with Nathan): network restriction alone should be enough, no VPN/proxy needed. Recommended recognition mechanism (Claude's proposal, pending Nathan): Google Sign-In restricted to Diane's and Nathan's two `@lastminute.com` addresses, rather than a bespoke token scheme
+- **NEW:** Critical review pass on Gestione OM (full findings in `conversations/2026-08-02-gestione-om-brainstorm.md`): a draft that reaches Closed without ever publishing gets no special handling (behaves like any closed stream); "[PUBLISH]" lives directly on the stream's own card/form; mistakes are always fixed via EDIT, never a separate undo; `Init Code` needs no Jira API validation (Diane's own upstream Init census already guarantees it exists); `Completeness %` stays a pure manual field, no computed anchor, confirmed not an MVP concern; notifications will eventually split into two audiences (Admin-facing vs. Slack-for-everyone-else) — shape only, detail deferred
+- **NEW:** Working-method note: product-doc changes must be mirrored into `ARCHITECTURE.md` in the same pass, without being asked — Diane wants documentation quality here to match Nathan's own standard of precision
+- **NEW:** Removed all OKR references (`docs/OKR_REFERENCE.md` deleted, OKR mentions scrubbed from `PRODUCT_SPEC.md`/`ARCHITECTURE.md`/`config/clusters.json`/README Next Steps)
+- **NEW:** `Cluster` renamed to **`Driver`**, confirmed as a replacement (not an additional field) — it is explicitly **never a dashboard filter**, only a card tag (same treatment as `Markets`). The "3D dashboard" (Cluster × OutputType × Completeness) framing throughout README/PRODUCT_SPEC/ARCHITECTURE is flagged as stale everywhere it appeared
+- **NEW:** Driver enum is **OM Compliance, OM Evolution, OM Efficiency, OM Optimisation** (4 values — revised same day from an initial 3-value pass that folded Evolution into Optimisation; Evolution needed its own value). `config/clusters.json` content mapped by direct name match: **OM Compliance** ← old Continuity, **OM Evolution** ← old Evolution, **OM Efficiency** ← old Efficiency — descriptions/examples/Strategic Pillar/Output Type associations all carried over under the new names. **OM Optimisation** is genuinely new, no prior cluster content exists for it — placeholder description/examples in `config/clusters.json`, pending Diane's input
+- **NEW:** Pushed everything since 30 July to both remotes: GitHub `main` is up to date; GitLab needed a **new Merge Request** (the prior one for this content was already merged into GitLab `main` on 30 July, contrary to what looked like no progress since 28 July) — opened from branch `sync-real-project`
+
+**30 July 2026** (direction from Nathan Vené — see `conversations/2026-07-30-domain-split-and-stack-pivot.md`):
+- Architecture is analyzed as **two separate domains**, not one shared screen: **Gestione OM** (write/workflow — Diane/Nathan create/update streams) and **Visualizzazione OM** (read/discovery — anyone on the network browses the catalog). Each is built as its own vertical rather than starting from a shared data model.
+- Stack pivot — the MVP itself is now **TypeScript/Node.js + PostgreSQL**, not Google Apps Script + Sheet. Reason: the goal is to *replace* the OM Streams Log Doc/Sheet, not stage the app inside the same Google Workspace ecosystem before rebuilding it later on a "real" stack. This is the real stack from day one.
+- `Code.gs` and `index.html` (the Apps Script prototype) are superseded — kept only as a historical reference for required behavior, not the base for the new build.
+- Everything previously listed as "Real App Requirements — TBD, post-MVP" (hosting, CI/CD, DB provisioning, secrets, domain/TLS, monitoring, backup) is now a **Sprint 1 blocker** on the new stack, not a later concern. Effort/timeline in `MVP_ROADMAP.md` were intentionally *not* recalculated yet — those hours assumed Apps Script and are considered stale until redone against the new stack.
 
 **28 July 2026**:
 - **NEW:** No login: read access open on the lastminute.com network, editing reserved to Diane and Nathan
@@ -20,7 +42,7 @@ This is the **single README** for the project (merged with the former `README_MV
 - **NEW:** Confirmed the `Requester` field is purely descriptive (labels where the OM engagement came from), no hidden logic
 - **NEW:** Notification strategy toward Value Stream Owners is an open decision (see Next Steps) — internal Slack/Email notifications are unaffected
 - **NEW:** Removed Delete entirely — streams are never deleted, only transitioned to Closed when obsolete or done
-- **NEW:** `Init Code` is a Jira reference/link (like the OKR bridge and today's OM digest), not free text
+- **NEW:** `Init Code` is a Jira reference/link (like today's OM digest), not free text
 - **NEW:** `Strategic Pillar` is now derived automatically from `Cluster` (fixed mapping in `config/clusters.json`) instead of being picked separately — the two fields overlapped and risked inconsistent combinations
 - **NEW:** Import maps the Doc's existing "Effective date" field to `EndDate` for closed streams — no historical data gap
 - **NEW:** `Output Type` is multi-select — a stream can have more than one
@@ -31,19 +53,14 @@ This is the **single README** for the project (merged with the former `README_MV
 
 ## Overview
 
-The **OM Governance Dashboard** (OM Catalog App) transforms the internal catalog of OM Streams into a business-friendly interface that visualizes organizational work across three dimensions:
+The **OM Governance Dashboard** (OM Catalog App) transforms the internal catalog of OM Streams into a business-friendly interface that visualizes organizational work. **Note (2 Aug 2026)**: the "three dimensions" framing below is stale — `Cluster` was renamed to `Driver` and is now explicitly **not** a filter/dimension, just a card tag (see `conversations/2026-08-02-gestione-om-brainstorm.md`). This section needs a proper rework once Visualizzazione OM gets its own problem-first pass; for now:
 
-1. **WHAT we do** (Cluster) — Which type of OM activity
-   - OM Compliance-Evolution (new markets, new entities)
-   - OM Compliance-Continuity (regulatory compliance, review cycles)
-   - OM Compliance-Efficiency (fiscal optimization, cost centralization)
-
-2. **WHAT it enables** (Output Type) — Which business capability we unlock
+- **`Driver`** (was Cluster) — a card tag, not a filter. Enum: **OM Compliance, OM Evolution, OM Efficiency, OM Optimisation**
+- **WHAT it enables** (Output Type) — Which business capability we unlock, still a filter
    - Business Evolution, Market Expansion
    - Corporate Compliance, Business Continuity
    - Operational Efficiency, Cost Optimization
-
-3. **HOW FAR we are** (Completeness) — Progress tracking (0-100%)
+- **HOW FAR we are** (Completeness) — Progress tracking (0-100%), still a filter
 
 ### The Problem
 
@@ -54,7 +71,7 @@ Operations Management work is often misunderstood by the business:
 
 ### The Solution
 
-A **3D catalog viewer** that answers: *"What is OM doing for my business, and why?"*
+A **catalog viewer** that answers: *"What is OM doing for my business, and why?"* (the "3D" framing is stale, see Overview note above)
 
 ---
 
@@ -64,11 +81,13 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 ✅ **Create Streams** — Add new OM activities with structured metadata  
 ✅ **Update Streams** — Edit + track changes (version history, read-only)  
-✅ **Open Access** — No login required; read access is open on the lastminute.com network. Editing is reserved to Diane and Nathan  
+✅ **Open Access** — No login required; read access is open on the lastminute.com network. Editing is reserved to a single Admin role (Diane and Nathan)  
+✅ **Draft/Publish** — A stream can be built up before it's visible on the network; publishing is one-way  
+✅ **Admin Kanban View** — Drag streams between statuses, reorder by real-world urgency within a column
 
 ### Visualization
 
-✅ **Dashboard (3D View)** — Filter by Cluster × OutputType × Completeness  
+✅ **Dashboard** — Filter by Output Type × Completeness (`Driver` shown as a card tag, not a filter — see Overview note above)  
 ✅ **Archive** — Historical view of completed activities per year  
 ✅ **Market Details Panel** — Legal/Tax/DPO context for each market  
 
@@ -105,20 +124,13 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
    cd om-governance-dashboard
    ```
 
-2. **Deploy to Google Apps Script**
-   ```bash
-   clasp login
-   clasp push
-   ```
+2. **Set up and run the app**
 
-3. **Open the web app**
-   - Navigate to the deployment URL (from `clasp list`) — no login needed to view
+   Superseded by the 30 July 2026 stack pivot (Node/TypeScript + PostgreSQL, see Architecture below) — the `clasp`/Apps Script steps that used to live here no longer apply. New setup instructions are TBD until the Open Questions (hosting, DB provisioning, framework choice) are resolved with Nathan.
 
 ### First Run
 
-1. Create a test stream to verify the form
-2. Check that data syncs to the OM Catalog Google Sheet
-3. Test the 3D filters on the dashboard
+TBD — depends on the new setup once the Open Questions below are resolved.
 
 ---
 
@@ -128,42 +140,44 @@ A **3D catalog viewer** that answers: *"What is OM doing for my business, and wh
 
 The OM Governance Dashboard is being built as the **single management center for Operations Management** — the one place where OM streams are created, tracked, and reported on. The goal is to **eliminate the other OM documents**, not run alongside them: today OM work lives scattered across the OM Streams Log (Google Doc) and siloed legal/tax/DPO trackers; once the app is live, it replaces them as the way OM work is managed.
 
-### Tech Stack (MVP)
+### Two Domains
 
-- **Backend**: Google Apps Script — used to bootstrap the MVP with real data
-- **Frontend**: HTML/Vanilla JS (no framework — MVP lean)
-- **Data**: Google Sheet ("OM Catalog") + Google Doc ("OM Streams Log") act as the **database** for the MVP. Once the real app is deployed, these documents are no longer used or managed directly — all OM management moves into the app.
+The app is analyzed and built as **two separate domains**, not one shared screen (decision from Nathan, 30 July 2026 — see `conversations/2026-07-30-domain-split-and-stack-pivot.md`):
 
-### Real App Requirements (post-MVP)
+- **Gestione OM (Management)** — write/workflow domain: Diane and Nathan create/update streams, notifications, version history.
+- **Visualizzazione OM (Visualization)** — read/discovery domain: anyone on the lastminute.com network browses/filters/explodes the catalog and consults the archive.
 
-Since the target is a real, standalone management app — not a Google Workspace script — Apps Script won't be needed once the real app exists. Deploying a real app requires:
+See `docs/PRODUCT_SPEC.md` for the functional split and `docs/ARCHITECTURE.md` for how each maps to routes/data.
 
-- A backend framework/runtime (TBD)
-- A real database (TBD) replacing the OM Log Doc / OM Catalog Sheet as the system of record
-- A hosting/cloud environment (e.g., the company's existing Azure/AWS/GCP setup — TBD)
-- A CI/CD pipeline (build → test → deploy on merge to main)
+### Tech Stack
+
+- **Backend**: TypeScript / Node.js — the real stack from the start, not a bootstrap step
+- **Database**: PostgreSQL — the system of record from day one
+- **Frontend**: TBD (framework not yet chosen)
+- **Data source (bootstrap only)**: OM Streams Log (Google Doc) is imported **once** to seed Postgres; after that it's never read or updated again — all OM management moves into the app
+
+**Superseded**: Google Apps Script + Google Sheet was rejected as the MVP foundation — the goal is to *replace* the Docs/Sheet, not stage the app inside the same Google Workspace ecosystem before rebuilding it later on a "real" stack. `Code.gs` and `index.html` (the Apps Script prototype) are kept only as a historical reference for required behavior, not the base for this build.
+
+### Open Questions (blocking Sprint 1)
+
+Since the MVP is now the real app, these are no longer "later" concerns:
+
+- Frontend framework
+- Hosting/cloud environment, and who provisions it
+- Who provisions and owns the Postgres instance
+- CI/CD pipeline ownership
 - Environment & secrets management (DB credentials, API keys) — not hardcoded in the repo
-- Network-level access restriction (reachable only from the lastminute.com network) — no user login; editing stays reserved to Diane and Nathan through a separate, simpler access path (not exposed in the public UI)
-- A custom domain + TLS certificate
-- Monitoring, logging, and alerting (uptime, errors)
-- A backup & rollback strategy (previous build/image, DB migration rollback)
-
-### Key Components (MVP)
-
-| Component | Purpose | File |
-|-----------|---------|------|
-| **doGet()** | Serve frontend, read catalog | `Code.gs` |
-| **doPost()** | Create/update streams | `Code.gs` |
-| **importDocToSheet()** | One-time import: OM Log → Sheet | `Code.gs` |
-| **Dashboard UI** | 3D filter & view | `index.html` |
-| **Market Panel** | Legal/Tax context | `index.html` |
+- Network-level access restriction (reachable only from the lastminute.com network) — no user login; editing stays reserved to Diane and Nathan through a separate, simpler access path
+- Custom domain + TLS certificate
+- Monitoring, logging, and alerting
+- Backup & rollback strategy (previous build/image, DB migration rollback)
 
 ### Data Model
 
-**Google Sheet: OM Catalog**
+**Postgres table: `om_catalog`**
 
 ```
-| ID | Name | Init | Status | Cluster | OutputType | 
+| ID | Name | Init | Status | Driver | OutputType | 
 | Markets | Completeness | DataControllers | MarketAssets | ... |
 ```
 
@@ -177,7 +191,6 @@ See `docs/ARCHITECTURE.md` for the full schema.
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** — Data schema, API design, security
 - **[UI_WIREFRAMES.md](docs/UI_WIREFRAMES.md)** — Layout, interaction flows, design system
 - **[MVP_ROADMAP.md](docs/MVP_ROADMAP.md)** — Timeline (4 weeks), sprint planning
-- **[OKR_REFERENCE.md](docs/OKR_REFERENCE.md)** — Company OKR reference material for the stream-to-OKR bridge
 - **[conversations/](conversations/)** — Log of planning decisions and why they were made
 
 ---
@@ -192,29 +205,29 @@ om-dashboard/
 │   ├── PRODUCT_SPEC.md
 │   ├── ARCHITECTURE.md
 │   ├── UI_WIREFRAMES.md
-│   ├── MVP_ROADMAP.md
-│   └── OKR_REFERENCE.md
+│   └── MVP_ROADMAP.md
 │
 ├── conversations/ (decision log)
 │
 ├── config/
-│   ├── clusters.json (3 cluster OM-driven + output type mapping)
+│   ├── clusters.json (3 Driver values + output type mapping — filename kept as-is, content renamed 2 Aug 2026)
 │   └── markets.json (Tier 1/2/3 classification)
 │
-├── Code.gs (Apps Script backend — CREARE, AGGIORNARE, IMPORT)
-└── index.html (Frontend — Dashboard, filters, market panel, archive)
+├── Code.gs (superseded — Apps Script prototype, kept as historical reference only)
+└── index.html (superseded — Apps Script prototype, kept as historical reference only)
 ```
 
 ---
 
 ## Configuration
 
-### Cluster Definitions
+### Driver Definitions
 
-See `config/clusters.json`:
-- **OM Compliance-Evolution** — Expansion initiatives (with INIT codes)
-- **OM Compliance-Continuity** — Regulatory compliance & stability
-- **OM Compliance-Efficiency** — Cross-functional optimization
+Renamed from "Cluster" 2 Aug 2026, revised same day to 4 values — see `config/clusters.json`. Enum: **OM Compliance, OM Evolution, OM Efficiency, OM Optimisation**:
+- **OM Compliance** (was OM Compliance-Continuity) — Regulatory compliance & stability, no INIT
+- **OM Evolution** (was OM Compliance-Evolution) — Expansion initiatives, with INIT codes
+- **OM Efficiency** (was OM Compliance-Efficiency) — Cross-functional optimization, no INIT
+- **OM Optimisation** — genuinely new, no prior cluster maps to it. Description/examples/Output Types are placeholders pending Diane's input
 
 ### Market Classification
 
@@ -227,25 +240,7 @@ See `config/markets.json`:
 
 ## Development
 
-> The clasp/Apps Script workflow below is for the MVP only — it validates the product with real OM data before the real app is built. The real app will use its own framework, its own database, and its own CI/CD instead of Apps Script and the OM Log Doc/OM Catalog Sheet (see [Real App Requirements](#real-app-requirements-post-mvp)).
-
-### Prerequisites (MVP)
-
-- Node.js 18+ (for local tooling)
-- `clasp` CLI (`npm install -g @google/clasp`)
-
-### Local Development (MVP)
-
-```bash
-# Deploy changes to Apps Script
-npm run deploy
-
-# Run tests
-npm run test
-
-# View logs
-npm run logs
-```
+> Superseded by the 30 July 2026 stack pivot: the app is now built on TypeScript/Node.js + PostgreSQL from the start, not Apps Script (see [Architecture](#architecture) and [Open Questions](#open-questions-blocking-sprint-1)). The `clasp`/Apps Script instructions that used to live here no longer apply. Local dev setup is TBD until the Open Questions (hosting, DB provisioning, framework choice) are resolved with Nathan.
 
 ### Workflow
 
@@ -255,54 +250,28 @@ Currently in **setup phase** (see `PROJECT.md`): `main` is not yet protected, so
 
 ## Deployment
 
-### MVP (Testing/Staging via Apps Script)
-
-```bash
-clasp deploy --description "Test deployment"
-```
-
-Test the staging app:
-- Create a test stream
-- Verify filters work
-- Check market details panel loads
-
-```bash
-clasp deploy --description "v0.1 MVP Launch"
-```
-
-Announce to users:
-- Slack: #om-governance-updates
-- Email: OM Team + Value Stream Owners
-
-**Rollback (MVP)**:
-```bash
-clasp deployments
-clasp undeploy <DEPLOYMENT_ID>
-```
-
-### Real App Deployment (post-MVP)
-
-Once the real app is built on the target framework, deploying it requires:
+Superseded by the 30 July 2026 stack pivot — there's no more "MVP via Apps Script" vs. "real app later" split; this is the one deployment target, and it's blocked on the Open Questions above. Once those are resolved, deployment needs:
 
 1. Hosting/runtime environment provisioned (container or app-service on the target cloud)
-2. Real database provisioned and migrated (replacing the OM Log Doc / OM Catalog Sheet)
+2. Postgres database provisioned and migrated, seeded once from the OM Log Doc
 3. CI/CD pipeline building, testing, and deploying automatically on merge to `main`
 4. Environment variables/secrets configured in the hosting platform (never in code)
 5. Custom domain + TLS certificate pointed at the deployment
 6. Monitoring/alerting wired up before go-live
 7. A rollback plan: previous build/image kept ready, plus DB migration rollback scripts
 
-Announce go-live the same way as the MVP (Slack + Email to OM Team + Value Stream Owners).
+Announce go-live via Slack (#om-governance-updates) + Email to OM Team + Value Stream Owners.
 
 ---
 
 ## Next Steps
 
-1. **Nathan Vené approval** — cluster taxonomy and market scope (blocking Sprint 1)
-2. **OKR granularity decision** — Objective-level (4 options) vs. Key Result-level (16 options); asked, awaiting answer
+1. **Nathan Vené approval** — Driver taxonomy and market scope (blocking Sprint 1)
+2. **Diane to provide real content for the `OM Optimisation` Driver** (description, examples, Output Types, Strategic Pillar) — currently a placeholder in `config/clusters.json`, the only one of the 4 Driver values with no prior cluster content behind it
 3. **Notification strategy toward Value Stream Owners** — Diane and Nathan still need to decide if/how notifications extend beyond the internal OM team (not blocking Sprint 1/2)
-4. **Reorganize the Google Sheet** — once approved, split it functionally (Manage Streams) × visually (Dashboard/Archive/Market Panel)
-5. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`)
+4. **Resolve the Open Questions on the new stack** — hosting, Postgres provisioning, CI/CD ownership, frontend framework (blocking Sprint 1, see Architecture above)
+5. **Re-scope Sprint 1 effort/timeline** — `MVP_ROADMAP.md` hours still assume Apps Script; not recalculated yet, deferred by Diane on 30 July 2026
+6. **Start Sprint 1** — backend setup (see `docs/MVP_ROADMAP.md`), once 4 and 5 are resolved
 
 ---
 
@@ -360,11 +329,11 @@ Internal tool — Lastminute.com Group only.
 
 ## FAQ
 
-**Q: Why three dimensions?**  
-A: Clusters show WHAT we do, Output Types show WHAT we ENABLE, Completeness shows HOW FAR we are. Together, they answer: "What is OM delivering for my business?"
+**Q: Why these dimensions?** *(updated 2 Aug 2026 — the old "three dimensions" answer is stale)*  
+A: Output Types show WHAT we ENABLE, Completeness shows HOW FAR we are — these are filters. `Driver` (was Cluster) shows WHAT TYPE of activity it is, but as a card tag only, not a filter.
 
-**Q: Can I filter by multiple clusters?**  
-A: Yes — use the Cluster dropdown to select one, or leave blank to see all.
+**Q: Can I filter by Driver?**  
+A: No — `Driver` (OM Compliance, OM Evolution, OM Efficiency, OM Optimisation) is shown on each card but is deliberately not a filter.
 
 **Q: Where is the historical data?**  
 A: Switch to the Archive tab to see closed activities per year.
@@ -374,6 +343,6 @@ A: No — the app is read-only for everyone on the lastminute.com network. Only 
 
 ---
 
-**Last Updated**: 28 July 2026  
+**Last Updated**: 2 August 2026  
 **Version**: 0.1 MVP (In Development)  
 **Status**: 🔄 In Review with OM Leadership
