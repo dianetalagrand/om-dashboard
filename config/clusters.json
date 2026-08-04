@@ -1,11 +1,11 @@
 {
-  "_status": "SUPERSEDED 3 Aug 2026 by the accepted domain reframe — see docs/proposal/README.md. Driver is now 3 values, counted from the real 34 streams, not designed: OM Governance (24 + the 2 previously mis-split as 'OM Compliance' = 26), OM Market Expansion (5), OM Efficiency (3). Descriptions/examples/output-type mappings below are placeholders — M1 ('seed from evidence') derives the real ones from the 34 stream tabs + 3 other source documents, per the rule that a field not backed by actual evidence gets cut, not invented.",
+  "_status": "M1 seed complete 3 Aug 2026 — see docs/proposal/m1-streams-seed.json for the full 34-stream extraction this is derived from. Driver is 3 values, counted from the real 34 streams: OM Governance (24 + the 2 previously mis-split as 'OM Compliance' = 26), OM Market Expansion (5), OM Efficiency (3). Examples below are the real stream names (evidence, not invented); descriptions are short factual summaries of what those real streams have in common, not designed categories.",
   "drivers": [
     {
       "id": "OM-GOVERNANCE",
       "name": "OM Governance",
-      "description": "PLACEHOLDER — to derive from the 26 real streams tagged Governance or (the now-merged) Compliance during M1.",
-      "examples": [],
+      "description": "The largest group by far (26/34). Internal structural governance moves: entity setup/relocation, licence reuse, HR/market structure, GDPR and other compliance reviews. Includes the 2 streams previously mis-tagged as a separate 'OM Compliance' driver (Diane's correction, 3 Aug 2026): Cruise Applications Decomissioning, CAA Audit - ATOL Adequacy Actions.",
+      "examples": ["Chiasso Moving", "Newco Romania", "ICO Group Asset Inventory", "OTA OM Review in France", "Pigi OTA B2C", "PT Invoicing Flights", "OM Market Structure Design", "OTA B2C Appian Workflow", "New HR Matrix", "PT Licence Reuse for EU Markets", "Acquiring Service Evolution", "IT Welfare Business in Pigi", "Forward Assets Transfer", "Whistleblower Comm: Indian Member Formalisation", "OM Assessment: US Tax Compliance", "OM B2B Services Catalog Review", "OM Assessment on Veriflight", "OM B2B: End-year Review", "ICO Service Amendment: SALES PLATFORM", "Cookie Consent Manager Harmonisation", "New ICO Service Activation", "Momorooms - OM Assessment", "Hotelscan: Data Controller Structure Review", "HR Guidelines: Matrix Evolution", "Cruise Applications Decomissioning", "CAA Audit - ATOL Adequacy Actions"],
       "outputTypes": [],
       "strategicPillar": null,
       "hasInit": null,
@@ -16,8 +16,8 @@
     {
       "id": "OM-MARKET-EXPANSION",
       "name": "OM Market Expansion",
-      "description": "PLACEHOLDER — to derive from the 5 real streams tagged Market Expansion during M1.",
-      "examples": [],
+      "description": "5/34. Opening or configuring the group's presence in a new market/entity setup for it (Greece VAT representation, LMNext US B2B/telesales, market prioritisation for Brazil/Saudi Arabia/UAE).",
+      "examples": ["GR VAT Representative Implementation", "Greece VAT Representative Activation", "New Market Prioritisation", "LMNext US: Telesales Configuration", "LMNext US: B2B Configuration"],
       "outputTypes": [],
       "strategicPillar": null,
       "hasInit": null,
@@ -28,8 +28,8 @@
     {
       "id": "OM-EFFICIENCY",
       "name": "OM Efficiency",
-      "description": "PLACEHOLDER — to derive from the 3 real streams tagged Efficiency during M1.",
-      "examples": [],
+      "description": "3/34, the smallest group. Reviewing/streamlining an existing setup rather than governing or expanding it (telesales focal point, PT invoicing switch, hotel FR entity switch).",
+      "examples": ["Telesales & Rumbo Focal Point Review", "PT Invoicing Implementation", "Hotel FR: Potential Switch"],
       "outputTypes": [],
       "strategicPillar": null,
       "hasInit": null,
@@ -38,6 +38,17 @@
       "icon": "⚡"
     }
   ],
+  "functions": {
+    "_note": "Closed list confirmed 3 Aug 2026, derived from row-label frequency across the real 34 streams (docs/proposal/m1-streams-seed.json). Fixed defaults are always assessed; optional ones are added deliberately based on need, per Diane's decision — this is not an open/free-text list.",
+    "fixed": ["Legal", "Fiscal (Finance & Tax)", "DPO"],
+    "optional": ["HR", "IT & Platform", "Corporate Affairs", "Cyber Security & PCI", "Accountancy", "(FCP) Business Analysis", "Content Management & UX", "Social/Copy/App", "Enterprise Risk Management", "VS/Business"],
+    "assessmentStates": ["asked", "in", "blocking", "n/a"]
+  },
+  "trigger": {
+    "_note": "Confirmed 3 Aug 2026 — kept exactly as Nathan wrote it in docs/proposal/om-maps.html §9/§3, not Diane's internal/external+Driver-reuse alternative.",
+    "originTypes": ["a decision taken elsewhere", "an outside authority", "OM itself spots a risk or an opportunity"],
+    "linksTo": ["Decision", "Forum"]
+  },
   "outputTypes": {},
   "statusEnum": [
     "New",

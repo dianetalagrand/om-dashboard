@@ -1198,20 +1198,26 @@ table.matrix tbody tr:hover th.cap,table.matrix tbody tr:hover td { background:v
         <div class="q"><div class="q-body">
           <p><b>Is a function&rsquo;s input filed under the function, or under the kind of impact?</b> The Streams Log files it by function &mdash; &ldquo;Legal:&rdquo;, &ldquo;Fiscal:&rdquo;, &ldquo;DPO:&rdquo;. The C-Team package files it by impact &mdash; financial, legal, reputational.</p>
           <p class="q-rec">Suggestion: file it by function, tag each one with the kind of impact, and let the C-Team view group by impact. This is the one decision that shapes everything else, so it is worth ten minutes.</p>
+          <p class="q-rec"><b>RESOLVED 3 Aug 2026 (Diane):</b> filed by function &mdash; and no separate impact tag on top. The function/department itself is the impact perspective; a distinct financial/legal/reputational tag would just be a second, redundant list.</p>
         </div></div>
         <div class="q"><div class="q-body">
           <p><b>Is the list of functions fixed, or can anyone add one?</b> Fifteen show up in the log so far.</p>
           <p class="q-rec">Suggestion: a fixed list you can extend deliberately. If people can type anything, the &ldquo;who owes me what&rdquo; screen stops being trustworthy &mdash; which is the whole value of R2.</p>
+          <p class="q-rec"><b>RESOLVED 3 Aug 2026 (Diane):</b> confirmed, a fixed list. Closed at 13 based on real frequency across all 34 streams (<span class="mono">docs/proposal/m1-streams-seed.json</span>) &mdash; 3 fixed defaults (Legal, Fiscal/Finance &amp; Tax, DPO) + 10 optional, each seen at least once (HR, IT &amp; Platform, Corporate Affairs, Cyber Security &amp; PCI, Accountancy, (FCP) Business Analysis, Content Management &amp; UX, Social/Copy/App, Enterprise Risk Management, VS/Business). See <span class="mono">config/clusters.json</span> &rarr; <span class="mono">functions</span>.</p>
         </div></div>
         <div class="q"><div class="q-body">
           <p><b>Which parts of a market&rsquo;s setup do streams actually change?</b> Needed at R2 to build the lists, long before the setup registry exists.</p>
           <p class="q-rec">From the Market Architecture: who sells, who is principal, who invoices, revenue model, VAT rule, liability model, insolvency cover, data controller, licences. Add what is missing, cut what never moves.</p>
+          <p class="q-rec"><b>RESOLVED 3 Aug 2026 (Diane):</b> confirmed as-is, nothing added or trimmed.</p>
         </div></div>
         <div class="q"><div class="q-body">
           <p><b>Does &ldquo;Stream&rdquo; stay the word?</b> It behaves a bit like a project, but calling it one invites the wrong expectations &mdash; the Perimeter doc is clear OM does not replace PMs.</p>
           <p class="q-rec">Suggestion: keep it. Everyone already says it, the C-Team recognises it, and 34 of them exist under that name. Change what it means, not what it is called.</p>
+          <p class="q-rec"><b>RESOLVED 3 Aug 2026 (Diane):</b> confirmed, &ldquo;Stream&rdquo; stays.</p>
         </div></div>
       </div>
+
+      <p class="q-rec" style="margin-top:1rem"><b>Two more settled the same day, beyond the four above:</b> the Trigger&rsquo;s origin type (Section 9 correction) stays exactly as written here &mdash; three values (a decision taken elsewhere &middot; an outside authority &middot; OM itself spots a risk or an opportunity), each linking to a Decision and a Forum &mdash; not Diane&rsquo;s initially-proposed internal/external binary plus a reuse of the Driver enum as &ldquo;cause&rdquo;, dropped once compared against this section&rsquo;s own wording. And the real content of all 34 streams &mdash; status, function assessments, dates &mdash; is now seeded in <span class="mono">docs/proposal/m1-streams-seed.json</span>, cross-checked against Diane&rsquo;s own Kanban board where the source doc itself had no recorded status.</p>
 
       <h4 class="sub">Nathan &mdash; to unblock</h4>
       <div class="qlist">

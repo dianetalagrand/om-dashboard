@@ -1,0 +1,1372 @@
+﻿{
+    "_meta":  {
+                  "source":  "OM Streams Log (Google Doc), https://docs.google.com/document/d/1UmdVojpEnd4OQ1p8pFJ7lgJt5XzCWs8a4rLnelg66Us/edit",
+                  "extractedDate":  "2026-08-03",
+                  "rule":  "A field not filled in the source is recorded as an empty string / null, never invented.",
+                  "totalStreamsInOverviewTable":  9,
+                  "totalStreamsWithDetailSectionFound":  34,
+                  "note":  "The doc\u0027s master \u0027OM Streams Overview\u0027 table (near the top) contains only 9 rows (#1-9), not all 34 - it appears stale/incomplete relative to the 34 detail sections found further down. Streams #10-34 below have number=null and status=null because no overview row or status-grouping mini-table (TO DO/IN PROGRESS/PAUSED/DONE) covers them anywhere in the source; this is a genuine gap in the source document, not an extraction omission."
+              },
+    "streams":  [
+                    {
+                        "number":  1,
+                        "name":  "Chiasso Moving",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "TO DO",
+                        "context":  "To sync the alignment of OM related information (legal, fiscal, DPO and financial) to ensure alignment on both B2B and B2C perimeter within the deadline set on the 1st of October.",
+                        "need":  "OM framework alignment to ensure consistent distribution of core information in and out.",
+                        "conclusion":  "",
+                        "effectiveDate":  "XX/0X/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  3,
+                        "name":  "Pigi OTA B2C",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "TO DO",
+                        "context":  "Pigi was a dormant Italian legal entity within the group, holding active travel agency licenses and VAT credits. Having evaluated its reuse to host the invoicing of IT Welfare business, now we want to expand the scope with the OTA B2C to assess a wider value.",
+                        "need":  "Define scope (countries \u0026 business lines) and assess cross-functional feasibility - Legal/Regulatory, Finance \u0026 Tax, HR, and Technology.",
+                        "conclusion":  "",
+                        "effectiveDate":  "XX/0X/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  2,
+                        "name":  "PT Invoicing Flights",
+                        "initCode":  "INIT-1023",
+                        "initLink":  "https://lastminute.atlassian.net/browse/INIT-1023",
+                        "category":  "OM GOVERNANCE",
+                        "status":  "TO DO",
+                        "context":  "As a result of last yearÃ¢â‚¬â„¢s risk mapping, we identified some streams of work to bring compliance in the market. From a corporate perspective, LMNext PT was created and incorporated within the group. To complete the activation, there is the need of starting the technical stream to ensure business process connecting and proper fiscal and financial invoicing.",
+                        "need":  "To invoice through the PT entity, it is necessary to develop a specific workflow both in   - \\*\\*Business Central (BC)\\*\\* \u0026#10;  - \\*\\*Order Accounting (OA)\\*\\*When both will be ready, the switch from Rumbo to LMNext PT can start.",
+                        "conclusion":  "",
+                        "effectiveDate":  null,
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "Today we invoice via Rumbo, which is a Spanish entity which used to have a temporary license (6 months) to operate in the market, with the agreement of being replaced by a PT entity. By local law, only PT companies can operate in the market, however as a group, we never finalised this step exposing us to possible compliance issues. The legal team escalated this risk last year at the Risk Committee. The output was to start activating a local entity from which both hiring, moving employees could be performed, along with the local invoicing (B2C)."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "Being able to have a local invoicing, it ensures the proper VAT % application and fiscal compliance."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "From a DPO standpoint, there is no red flag or constraint, as we are in the GDPR contest.  From a Data Protection perspective, the team has to be informed prior to the switch, to ensure the proper configuration updates in the Register of Processing Activities (RoPA)."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "The project plan is under evaluation as technical teamsÃ¢â‚¬â„¢ capacity is now dedicated to other core initiatives. The OM Table along with the ERM will assess the project to then label it with the right priority among the rest. \\\\\\[evaluation is expected ETA half March)"
+                                     },
+                                     {
+                                         "label":  "Go-live date",
+                                         "text":  "XX/0X/2026"
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  4,
+                        "name":  "OM Market Structure Design",
+                        "initCode":  "INIT-997",
+                        "initLink":  "https://lastminute.appiancloud.com/suite/sites/initiative-management/page/home/record/dxML56wDjcLDWVk2_4-bIPSVQGQubyIzVKLm5zEEEH3q2pG664g0HDvD2zLI2isgIidWKuUF9nuyN72xSjyjGInD49iuYN0iS-zEf8vDs8GfRaVICXfR5miLVTJtP0bOeP-Mjj2BYI/view/summary",
+                        "category":  "OM GOVERNANCE",
+                        "status":  "IN PROGRESS",
+                        "context":  "With the aim of transitioning from our only and current \"Group-down\" framework into a tailored horizontal national Operating Model. This initiative serves as a centralized compliance gateway designed to map local architectural layers, respect specific regional constraints, and drive \"conscious efficiency\" by reducing operational costs through the elimination of structural redundancies.",
+                        "need":  "To encompass the end-to-end documentation and harmonisation of our local operational landscape and reach:\\\\- \"Conscious Efficiency\" Framework: Increase awareness and visibility of local operational constraints and limits, enabling leadership to make data-driven decisions.\\\\- Data Integration: Seamless integration of the OM B2B-to-B2C ecosystem, building a unique source of truth.\\\\- Risk Mitigation: Full transparency on local \"peculiarities,\" regulatory, fiscal or technical limits.",
+                        "conclusion":  "",
+                        "effectiveDate":  "XX/0X/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "The activity connects regulatory and B2C information, with the integration of local constraints never captured from the wide OM view.  \u0026#10;  \u0026#10;We are working on the most complex use case (OM France) to build our standard."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  5,
+                        "name":  "Newco Romania",
+                        "initCode":  "INIT-1004",
+                        "initLink":  "https://lastminute.atlassian.net/jira/software/c/projects/OMG/boards/3081?selectedIssue=OMG-6",
+                        "category":  "OM GOVERNANCE",
+                        "status":  "IN PROGRESS",
+                        "context":  "The initiative addresses the need to stabilise and scale our workforce in Eastern Europe. Currently, the Group relies on a fragmented model of external contractors which presents several challenges, among those the most critical is: \\\\- Compliance \u0026 Labor Laws Risk: Operating through long-term contractors without a local legal entity creates potential \"shadow payroll\" risks and non-compliance with evolving Romanian labor laws.",
+                        "need":  "By activating a dedicated NewCo, we can transform a dispersed group of contractors into a consolidated Strategic Talent Hub.\\\\-Reconcile contractors under the new RO entity, moving towards a direct recruitment model through the local entity.\\\\-Establish a Center of Excellence (CoE) that serves as an internal service provider for all Group subsidiaries.",
+                        "conclusion":  "",
+                        "effectiveDate":  "XX/0X/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "Business Legal is out of scope. From a labor perspective, in the HR context, the milestones to achieve are: \\\\- HR Stabilisation: 100% migration of mission-critical contractors into the NewCo, significantly reducing churn and securing intellectual property.\\\\- Compliance Excellence: Full alignment with Romanian fiscal requirements and Group Internal Audit standards."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "As the new entity will be incorporated in the group, we will configure the ICO relations in scope to frame cost, recharge and revenues coherently."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  6,
+                        "name":  "OTA B2C Appian Workflow",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "PAUSED",
+                        "pauseReason":  "Confirmed by Diane, 3 Aug 2026: on hold for tech availability — dedicated app under evaluation.",
+                        "context":  "The Appian B2C OM workflow module was designed to enable Legal and Tax teams to review the B2C operating model and submit modification requests. Following an internal demo, it was determined that while the tool is closely aligned with operational requirements, its current reliance on Order Accounting tables introduces risks to data reliability and quality.",
+                        "need":  "To address these risks, the workflow is being upgraded to migrate its data source to the OM B2C reference spreadsheet, ensuring enhanced data accuracy and maintainability. Additionally, targeted UX and process enhancements are being implemented to optimize the tool for Legal, Tax, and DPO team operations.",
+                        "conclusion":  "- Development continues on a best-effort basis (FCP-Project Governance\u0026 Appian Team).\u0026#10;  - Current efforts focus on note field logic validation, comment history per department, removal of the T\\\\\\\u0026C checkbox, and setting the data controller field to read-only. \u0026#10;  - The next phase will involve integrating static lists for order type combinations across active markets, sourced from Company Corporate Data and B2C Distribution Structure.",
+                        "effectiveDate":  "XX/XX/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "A Ã¢â‚¬Å“data controllerÃ¢â‚¬Â field has been added to the Legal Step to capture necessary privacy role information (DPO). The feasibility of automating Jira ticket generation for the Legal team remains under evaluation."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "The Tax section retains its existing structure, with no fiscal or structural modifications required."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "- Development continues on a best-effort basis (FCP-Project Governance\u0026 Appian Team).\u0026#10;  - Current efforts focus on note field logic validation, comment history per department, removal of the T\\\\\\\u0026C checkbox, and setting the data controller field to read-only. \u0026#10;  - The next phase will involve integrating static lists for order type combinations across active markets, sourced from Company Corporate Data and B2C Distribution Structure."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  8,
+                        "name":  "New HR Matrix",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "PAUSED",
+                        "pauseReason":  "Confirmed by Diane, 3 Aug 2026: on hold pending org structure (matches the source\u0027s own note — [TBD] on Legal/Fiscal/HR/Conclusion, pending the Company\u0027s job-family/roles formalisation).",
+                        "context":  "As a result of our organisational evolution, there is the need to align the present HR job families, roles structure aligning with our Operating Model.",
+                        "need":  "The objective is to institutionalise a consistent HR structure that harmonises talent acquisition and global mobility with OM business rules. This initiative aims to streamline request management through self-service autonomy, reducing bottlenecks by ensuring a \u0027single source of truth\u0027 for all process-related queries.",
+                        "conclusion":  "\\\\\\[TBD\\\\\\]",
+                        "effectiveDate":  "XX/XX/202X",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "\\\\\\[TBD\\\\\\]"
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "\\\\\\[TBD\\\\\\]"
+                                     },
+                                     {
+                                         "label":  "HR:",
+                                         "text":  "\\\\\\[TBD\\\\\\]"
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "\\\\\\[TBD\\\\\\]"
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "\\\\\\[pending on the Company formalisation of the new job families, roles structure to then start to plan the cross activity\\\\\\]"
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  7,
+                        "name":  "PT Licence Reuse for EU Markets",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "PAUSED",
+                        "pauseReason":  "Confirmed by Diane, 3 Aug 2026: on hold, Pigi OTA B2C is priority.",
+                        "context":  "Strategical evaluation on using Portuguese licenses to optimise Insolvency costs is relevant to generate a potential saving on our operational fixed cost.",
+                        "need":  "Assess cross feasibility from all the Operating Model perspectives.",
+                        "conclusion":  "\\\\\\[30.06.2025 \\*Analysis currently paused\\*\\\\\\]",
+                        "effectiveDate":  "XX/0X/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "- \\*\\*Rumbo Model Risk Profile\\*\\*: The current operational structure (EU Seller / CH Organiser) is increasingly viewed as \\*\\*sub-optimal\\*\\* and may face scrutiny from regulatory authorities.   - \\*\\*Portuguese License Advantage\\*\\*: The Portuguese fund does not mandate the \\*\\*5% guarantee on transacted volume\\*\\* required for Rumbo, representing an \\*\\*immediate cost saving\\*\\* and liquidity improvement."
+                                     },
+                                     {
+                                         "label":  "Finance:",
+                                         "text":  "- \\*\\*Spanish Tax Efficiency\\*\\*: Rumbo currently holds approximately \\*\\*Ã¢â€šÂ¬5M in carried-forward tax losses\\*\\* in Spain.   - \\*\\*Profitability Risk\\*\\*: Given that RumboÃ¢â‚¬â„¢s profitability is almost exclusively driven by \\*\\*DP (Dynamic Packaging)\\*\\*, migrating this business to the Portuguese license would effectively neutralize the ability to offset and recover these tax losses.   - \\*\\*Scope Optimisation\\*\\*: To safeguard existing tax benefits, it is recommended to \\*\\*exclude Spain and Germany\\*\\* from the initial phase of the migration."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "- \\*\\*Technical Feasibility\\*\\*: The migration of the majority of markets under the Portuguese entity is considered \\*\\*tax-compliant and manageable\\*\\* from a technical standpoint.   - \\*\\*VAT Trade-off\\*\\*: The primary critical constraint remains the \\*\\*VAT management framework\\*\\* and the potential forfeiture of the current \\*\\*VAT-exempt status\\*\\*."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "- \\*\\*Marketing Database Attrition:\\*\\* Changing the \"Seller Company\" poses a significant risk to the legal continuity of customer database transfers.   - \\*\\*Consent Retention:\\*\\* There is a concrete risk of invalidating marketing consents (specifically letters E and F) and the entire \"vertical consent\" chain if Rumbo ceases to be the merchant of record for those specific products."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "\\\\\\[30.06.2025 \\*Analysis currently paused\\*\\\\\\]"
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  9,
+                        "name":  "Cruise Applications Decomissioning",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM COMPLIANCE",
+                        "status":  "DONE",
+                        "context":  "The cross-analysis aims to identify all the legal and DPO constraints for the decommissioning of the Cruises business (Crocierissime) and its supporting applications: Calypso (Back Office), VTE (CRM), and Azure (Cloud platform). The review is necessary to manage the data currently stored in these systems in a compliant manner.",
+                        "need":  "- To establish clear rules and guidelines for the management and deletion/retention of data in the systems being decommissioned.\u0026#10;  - To define a guideline for similar scenario to adopt at the company level, once this extraordinary",
+                        "conclusion":  "The Cruise Tools decommissioning project has finalised its strategy to mitigate security risks and achieve compliance while managing the final 2027 operations   - Decommissioning Timeline: The official shutdown of Cruise platforms and telephony is scheduled for \\*\\*January 31, 2027\\*\\*, following the return of all active bookings.   - Infrastructure Strategy:\u0026#10;      \u0026#10;      - Decommissioning: Legacy Azure infrastructure (Calypso) and the CRM instance (VTE) will be fully terminated on January 31, 2027.\u0026#10;      - Retention: Accounting data is securely held in Business Central. \u0026#10;      - Operational Management (2027 Bookings): The team is managing \\\\\\~41 active 2027 bookings by offering customers a choice between a full refund or transfer to external partner,, avoiding any direct PII transfer.\u0026#10;  - Security \u0026 Compliance:\u0026#10;      \u0026#10;      - Immediate security monitoring (alerts for unauthorised access) is active on legacy systems.\u0026#10;      - All deletion operations are strictly documented via Jira tickets and tracked in the \\[Decommission Tracker\\](https://docs.google.com/spreadsheets/d/1T3MwY06rxFWqFTDc\\_ACMbdHUHmxXLgiPjwfDuoWtIhU/edit?gid=0\\#gid=0) to ensure GDPR audit compliance.",
+                        "effectiveDate":  "23/07/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "From a contractual standpoint, the team is managing the contractual analysis to early terminate customer contracts with 2027 departures."
+                                     },
+                                     {
+                                         "label":  "Finance \u0026 Tax",
+                                         "text":  "All accounting documents already in Business Central Ã¢â‚¬â€ 10-year retention requirement met, no action needed. Business Central is out of scope for decommissioning."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "Data minimisation priority: each department head must risk-assess their data blocks to justify retention under GDPR Ã¢â‚¬â€ do not retain unclassified data wholesale. Any archiving solution must: (1) allow complete purge at end of retention period; (2) support efficient search/retrieval for DSAR compliance."
+                                     },
+                                     {
+                                         "label":  "IT \u0026 Platform:",
+                                         "text":  "\\#\\#\\#  \\*\\*CRM (VTE) \u0026 Supplier Management\\*\\*  - \\*\\*Output:\\*\\* The supplier will officially dismiss the entire Cruise architecture, which includes both the application and the databases, at the end of January 2027.\\#\\#\\# \\*\\*Email Infrastructure\\*\\*  - \\*\\*Output:\\*\\* The deletion of the email data is scheduled for the last day of January 2027.\\#\\#\\# \\*\\*Infrastructure Security \u0026 Monitoring (Azure/AWS)\\*\\*  - \\*\\*Output:\\*\\* This feature will provide immediate alerts if unauthorised access to the environment occurs.\\#\\#\\# \\*\\*Cruise Accounting\\*\\*  - \\*\\*Output:\\*\\* The legacy Azure/AWS Cruise Accounting databases and bridge microservices can be safely removed."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "The Cruise Tools decommissioning project has finalised its strategy to mitigate security risks and achieve compliance while managing the final 2027 operations   - Decommissioning Timeline: The official shutdown of Cruise platforms and telephony is scheduled for \\*\\*January 31, 2027\\*\\*, following the return of all active bookings.   - Infrastructure Strategy:\u0026#10;      \u0026#10;      - Decommissioning: Legacy Azure infrastructure (Calypso) and the CRM instance (VTE) will be fully terminated on January 31, 2027.\u0026#10;      - Retention: Accounting data is securely held in Business Central. \u0026#10;      - Operational Management (2027 Bookings): The team is managing \\\\\\~41 active 2027 bookings by offering customers a choice between a full refund or transfer to external partner,, avoiding any direct PII transfer.\u0026#10;  - Security \u0026 Compliance:\u0026#10;      \u0026#10;      - Immediate security monitoring (alerts for unauthorised access) is active on legacy systems.\u0026#10;      - All deletion operations are strictly documented via Jira tickets and tracked in the \\[Decommission Tracker\\](https://docs.google.com/spreadsheets/d/1T3MwY06rxFWqFTDc\\_ACMbdHUHmxXLgiPjwfDuoWtIhU/edit?gid=0\\#gid=0) to ensure GDPR audit compliance."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ]
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Acquiring Service Evolution",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "The group is integrating Revolut Pay as a new alternative payment method, in parallel with a new payment orchestrator (go-live late Aug/early Sept 2026; Revolut Pay go-live early Q4 2026). Revolut requires an EU-registered entity to collect payments Ã¢â‚¬â€ BravoNext SA (Switzerland) does not qualify.",
+                        "need":  "Designate an alternative group entity to act as the EU collecting counterpart for Revolut Pay, with full legal, fiscal, corporate, and security sign-off.",
+                        "conclusion":  "NV confirmed as the preferred collecting entity, pending final Revolut contract review. No legal, fiscal, corporate, or cyber blockers. Upon receiving a copy of the contract, the NV privacy assessment will be finalised along with the contract review and T\\\\\\\u0026C update.",
+                        "effectiveDate":  "23/06/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  "Two options evaluated: (A) \\[Lastminute.com\\](http://lastminute.com) NV (Netherlands) Ã¢â‚¬â€ preferred, confirmed viable, subject to final Revolut contract review; (B) Rumbo (Spain) Ã¢â‚¬â€ explored and set aside. NV was preferred by Finance for financial optimisation reasons."
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "No material blockers. Existing T\\\\\\\u0026Cs already allow NV to process payments on behalf of group Seller Companies. Actions required: update T\\\\\\\u0026Cs to explicitly cover alternative payment methods (chargeback/fraud protection) and clarify subsidiariesÃ¢â‚¬â„¢ collection rights; final legal sign-off pending Revolut contract review. Privacy: group entities are independent controllers; NVÃ¢â‚¬â„¢s new role may trigger an additional privacy assessment and updates to intercompany DPA arrangements (DPO: Solomiia Kogut, pending contract)."
+                                     },
+                                     {
+                                         "label":  "Finance \u0026 Tax",
+                                         "text":  "Tax-neutral for the group. NV is currently loss-making; routing Revolut Pay flows through it helps offset NVÃ¢â‚¬â„¢s operational losses Ã¢â‚¬â€ model extensible to future payment partners. Substance requirement: Tax recommends NV employ 1Ã¢â‚¬â€œ2 people to defend the structure under tax-risk scrutiny; HR is checking internal relocation options."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "The existing intercompany framework treats group entities as independent controllers. If NV processes customer payment data, an additional privacy assessment and potential update to intercompany arrangements are required."
+                                     },
+                                     {
+                                         "label":  "Corporate Affairs:",
+                                         "text":  "Complete, no blockers. NVÃ¢â‚¬â„¢s Swiss-listed status does not constrain it from collecting B2C funds directly Ã¢â‚¬â€ it already acts as contracting/signatory entity for group companies; this is an evolution, not a departure, from existing practice."
+                                     },
+                                     {
+                                         "label":  "Cyber Security \u0026 PCI:",
+                                         "text":  "No risk associated."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "NV confirmed as the preferred collecting entity, pending final Revolut contract review. No legal, fiscal, corporate, or cyber blockers. Upon receiving a copy of the contract, the NV privacy assessment will be finalised along with the contract review and T\\\\\\\u0026C update."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "GR VAT Representative Implementation",
+                        "initCode":  "INIT-840",
+                        "initLink":  "https://lastminute.atlassian.net/browse/INIT-840",
+                        "initCodeNote":  "Shared with \u0027Greece VAT Representative Activation\u0027 â€” confirmed by Diane 3 Aug 2026: not a duplication error, these are 2 separate streams (activation, implementation) that happened at different times and were managed individually under the same Jira init code.",
+                        "category":  "OM MARKET EXPANSION",
+                        "status":  "DONE",
+                        "context":  null,
+                        "need":  "- Fiscal compliance adequacy: Adopt the VAT local representative to manage the invoicing of domestic flights applying the local VAT%.",
+                        "conclusion":  "",
+                        "effectiveDate":  "27/05/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Accountancy",
+                                         "text":  "- \\*\\*Workload:\\*\\* Configuration set-up.\u0026#10;  - \\*\\*Configuration\\*\\*: We will maintain the standard Bravonext accounting scenario. We only need to create one new dedicated General Ledger (GL) account for Greece.\u0026#10;  - \\*\\*VAT Codes\\*\\*: Confirmed the need to create 3 specific VAT codes to ensure continuity: Applied VAT (Domestic), VAT Exempt (International), and No-VAT (Extraterritorial)."
+                                     },
+                                     {
+                                         "label":  "Tax",
+                                         "text":  "- \\*\\*Invoicing\\*\\*: The layout will follow the standard European model (two invoice types: one with VAT and one without, applied only to the flight margin)."
+                                     },
+                                     {
+                                         "label":  "(FCP) Business Analysis",
+                                         "text":  "- \\*\\*System Logic \u0026 Configuration\\*\\*: The implementation in Business Central will duplicate the logic used for existing VAT representations. Applying the specific VAT code to the economic margins will automatically trigger the correct mapping to the new dedicated GL.\u0026#10;  - \\*\\*Infrastructure Requirements\\*\\*: A dedicated or complex Business Central instance is not required, as the Greek market has no unique or custom document requirements beyond our standard setups"
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "- Execution is 100% complete.\u0026#10;  - Technical checklists are 100% complete.  Post-release operational framework and ownership transition to the Finance team are finalised."
+                                     },
+                                     {
+                                         "label":  "Agreed Go-Live Date",
+                                         "text":  "01/06/2026"
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "IT Welfare Business in Pigi",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "The assessment has in scope the impact evaluation of moving the Italian welfare business, currently managed under Swiss jurisdiction, to the Italian entity Pigi. This opportunity arises following the decommissioning of the Cruise business, which left Pigi as an available entity with several strategic advantages:  - Tax Assets: Pigi currently holds significant accumulated tax losses and VAT credits that could be leveraged to offset future profits from the welfare business.\u0026#10;  - Operational Readiness: The entity already possesses useful OTA and travel agency licences.\u0026#10;  - Market Alignment: An Italian entity simplifies the legal and fiscal relationship with local partners, allowing for standard Italian invoicing instead of out-of-scope VAT statements.",
+                        "need":  "Partnerships VS   - Risk Mitigation: The evaluation primarily mitigates risk for the Italian Welfare business and offers the company an opportunity for a more coherent operational setup.\u0026#10;  - Growth Strategy: The team decided to conduct the feasibility analysis based on a total transfer of the existing business rather than just a test on new partners to maximise the protective impact of the move.",
+                        "conclusion":  "All necessary assessments have been completed to determine feasibility and time-cost. Whilst awaiting corporate evaluation on whether to proceed, we are pausing further activities pending clear direction on the way forward.",
+                        "effectiveDate":  "21/05/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "- Regulatory Landscape: It was clarified that whilst travel is highly regulated, the welfare market itself does not require specific licences."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "- Loss Carryforward: A primary benefit is the ability to utilise Pigi\u0027s tax losses to shield the welfare business\u0027s margins in the short to medium term.\u0026#10;  - VAT Efficiency: The existing VAT credit within Pigi can be recovered through active welfare operations.\u0026#10;  - Long-term Outlook: Whilst the move involves transitioning from a Swiss tax rate to a higher Italian one, the initial use of tax losses provides a significant immediate financial advantage."
+                                     },
+                                     {
+                                         "label":  "Corporate Affairs",
+                                         "text":  "- Transfer Structure: A key decision is whether to structure this as a transfer of a going concern (cessione di ramo d\u0027azienda) or a transfer of individual assets.\u0026#10;  - Efficiency: A transfer of a going concern is preferred for its automatic nature, whereas asset transfers require individual consents."
+                                     },
+                                     {
+                                         "label":  "Enterprise Risk Management",
+                                         "text":  "- Partner Dependency Risk: The primary risk identified in the current management of the business is the dependency on partners such as Edenred. To mitigate this, the long-term objective should be to manage all partners through the Italian entity.\u0026#10;  - Analytical Scope: Focusing only on new business would limit the overall strategic impact; therefore, the feasibility analysis will cover the total transfer of the existing business portfolio.\u0026#10;  - Strategic Approval: Transitioning the full volume involves significant fiscal implications, as the tax rate could potentially be double that of the Swiss regime. This impact requires final approval from top management."
+                                     },
+                                     {
+                                         "label":  "HR",
+                                         "text":  "- Staffing Scenarios: We could potentially have three options: transferring an employee from Italy, transferring one from Switzerland, or a new direct hire.\u0026#10;  - Redundancy Constraints: Any hiring or transfer must be carefully managed to avoid overlap with roles affected by the recent collective redundancy procedure (finalised on 13 April).\u0026#10;  - Recommended Timing: To mitigate the risk of union challenges, we recommend that new hires or transfers occur at least one year after the procedure (October/November 2026).\u0026#10;  - Role Specification: Highlighting the specialised, vertical nature of the welfare market will be crucial to justify the need for specific expertise."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "- Employee Data: Transferring an individual employee from Switzerland to Italy is considered a routine procedure, requiring only updated privacy notices and new consents.\u0026#10;  - Operational Data Flows: A dedicated deep dive is scheduled to analyse specific data flows and volumes from Switzerland to Italy.\u0026#10;  - Transfer Framework: From a privacy perspective, a \"Transfer of a Going Concern\" (Ramo d\u0027Azienda) is the preferred legal framework, as it is more justifiable and manageable for data migration than an asset-only transfer.\u0026#10;  - Historical data \u0026 consents remain with Bravonext SA. Pigi will act as the autonomous controller."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "All necessary assessments have been completed to determine feasibility and time-cost. Whilst awaiting corporate evaluation on whether to proceed, we are pausing further activities pending clear direction on the way forward."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Forward Assets Transfer",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "LM Forward is currently divesting its assets to proceed with final liquidation (or strike-off) by May 31, 2026. The process was split into two phases: the transfer of major intangible assets (formalised in December 2025) and the transfer of the remaining balance sheet items.  After the migration of assets between companies, we are performing a focused ex-post review; This to ensure consistency with the Operating model and full alignment across actions performed and 360Ã‚Â° effects.",
+                        "need":  "To guarantee structural consistency and operational stability.",
+                        "conclusion":  "Within the OM Governance framework, we have carried out all the analyses aimed at ensuring the multidisciplinary execution, and coordinated the outstanding cross-functional activities.  Both activities have been completed.",
+                        "effectiveDate":  "26/05/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal \u0026 DPO:",
+                                         "text":  "Starting from the business need along with technical teams (EUS \u0026 Platform) and the Media team, we ensured the alignment on the different touchpoints:  \u0026#10;  \u0026#10;\\*\\*ASSETS \u0026 DOMAINS\\*\\* Structural transfer and domain assignment.\\*\\*SOFTWARE\\*\\* Technical transfer verification for Content Hub (Media module).\\*\\*CLIENTS \u0026 CONTRACTS\\*\\* Classification and qualification (\\*transferred, in progress, closed\\*) of the client portfolio.\\*\\*DPO \u0026 PRIVACY\\*\\* Records of Processing Activities (RoPA) and privacy notices updated with the new Data Controller.\\*\\*B2C WEBSITE\\*\\* T\\\\\\\u0026Cs and Privacy Policies updated.\\*\\*SOCIAL PROFILES UPDATE\\*\\* Review and update of Social Media \u0026 LinkedIn profiles completed."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "Finance and tax teams worked on fiscal management of:  \u0026#10;Cash, Equity, credits \u0026 debits, bank accounts, goodwill to be transferred and  ICO agreements update.  \u0026#10;"
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "Within the OM Governance framework, we have carried out all the analyses aimed at ensuring the multidisciplinary execution, and coordinated the outstanding cross-functional activities.  Both activities have been completed."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Telesales \u0026 Rumbo Focal Point Review",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM EFFICIENCY",
+                        "status":  "DONE",
+                        "context":  "Rumbo currently acts as the groupÃ¢â‚¬â„¢s central telesales focal point -  a structure born from historical convenience rather than deliberate compliance or fiscal design. As telesales operations have expanded and regulatory frameworks evolved, this legacy setup now requires a comprehensive review to ensure continued legal, tax, and data protection alignment across all EU markets.",
+                        "need":  "The reassessment aims to determine whether maintaining Rumbo as the central telesales entity remains compliant and efficient, or whether a \\*\\*modular, market-specific model\\*\\* should be introduced.  The goal is to align telesales governance with updated regulatory, privacy, and operational standards, ensuring risk mitigation and sustainable scalability.",
+                        "conclusion":  "Following the regulatory assessment:   - \\*\\*B2B Side\\*\\*: Legal analysis confirmed that no specific registration requirements, such as the Italian ROC (Registry of Communication Operators), exist in other European markets.\u0026#10;  - \\*\\*B2C Side\\*\\*: The regulatory risk is considered cleared because the operating model follows the standard online setup (confirmation emails and invoicing are handled by the correct seller company), ensuring customer protection.  \u0026#10;      The review confirmed that the \"focal point\" model managed by Rumbo is not merely a historical stratification but a solid and resilient structure.",
+                        "effectiveDate":  "14/04/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "The original centralisation under Rumbo was never systematically reviewed against \\*\\*current licensing and regulatory requirements\\*\\*.  Given the geographic expansion of telesales, the model now presents potential compliance gaps.  The team will consolidate the applicable \\*\\*EU regulatory and licensing frameworks to identify any inconsistencies\\*\\* or misalignments, forming the basis for future structural decisions."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "From a tax standpoint, RumboÃ¢â‚¬â„¢s setup was originally meant to \\*\\*simplify internal accounting and sales recognition\\*\\*.  There are currently \\*\\*no fiscal constraints\\*\\* mandating that Rumbo remain the sole telesales entity.  Therefore, from a tax perspective, there is \\*\\*full flexibility\\*\\* to redesign or redistribute telesales responsibilities should the compliance or privacy analysis recommend doing so."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "Moving from a centralised Ã¢â‚¬Å“all-marketÃ¢â‚¬Â model to a \\*\\*modular, market-based telesales structure\\*\\* would significantly enhance \\*\\*GDPR compliance\\*\\*. The current setup risks data protection inconsistencies - for example, a \\*\\*French customer\\*\\* receiving a follow-up call from a \\*\\*Rumbo agent\\*\\* without direct consent, revealing clear \\*\\*GDPR misalignment\\*\\*.  Decentralising telesales functions would enable better consent management and clearer accountability."
+                                     },
+                                     {
+                                         "label":  "Conclusion",
+                                         "text":  "Following the regulatory assessment:   - \\*\\*B2B Side\\*\\*: Legal analysis confirmed that no specific registration requirements, such as the Italian ROC (Registry of Communication Operators), exist in other European markets.\u0026#10;  - \\*\\*B2C Side\\*\\*: The regulatory risk is considered cleared because the operating model follows the standard online setup (confirmation emails and invoicing are handled by the correct seller company), ensuring customer protection.  \u0026#10;      The review confirmed that the \"focal point\" model managed by Rumbo is not merely a historical stratification but a solid and resilient structure."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "CAA Audit - ATOL Adequacy Actions",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM  COMPLIANCE",
+                        "status":  "DONE",
+                        "context":  "Following the  Civil Aviation Authority (CAA) audit on our UK websites (Bravofly and lastminute.com, the legal team formalised the required actions on ATOL logo, membership (ATOL 11082) and wording to ensure compliance with stricter UK advertising rules for ATOL protected products in UK (DPs \u0026 GDS flights)",
+                        "need":  "To update all digital channels (websites, emails, social media, app, invoices) to clearly and consistently display the ATOL logo, license number, and \"ATOL Protected\" statement for all DP-only products in the UK, across all brands with a deadline of March 31st.",
+                        "conclusion":  "All modifications aimed to align with the CAAÃ¢â‚¬â„¢s requirements have been picked up. For the deadline, the CM team confirmed readiness for the major pages (the most visible and impacted ones). Progressively during the upcoming months they will complete the full picture.",
+                        "effectiveDate":  "31/03/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "- The team did a qualitative and quantitative review on:\u0026#10;      \u0026#10;      - Decluttering incorrect links (result of wrong past duplication), where ATOL is present but not needed.\u0026#10;      - Identification of the core perimeter of intervention: they agreed with Content Management to work on priority, as the number of pages to be updated is a lot."
+                                     },
+                                     {
+                                         "label":  "Content Management \u0026 UX:",
+                                         "text":  "- The CM team, in coordination with Creative Production mapped all managed placements (banners, newsletters, web pages, etc.) that may be impacted.\u0026#10;      \u0026#10;      - ATOL logo placement in the page ATOL protected both websites (lastminute.com and \\[bravofly.co.uk\\](http://bravofly.co.uk))."
+                                     },
+                                     {
+                                         "label":  "Social, Copy \u0026 APP",
+                                         "text":  "Social:  - For Paid Social/Brand/Engagement, including the hashtag \\\\\\#atolprotected or \\\\\\#atol in the copy text is sufficient.\u0026#10;  - This rule applies to creator marketing.\u0026#10;  - Adding the hashtag to a social account\u0027s bio is not considered sufficient; it must be in the post itself for relevant ads.  \u0026#10;      Copy (SEM):  - For Search Engine Marketing (SEM) Ad Copy, mentioning \"ATOL\" is not mandatory; it is an optional choice. APP:  - The app side inherits the development coming from websites (slaver). No particular issue in the magnitude of work, just a refinement in the logo version for mobile to proportionate that new image avoiding to be perceived as Ã¢â‚¬Å“too much invasiveÃ¢â‚¬Â."
+                                     },
+                                     {
+                                         "label":  "FCP - Business Analysis",
+                                         "text":  "The team is developing a solution to embed the ATOL wording directly into the body of the invoices."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "All modifications aimed to align with the CAAÃ¢â‚¬â„¢s requirements have been picked up. For the deadline, the CM team confirmed readiness for the major pages (the most visible and impacted ones). Progressively during the upcoming months they will complete the full picture."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Whistleblower Comm:  Indian Member Formalisation",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "Since 2025, when the Whistleblower Committee was born, the contribution coming from the Indian operating from India. It was never formalised at intercompany level and we need to align it in our system. The primary issue is to formally document her work and ensure legal compliance for the transfer and management of EU and extra EU employee and consumer data she handles.",
+                        "need":  "- \\*\\*Formalisation\\*\\*: from a documentary and legal perspective.\u0026#10;  - \\*\\*Compliance\\*\\*: Legally cover the transfer and management of EU/extra EU data to ensure compliance with data protection regulations.\u0026#10;  - \\*\\*Documentation\\*\\*: ask the Indian member to sign the updated privacy letter related to the role on the committee.\u0026#10;  - \\*\\*Intercompany Alignment\\*\\*: Ensure the service description in intercompany reports aligns with the actual activities performed.",
+                        "conclusion":  "- \\*\\*Contractual Solution\\*\\*: A standard \\*\\*Consultancy\\*\\* Agreement will be activated between \\*\\*Bravoventure India (Provider) and Bravonext (Recipient)\\*\\*.\u0026#10;  - \\*\\*Service Definition\\*\\*: The standard \"Consultancy\" wording is sufficient to cover her strategic duties, including her role in the Whistleblowing Committee. \\*\\*No specific detailing is required in the contract\u0027s cover letter\\*\\*.\u0026#10;  - \\*\\*Retroactivity\\*\\*: The contract will be retrodated to January 1, 2026, for internal documentation purposes to regularise the pre-existing situation.\u0026#10;  - \\*\\*Data Protection\\*\\*: The new Intercompany Contract \\*\\*(ICO)\\*\\* must be \\*\\*incorporated into\\*\\* the Group Data Processing Agreement \\*\\*(DPA)\\*\\* update project to ensure data protection alignment.",
+                        "effectiveDate":  "17/03/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "From a fiscal standpoint, this activity has no remuneration.  This is something that allows us to manage this quite easily: by creating a new ICO agreement for Ã¢â‚¬Å“consultancy serviceÃ¢â‚¬Â."
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "The standard definition of \"Consultancy\" is deemed sufficient to cover the support provided, and no specific detailing of the Whistleblowing Committee activity is required in the contract\u0027s cover letter."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "From a Privacy roles perspective, the Ã¢â‚¬Å“consultancyÃ¢â‚¬Â service already covers all the parts (employees, customer, third parties). There is no need for further review.   - The new ICO (Consultancy contract) will need to be considered in the Group DPA update project to ensure alignment on Data Protection and data exchange. \u0026#10;  - The DPO will update the existing privacy letter models for committee members to be signed."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "- \\*\\*Contractual Solution\\*\\*: A standard \\*\\*Consultancy\\*\\* Agreement will be activated between \\*\\*Bravoventure India (Provider) and Bravonext (Recipient)\\*\\*.\u0026#10;  - \\*\\*Service Definition\\*\\*: The standard \"Consultancy\" wording is sufficient to cover her strategic duties, including her role in the Whistleblowing Committee. \\*\\*No specific detailing is required in the contract\u0027s cover letter\\*\\*.\u0026#10;  - \\*\\*Retroactivity\\*\\*: The contract will be retrodated to January 1, 2026, for internal documentation purposes to regularise the pre-existing situation.\u0026#10;  - \\*\\*Data Protection\\*\\*: The new Intercompany Contract \\*\\*(ICO)\\*\\* must be \\*\\*incorporated into\\*\\* the Group Data Processing Agreement \\*\\*(DPA)\\*\\* update project to ensure data protection alignment."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "OM Assessment: US Tax Compliance",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "The project originates from a strategic fiscal inquiry aimed at exploring and optimizing the management of revenue generated by non-US entities (Bravonext and Rumbo) within the United States territory. The exercise specifically evaluates the feasibility of shifting to an Operating model where a US-based entity handles these sales directly to mitigate current tax inefficiencies.",
+                        "need":  "Assess if the sales generated from Rumbo and Bravonext on US destinations, can be invoiced from the US entity by redirecting the sales to LMNext US.",
+                        "conclusion":  "- At this stage, the Regulatory team is not in a position to offer a definitive assessment or sign-off, as key information required for a thorough evaluation is missing. Additionally, any potential implementation would carry financial implications.   - Until a clear mandate and approved budget are granted to the Legal department for further deep-dives, the priority remains purely analytical.   - A high-level external perspective is required before any structural \"point of no return\" is reached.   - Recommended Action: Evaluate the procurement of a Tier-1 consultancy (e.g., EY).   - Objective: Gain a clear dimension of what is Legally Mandatory versus what is a Business Choice, providing an authoritative \"second pair of eyes\" on the fiscal strategy.",
+                        "effectiveDate":  "11/02/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "- \\*\\*EU Local Fragmentation\\*\\*: from a regulatory perspective, not all EU member states allow a US entity to be an Ã¢â‚¬Å“agentÃ¢â‚¬Â(e.g. UK).   - \\*\\*No Ã¢â‚¬Å“fitting allÃ¢â‚¬Â solution\\*\\*: in light of the above, itÃ¢â‚¬â„¢s clear we canÃ¢â‚¬â„¢t pursue a unique solution across Europe. Further checks and costs should be dedicated to the EU local mapping ecosystem.   - \\*\\*Transparency Gap\\*\\*: There is a high risk of regulatory pushback if US Terms \u0026 Conditions are \"hidden\" within European user journeys."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "- \\*\\*Current Exposure\\*\\*: Sales of Dynamic Packaging (DP) are treated as \"hotel sales\" in the US, creating a tax nexus.   - \\*\\*The \"Audit Bridge\"\\*\\*: A significant strategic risk involving LMNext US provides US authorities with a \"jurisdictional hook\" to audit European entities previously out of their reach.   - \\*\\*Calculated Risk\\*\\*: Management currently prefers a $500,000/year \"cost of doing business\" over the massive capital expenditure of a full structural overhaul."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "- \\*\\*Data Sovereignty\\*\\*: Transitioning to a US entity requires certification and a new Record of Processing Activities (RoPA).  \u0026#10;      \u0026#10;  - \\*\\*Transparency Concerns\\*\\*: While users might technically accept US Terms \u0026 Conditions, the DPO expressed concern that embedding a US contract within a European-facing site could be perceived as \"sneaky\" or lacking transparency.   - \\*\\*Operational \"Red Line\"\\*\\*: Rebuilding the privacy database for major markets (UK/FR) is flagged as a move that could lead to \"operational paralysis\" and permanent data loss."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "- At this stage, the Regulatory team is not in a position to offer a definitive assessment or sign-off, as key information required for a thorough evaluation is missing. Additionally, any potential implementation would carry financial implications.   - Until a clear mandate and approved budget are granted to the Legal department for further deep-dives, the priority remains purely analytical.   - A high-level external perspective is required before any structural \"point of no return\" is reached.   - Recommended Action: Evaluate the procurement of a Tier-1 consultancy (e.g., EY).   - Objective: Gain a clear dimension of what is Legally Mandatory versus what is a Business Choice, providing an authoritative \"second pair of eyes\" on the fiscal strategy."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "ICO Group Asset Inventory",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "While we successfully developed the OM (Operating Model) module within Business Central, the underlying asset listing was never consolidated; as our Operating Model evolves, establishing total consistency across our B2B operations is now mandatory to ensure a flawless representation of the group\u0027s asset inventory and internal relationships",
+                        "need":  "- \\*\\*Centralised visibility:\\*\\* by tracking and maintaining a \\*\\*\"single source of truth\"\\*\\* for all assets across the entire group. This allows management to know exactly where an asset is located and which legal entity currently owns it without manual reconciliation.  \u0026#10;      \u0026#10;  - \\*\\*Global Reporting \u0026 Consolidation\\*\\*: Create a consolidated view of the group\u0027s total CAPEX, useful in particular for finance closing to better balance profit/loss.  \u0026#10;      \u0026#10;  - \\*\\*Audit Readiness \u0026 Compliance\\*\\*: Auditors can easily trace the history of an asset from its original purchase through any internal transfers, ensuring compliance with international accounting standards",
+                        "conclusion":  "From a technical perspective, we have successfully mapped the \\*\\*service-to-asset\\*\\* relationship in a structured format, clearly identifying ownership across supplier and client entities within \\*\\*intercompany relations\\*\\*. As a strategic \\*\\*next step\\*\\* - contingent upon further ERP development - the objective is to establish a direct link between the \\*\\*asset registry\\*\\* and \\*\\*book values\\*\\*, ensuring full alignment with \\*\\*financial accounting.\\*\\*",
+                        "effectiveDate":  "12/02/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "From a legal standpoint, centralising the census of license ownership within the Travel Agency service transitions critical information into a structured, tabular format. This approach ensures data accessibility at the corporate level, effectively breaking down departmental silos and streamlining compliance oversight."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "Regarding Tax and Finance, mapping the underlying logic of asset-holding services provides a robust framework for critical financial data.  By anchoring these insights within the system, we ensure that high-value information remains accurate, secure, and aligned with broader financial reporting requirements."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "From a technical perspective, we have successfully mapped the \\*\\*service-to-asset\\*\\* relationship in a structured format, clearly identifying ownership across supplier and client entities within \\*\\*intercompany relations\\*\\*. As a strategic \\*\\*next step\\*\\* - contingent upon further ERP development - the objective is to establish a direct link between the \\*\\*asset registry\\*\\* and \\*\\*book values\\*\\*, ensuring full alignment with \\*\\*financial accounting.\\*\\*"
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "OM B2B Services Catalog Review",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "The primary objective of this initiative is to modernise our service catalog, preserving the core meaning of our offerings while increasing the level of granular definition and clarity (where possible).",
+                        "need":  "- \\*\\*Enhance Accessibility\\*\\*: Make service descriptions intuitive and clear for both cross-functional teams and top-down management.  \u0026#10;      \u0026#10;  - \\*\\*Validate Relevance\\*\\*: Challenge every existing definition by asking, \"\\*Does this still represent our current reality?\\*\" to eliminate legacy inaccuracies.  \u0026#10;      \u0026#10;  - \\*\\*Ensure Multi-Dimensional Compliance\\*\\*: This review is being conducted as a collaborative effort with Legal, Tax, and DPO departments. This ensures that every service is correctly mapped against legal frameworks, transfer pricing requirements, and data protection regulations.",
+                        "conclusion":  "This qualitative review of definitions has led to a deeper understanding and explanation of the subject, breaking down cryptic concepts into more tangible, self-explanatory terms. Furthermore, it has allowed for the update of specific data points, such as the focal points, ICO services denomination and descriptions which have evolved alongside our operating model.",
+                        "effectiveDate":  "11/02/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal \u0026 DPO:",
+                                         "text":  "- The evolution toward \\*\\*future-proof service descriptions\\*\\* - replacing specific tool names with functional categories - enables a function-based approach that is inherently more stable and resilient.  \u0026#10;      \u0026#10;  - \\*\\*Standardisation\\*\\*: The removal of redundant terms from service names aims to improve formal rigor and clarity across all legal documentation."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "- \\*\\*Naming Convention Harmonisation\\*\\*: Streamlining service titles to ensure clear identification brings a value for the intercompany billing and reporting.   - \\*\\*\\\\\\*\\\\\\*Focal Point Update:\\\\\\*\\\\\\* the activity increases consistency across the services and focal points associated.\\*\\*"
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "This qualitative review of definitions has led to a deeper understanding and explanation of the subject, breaking down cryptic concepts into more tangible, self-explanatory terms. Furthermore, it has allowed for the update of specific data points, such as the focal points, ICO services denomination and descriptions which have evolved alongside our operating model."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "New Market Prioritisation",
+                        "initCode":  "INIT-885",
+                        "initLink":  "https://lastminute.atlassian.net/browse/INIT-885",
+                        "category":  "OM  MARKET EXPANSION",
+                        "status":  "DONE",
+                        "context":  "- This initiative is aimed at evaluating possible local expansion through a cross-departmental mapping costs (Legal, DPO, Tax, IT, HR, etc.). \u0026#10;  - The goal is to gain a consolidated, fact-based view of preliminary costs and constraints, enabling a robust comparison against other potential countries. \u0026#10;  - This preliminary activity will lay the groundwork for possible implementation following the C-teamÃ¢â‚¬â„¢s decision (formalisation of an INIT with a budget allocated for implementation).\u0026#10;  - For the market assessment, we will collect insights with the aim of defining the best strategy - whether to operate fully in-house or alternatively to leverage the joint venture model.",
+                        "need":  "- \\*\\*Company needs\\*\\*: Clarify cost structures and hidden obligations early on, measure realistic operational readiness, avoiding unexpected liabilities and ensuring consistency.  \u0026#10;      \u0026#10;  - \\*\\*Strategic needs\\*\\*: Build a transparent cost-benefit analysis that supports decision-making on profitability and priority whether Saudi Arabia is the most advantageous location versus alternatives.",
+                        "conclusion":  "",
+                        "effectiveDate":  null,
+                        "rows":  [
+                                     {
+                                         "label":  "Expected outcome",
+                                         "text":  "- A quantified cost baseline across all impacted functions.\u0026#10;  - A clear understanding of mandatory local needs and obligations.\u0026#10;  - A strategic decision framework allowing leadership to compare Brazil with Saudi Arabia."
+                                     },
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Brazil overview",
+                                         "text":  "\\[INIT-865\\](https://lastminute.atlassian.net/browse/INIT-865)"
+                                     },
+                                     {
+                                         "label":  "Saudi A. overview",
+                                         "text":  "\\[INIT-866\\](https://lastminute.atlassian.net/browse/INIT-866)"
+                                     },
+                                     {
+                                         "label":  "UAE overview",
+                                         "text":  "\\[link\\](https://docs.google.com/presentation/d/1svyksCHFKHXAoHQEjB\\_fs0Ubmo4IPux7p3i5qexEZmk/edit?usp=sharing)"
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "Following a strategic review, the C-team has opted:   - \\*\\*Not to proceed with further assessments,\\*\\* concluding that the \\*\\*legal risks\\*\\* are disproportionate to the \\*\\*minimal market opportunity\\*\\*.  \u0026#10;      \u0026#10;  - Focusing  instead to \\*\\*strengthen our existing market position\\*\\* given the current \\*\\*legal complexity\\*\\* and \\*\\*minimal business opportunity\\*\\* in new territories."
+                                     },
+                                     {
+                                         "label":  "Decision-taking date",
+                                         "text":  "05/02/2026"
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE (closed) by Diane, 3 Aug 2026 (not recorded in the source doc)."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "OM Assessment on Veriflight",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "To ensure proper operating-model governance, compliance, and alignment ahead of the Momo Rooms launch, we held an OM Table session to consolidate the different perspectives across teams. The objective was to synchronise on the projectÃ¢â‚¬â„¢s current setup and assess whether any material red flags or risks should be highlighted at this stage.",
+                        "need":  "Assessing this new meta business line requires any regulatory, fiscal or operational review or additional investigation to frame it within our groupÃ¢â‚¬â„¢s relations.",
+                        "conclusion":  "The website is scheduled for launch by late March; currently, there are no pending actions or critical issues to report. We will implement incremental monitoring in line with business evolution to ensure ongoing OM compliance and development.",
+                        "effectiveDate":  "09/02/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "VS/Business:",
+                                         "text":  "\\*\\*Vision:\\*\\* A flight meta-search engine that connects users directly to airlines, bypassing OTAs to deliver transparent, real-time data (baggage policies, fare classes) straight from the source.\\*\\*Go-to-Market Strategy:\\*\\* Lean validation via a static landing page combined with SEM campaigns to gauge market demand before committing to full-scale search engine development. \\[Mock-up\\](https://html.onlineviewer.net/\\#)"
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "The team will coordinate the review of preliminary drafts. Critical focus: Review messaging to mitigate risks with authorities (e.g., Ã¢â‚¬Ëœno hidden feesÃ¢â‚¬â„¢ claim) No additional ICO agreement to create from the B2B side."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "From a tax perspective:  - \\*\\*Phase 1:\\*\\* Covered under existing Jetcost contracts Ã¢â‚¬â€œ no new intercompany setup required.\u0026#10;  - \\*\\*Future evaluation required for the Bravonext (domain) Ã¢â€ â€ Blue SAS (tech) relationship post-launch.\\*\\*"
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "- \\*\\*Data Controller:\\*\\* Bravonext (for database consistency).\u0026#10;  - \\*\\*Privacy Setup:\\*\\* Minimal policy for the landing page (analytical cookies only); full compliance documentation ready for the search engine launch.\u0026#10;  - \\*\\*Identified Risk:\\*\\* Data segregation between Bravonext and Blue SAS may limit cross-marketing opportunities."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "The website is scheduled for launch by late March; currently, there are no pending actions or critical issues to report. We will implement incremental monitoring in line with business evolution to ensure ongoing OM compliance and development."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "OM B2B: End-year Review",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "As part of our ongoing efforts to ensure intra-group consistency and alignment with our evolving operating model, we have completed a comprehensive review of our Intercompany (ICO) framework",
+                        "need":  "- Keeping ICO contracts consistent with the evolution of the operating model.\u0026#10;  - Updating systems to accurately track and reflect intra-group relations.",
+                        "conclusion":  "As a result of this cross activity, new contracts were generated and new others amended to align with the as-is.",
+                        "effectiveDate":  "10/01/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "The team contributed in defining the new \\[T\\\\\\\u0026Cs for the SALES PLATFORM service evolution\\](about:blank)."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "From a tax perspective, we listed the relations to be updated and issued new contracts to be signed."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "As a result of this cross activity, new contracts were generated and new others amended to align with the as-is."
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  ""
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "PT Invoicing Implementation",
+                        "initCode":  "INIT-820",
+                        "initLink":  "https://lastminute.atlassian.net/browse/INIT-820",
+                        "category":  "OM EFFICIENCY",
+                        "status":  "IN PROGRESS",
+                        "context":  "As a result of last yearÃ¢â‚¬â„¢s risk mapping, we identified some streams of work to bring compliance in the market. From a corporate perspective, LMNext PT was created and incorporated within the group. To complete the activation, there is the need of starting the technical stream to ensure business process connecting and proper fiscal and financial invoicing.",
+                        "need":  "To invoice through the PT entity, it is necessary to:  - \\*\\*Configure Business Central (BC) for PT\\*\\*It implies the purchase of 2 plug-in to be configured and customised (dev is required):   - 1 for reporting to the local authority\u0026#10;  - 1 to transpose PT with the GroupÃ¢â‚¬â„¢s Chart of Accounts  \u0026#10;        - \\*\\*Create the process in the Order Accounting (OA) for all products\\*\\*  \u0026#10;      When both will be ready, the switch from Rumbo to LMNext PT can start.",
+                        "conclusion":  "",
+                        "effectiveDate":  null,
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "Today we invoice via Rumbo, which is a Spanish entity which used to have a temporary license (6 months) to operate in the market, with the agreement of being replaced by a PT entity. By local law, only PT companies can operate in the market, however as a group, we never finalised this step exposing us to possible compliance issues. The legal team escalated this risk last year at the Risk Committee. The output was to start activating a local entity from which both hiring, moving employees could be performed, along with the local invoicing (B2C)."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "Being able to have a local invoicing, it ensures the proper VAT % application and fiscal compliance."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "From a DPO standpoint, there is no red flag or constraint, as we are in the GDPR contest.  From a Data Protection perspective, the team has to be informed prior to the switch, to ensure the proper configuration updates in the Register of Processing Activities (RoPA)."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "The technical teams worked to prepare the environments and connect them to the group processes. In alignment with all the functions involved, we formalised the list of outstanding activities to complete (Legal \u0026 DPO content update, BPs update etcÃ¢â‚¬Â¦) to ensure a global readiness set on the first Monday of February."
+                                     },
+                                     {
+                                         "label":  "Go-live date",
+                                         "text":  "02/02/2026"
+                                     }
+                                 ],
+                        "statusHypothesis":  "IN PROGRESS",
+                        "statusNote":  "Confirmed IN PROGRESS by Diane, 3 Aug 2026 (not recorded in the source doc)."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "OTA OM Review in France",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM  GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "While the current complexity was a necessary response to past external pressures, we are now moving beyond a defensive stance to \\*\\*actively challenge our current structural limits\\*\\*.  This review is not merely an audit of past fragmentation, but a strategic effort to unlock a more agile business model.",
+                        "need":  "- Identify opportunities to increase efficiency.",
+                        "conclusion":  "\\*\\*Executive Summary: Strategic Review Ã¢â‚¬â€œ French Market Restructuring\\*\\* \\*\\*Current Status \u0026 Tax Risks\\*\\*  - \\*\\*Operational Blockers\\*\\*: A comprehensive audit of inbound and outbound flows for our French entity reveals significant tax-related barriers. These hurdles currently prevent any immediate active maneuvers.\u0026#10;  - \\*\\*Restructuring Sensitivity\\*\\*: The major 2022 Ryanair operational shift remains a \"live\" reference for French tax authorities. Given the recent nature of the \\*\\*F/DP\\*\\* carve-out into \\*\\*Viaggiare\\*\\*, any further operational changes in the near term are deemed high-risk.\u0026#10;  - \\*\\*Mitigating Retroactive Exposure\\*\\*: Beyond simply maintaining a low profile, we must avoid triggering a fresh audit. A new shift today could lead the authorities to proactively \\*\\*re-examine past\\*\\* maneuvers, potentially leading to counterproductive retroactive disputes.   \u0026#10;      \\*\\*Forward-Looking Strategy\\*\\*  - \\*\\*Long-term Feasibility\\*\\*: While the exercise confirms that \"surgical\" volumes reduction from LMNext FR will yield cross-functional benefits in the future, the timing is not yet mature for execution.\u0026#10;  - \\*\\*Immediate Actionable Alternative\\*\\*: To mitigate current APST costs, we have identified a viable alternative within the insolvency framework. This is a concrete, actionable path we can pursue now to offset financial pressure without triggering the tax risks mentioned above.",
+                        "effectiveDate":  "16/01/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "LMNext FR Background \u0026Evolution",
+                                         "text":  "French Market OTA Evolution: Structure and Licensing FrameworkTo understand the current operational landscape in France, it is essential to trace the strategic shift that led to the present fragmentation of legal entities and responsibilities.\\*\\*1. Pre-2022 Baseline\\*\\*Historically, the French OTA market was managed by a single local \\*\\*Seller Company\\*\\*. This entity acted as the sole \\*\\*Agent and Principal\\*\\*, handling all invoicing and operations for the entire product portfolio.\\*\\*2. Strategic Reorganisation (2022)\\*\\*In 2022, the group restructured to accommodate specific licensing requirements for Ryanair flights. This necessitated isolating flight-related operations under a dedicated legal entity (\\*\\*Viaggiare\\*\\*) capable of managing the necessary regulatory framework.This transition was executed through a series of \\*\\*Intercompany White Label Agreements (ICO)\\*\\*, migrating the \"Flights\" and \"Dynamic Packaging\" (DP) tabs of the main brands to Viaggiare.These contracts empowered \\*\\*Viaggiare\\*\\* to take over the operational management and invoicing of flight-related products across all group brands on the market:  - \\*\\*Rumbo - Viaggiare Agreement (Effective June 1, 2022):\\*\\*\\*\\*  \u0026#10;    \\*\\*Covers both \"Flight Only\" and \"Dynamic Packaging\" (DP) for the \\*\\*Rumbo.fr\\*\\* domain.  \u0026#10;      \u0026#10;  - \\*\\*Bravonext - Viaggiare Agreement:\\*\\*\\*\\*  \u0026#10;    \\*\\*This overarching agreement manages multiple touchpoints across different timelines:\u0026#10;      \u0026#10;      - \\*\\*Bravofly.fr:\\*\\* Managed \"Flight Only\" starting June 1, 2022, with \"Dynamic Packaging\" (DP) added on October 1, 2022.\u0026#10;      - \\*\\*fr.lastminute.com:\\*\\* Managed both \"Flight Only\" and \"Dynamic Packaging\" (DP) starting August 1, 2022.\\*\\*3. Current Perimeter of the French Entity\\*\\*Following this fragmentation, the French legal entityÃ¢â‚¬â„¢s scope as Agent, Principal, and Invoicing company is now strictly limited to:  - \\*\\*Hotel Only\\*\\* (both Net and Commissionable).\u0026#10;  - \\*\\*Tour Operator (TO)\\*\\* products.\\*\\*4. Critical Regulatory Impact: Insolvency Costs\\*\\*The French market presents a unique challenge regarding \\*\\*Insolvency Protection costs\\*\\* due to the local transposition of the EU Package Travel Directive:  - \\*\\*Strict Interpretation:\\*\\* Unlike other markets, French law adopts a \"pro-consumer\" stance that extends package-like protections to \\*\\*Hotel Only\\*\\* bookings.\u0026#10;  - \\*\\*Joint and Several Liability (ResponsabilitÃƒÂ© Solidale):\\*\\* Under French regulations, Hotel Only products are treated with the same liability standards as Dynamic Packages.\u0026#10;  - \\*\\*Financial Impact:\\*\\* This regulatory framework significantly inflates insolvency costs. However, maintaining this level of protection is mandatory for \\*\\*Lmnext FR\\*\\* (and any potential future seller entity) to operate legally in the French territory."
+                                     },
+                                     {
+                                         "label":  "Qualitative aspects:",
+                                         "text":  "To maintain a high level of transparency and facilitate a data-driven decision, we have developed a detailed \\[Pros\\\\\\\u0026Cons Matrix\\](https://docs.google.com/spreadsheets/d/1rUaDx9VPEcJYy2-ovuGg927DB1P4mqu1tZK1nYaBPW8/edit?usp=sharing) for each scenario."
+                                     },
+                                     {
+                                         "label":  "Financial \u0026 Fiscal  \u0026#10;impacts",
+                                         "text":  "The \\*\\*main blockers\\*\\* arise from the fiscal side, whether we consider to add or transfer volumes from the French legal entity, there are \\*\\*significant fiscal constraints\\*\\* to consider:Key Reasons Against Shifting volumes from Viaggiare  - \\*\\*Loss of Italian Tax Consolidation Benefits\\*\\*\\*\\*  \u0026#10;    \\*\\*Viaggiare is a strategic cornerstone for our group tax planning. Since we implemented tax consolidation in 2025, this entity is the only one generating a substantial taxable income - thanks to DPs and Flights - which is essential for offsetting losses across the rest of the group. Moving this income stream to France would eliminate this crucial compensation mechanism.  \u0026#10;      \u0026#10;  - \\*\\*Similar Tax Rates\\*\\*\\*\\*  \u0026#10;    \\*\\*The French tax rate is \\*\\*25% vs 27.9% in Italy\\*\\*, this does not bring \\*\\*significant advantage\\*\\*.  \u0026#10;      \u0026#10;  - \\*\\*Mandatory Employee Profit-Sharing\\*\\*   \u0026#10;    This legal requirement, known as \"\\*participation aux rÃƒÂ©sultats\\*,\" obligates to distribute a percentage of the company\u0027s profits to employees, adding a significant and unavoidable cost burden not present in the current Italian setup.TodayÃ¢â‚¬â„¢s Key Reasons Against adding volumes from Viaggiare:  \u0026#10;  \u0026#10;While savings from reduced bank guarantees would free up financial capacity for other markets, they would not result in direct monetary savings on the P\\\\\\\u0026L.   - The real cost arises from the \\*\\*potential exit tax\\*\\* for moving volumes out of France, which \\*\\*would result in actual and immediate cash payments\\*\\*.\u0026#10;  - The move would shift revenue away from LMNext FR, \\*\\*potentially\\*\\* triggering \\*\\*disputes with the French tax authorities\\*\\* and leading to a substantial, \\*\\*possibly catastrophic, exit tax\\*\\*.   - \\*\\*Going concern issues with LMN FR\\*\\*. Without the income generated by the Hotel business, LMN FR would be in a loss position, not efficient from a tax perspective because we cannot utilise the tax losses. On top, the Group would need to recapitalise the company and sustain costs for a loss making company such as audit, tax compliance, legal advisory and so on."
+                                     },
+                                     {
+                                         "label":  "Legal impacts",
+                                         "text":  "From a regulatory perspective: There would be an \\*\\*overall obstacle\\*\\* in case of \\*\\*volumes increase (new segment F/DP)\\*\\* under the \\*\\*French entity\\*\\*:   - A final court ruling \\*\\*prohibits LMNext FR from selling Ryanair\\*\\*.\u0026#10;  - A \\*\\*technical limit\\*\\* at the inventory level: inability to distinguish \"Ryanair\" from \"Other FlightsÃ¢â‚¬Â, \\*\\*preventing partial migration\\*\\*. While \\*\\*moving the Hotel\\*\\* portion would be \\*\\*legally feasible\\*\\*, it is important to consider \\*\\*a key legal challenge\\*\\*:   - Operating in France is \\*\\*joint liability\\*\\* for \"ruined holiday\" damages applied also on \\*\\*hotels only\\*\\*. This would \\*\\*necessitate insolvency protection\\*\\*, (whatever  seller we might consider, the requirement persists). This would impact a robust saving in the insolvency cost decrease."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "- From a DPO standpoint, there is no red flag or constraint, as we are in the GDPR contest.    - From a Data Protection perspective, the team has to be informed prior to the switch, to ensure the proper configuration updates in the Register of Processing Activities (RoPA).   - A warning in case of business segment \\*\\*shift\\*\\* from \\*\\*LMNext FR\\*\\*: \\*\\*Loss of consents marketing database\\*\\*.   \u0026#10;    Per CNIL regulations, a change in Data Controller (FR to IT) requires obtaining new explicit consents."
+                                     },
+                                     {
+                                         "label":  "Conclusion",
+                                         "text":  "\\*\\*Executive Summary: Strategic Review Ã¢â‚¬â€œ French Market Restructuring\\*\\* \\*\\*Current Status \u0026 Tax Risks\\*\\*  - \\*\\*Operational Blockers\\*\\*: A comprehensive audit of inbound and outbound flows for our French entity reveals significant tax-related barriers. These hurdles currently prevent any immediate active maneuvers.\u0026#10;  - \\*\\*Restructuring Sensitivity\\*\\*: The major 2022 Ryanair operational shift remains a \"live\" reference for French tax authorities. Given the recent nature of the \\*\\*F/DP\\*\\* carve-out into \\*\\*Viaggiare\\*\\*, any further operational changes in the near term are deemed high-risk.\u0026#10;  - \\*\\*Mitigating Retroactive Exposure\\*\\*: Beyond simply maintaining a low profile, we must avoid triggering a fresh audit. A new shift today could lead the authorities to proactively \\*\\*re-examine past\\*\\* maneuvers, potentially leading to counterproductive retroactive disputes.   \u0026#10;      \\*\\*Forward-Looking Strategy\\*\\*  - \\*\\*Long-term Feasibility\\*\\*: While the exercise confirms that \"surgical\" volumes reduction from LMNext FR will yield cross-functional benefits in the future, the timing is not yet mature for execution.\u0026#10;  - \\*\\*Immediate Actionable Alternative\\*\\*: To mitigate current APST costs, we have identified a viable alternative within the insolvency framework. This is a concrete, actionable path we can pursue now to offset financial pressure without triggering the tax risks mentioned above."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: the analysis is finished and the current structural setup cannot be changed even if desired — the blocker language in Conclusion refers to why the setup stays as-is, not to unresolved work."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "ICO Service Amendment: SALES PLATFORM",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "Based on the need to support the US expansion and to ensure compliance with legal, tax, and data protection regulations at group level, the OM table worked to define and implement the solution to manage the Sales Platform service exchange including the US entity.",
+                        "need":  "- The main goals were to ensure \\*\\*GDPR and Legal Compliance\\*\\* \\*\\*for US Market\\*\\*: \u0026#10;      \u0026#10;      - establish a legally compliant structure to enable the US entity to operate \\*\\*without violating GDPR\\*\\*.\u0026#10;      - Preventing US employees from accessing systems containing EU customer data to \\*\\*avoid the risk of unlawful international data transfer\\*\\*.  \u0026#10;          \u0026#10;  - Maintain \\*\\*Group Uniformity and Audit Consistency\\*\\*: A crucial objective was to maintain consistency of services and fiscal treatment across all countries to avoid audit challenges, while simultaneously \\*\\*introducing a US-specific contractual clause\\*\\* to meet unique legal requirements without compromising the global uniformity of the group\u0027s standard Terms and Conditions.",
+                        "conclusion":  "The new agreement structure not only solved the legal and data access issues but also provided the necessary contractual basis to define the comprehensive service exchange, ensuring the fiscal uniformity treatment was consistent with the nature of the platform\u0027s utilisation and management.",
+                        "effectiveDate":  "22/12/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "The technical-legal solution to the GDPR risk was the restructuring of the intercompanyÃ¢â‚¬â„¢s T\\\\\\\u0026Cs: \\*\\*New Terms and Conditions and contractual clauses for the US\\*\\* were drafted, explicitly covering the \"International Transfer of Personnel Data\" for the US entity. \\*Ã¢â‚¬Å“\\*\\*11.3. International Transfer of Personnel Data (EU towards US)\\*\\*. In the event that the Recipient is required to process personal data belonging to the ProviderÃ¢â‚¬â„¢s personnel (or personnel of the ProviderÃ¢â‚¬â„¢s affiliates), or is required to transfer such data to systems or providers located in the United States (e.g., for tax compliance, administrative purposes, or access to systems), the Recipient agrees to ensure adequate protection for such transfers. Specifically, the Recipient agrees to execute and abide by the applicable EU Standard Contractual Clauses (SCCs) and implement any necessary supplementary measures required to legitimise the international transfer of such personal data.\\*\\*11.4. International Transfer of Personnel Data (EXTRA US towards EXTRA US)\\*\\*. In the event that the Recipient is required to process personal data belonging to the ProviderÃ¢â‚¬â„¢s personnel (or personnel of the ProviderÃ¢â‚¬â„¢s affiliates), or is required to transfer such data to systems or providers located outside EU or a country awarded with an adequacy decision (e.g., for tax compliance, administrative purposes, or access to systems), the Recipient agrees to ensure adequate protection for such transfers. Specifically, the Recipient agrees to execute and abide by the applicable adequacy measures and implement any necessary supplementary measures required to legitimise the international transfer of such personal data.Ã¢â‚¬Â\\* As a result, the Intercompany Agreement transitioned from standard platform licensing to a comprehensive service with the necessary human resources at support. \\*Ã¢â‚¬Å“\\*\\*3.13. Managed Access and Data Segregation\\*\\*. The Parties acknowledge that the Provider supplies the Platform and the necessary human resources to operate it as a \"full-service\" solution. To ensure compliance with applicable data protection laws and to prevent the unauthorized transfer of data, the Provider shall configure the Platform such that the Recipient (operating from the US) is not granted direct access to the underlying personal data of European data subjects, unless strictly necessary and legally compliant. The Provider acts as the gatekeeper of such data to protect the Recipient from regulatory exposure.\\* \\*3.14. Instruction to Grant Third-Party Access\\*\\*. Notwithstanding the above, the RecipientÃ¢â‚¬â€acting in its capacity as Data ControllerÃ¢â‚¬â€may instruct the Provider to grant specific access rights to the Platform to other third-party processors appointed by the Recipient (including, but not limited to, entities managing Customer Care centers or Marketing activities). Upon receipt of such instruction from the Recipient, the Provider undertakes to issue and manage the necessary credentials and technical access for said third parties to perform their services.Ã¢â‚¬Â\\*"
+                                     },
+                                     {
+                                         "label":  "Finance \u0026 Fiscal:",
+                                         "text":  "While the legal framework (T\\\\\\\u0026Cs and contractual type) was significantly updated, the fundamental \\*\\*way the service was remunerated\\*\\* for tax purposes was \\*\\*unchanged\\*\\*. From a \\*\\*fiscal remuneration\\*\\* (tax) perspective, the core financial structure was \\*\\*intentionally kept consistent\\*\\*.   - Fiscal Treatment: A key goal was to maintain consistency of services and fiscal treatment across all entities to \\*\\*avoid audit challenges\\*\\*."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "As seen above, the DPO team addressed two primary \\*\\*GDPR risks\\*\\* that was necessary to avoid while building the intercompany relation for the US market: 1\\.  \\*\\*Preventing the US entity\u0027s personnel from directly accessing\\*\\* the \\*\\*EU\\*\\* customer data systems.\u0026#10;2.  \\*\\*Avoid unlawful international data transfer.\\*\\* The service \\*\\*agreement evolution\\*\\* has been the \\*\\*necessary legal mechanism to justify the separation of data access and processing.\\*\\*    - \\*\\*It allowed the European entity to provide a complete, managed service, rather than just granting a license to a platform.\\*\\*\u0026#10;  - Introducing a strict legal model for data handling:\u0026#10;      \u0026#10;      - \\*\\*European Entity (BravoNext): Data Processor\\*\\*. It now manages the entire platform and processes the data on behalf of the US entity.\u0026#10;      - \\*\\*US Entity: Data Controller\\*\\*. The US entity remains the Data Controller for its customers\u0027 data. As a final step to ensuring that the service provision and data flow were correctly defined to satisfy the DPO\u0027s needs about compliant international data processing, was the activation of a new CUSTOMER CARE service agreement between Rumbo and the US entity."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "The new agreement structure not only solved the legal and data access issues but also provided the necessary contractual basis to define the comprehensive service exchange, ensuring the fiscal uniformity treatment was consistent with the nature of the platform\u0027s utilisation and management."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Cookie Consent Manager Harmonisation",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "Historically the Group had kept \\*\\*Bravoventure Spain\\*\\* as the cookie controller of \\[lastminute.es\\](http://lastminute.es) as the \\*\\*owner\\*\\* of:   - the \\*\\*website\\*\\*, and\u0026#10;  - the \\*\\*legacy LMN database\\*\\*, Controlling cookies allowed the company to position itself as a multi-product travel portal, continuing to run marketing communications to its own customers about the products available on its website, even if those products were not directly sold by Bravoventure Spain. Without the cookie control, Bravoventure Spain would not have had a valid justification to continue marketing activities on that database.",
+                        "need":  "As the Bravoventure Spain email \\*\\*database has expired\\*\\*, it is necessary to identify which one can be the new cookies controller. There are \\*\\*two possibilities\\*\\* to explore to bring a full consent management harmonisation:  - \\*\\*By brand\\*\\*, applying the standard LMN approach and using Bravonext as data controller, or\u0026#10;  - \\*\\*By country\\*\\*, aligning with the Spanish setup and using Rumbo, as for the other Spanish website.",
+                        "conclusion":  "",
+                        "effectiveDate":  "02/02/2026",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "\u0026#10;The Regulatory team checked with a local consultant on different aspects such as:  \u0026#10;    - \\*\\*Travel Agency License\\*\\*: Bravoventure Spain holds a travel agency license in Madrid and operates as a IATA Company. To maintain this license, \\*\\*a point of sale is required\\*\\*. The proposed solution involves using a \"landing\" site with a related redirect (a model already tested in the past), which is \\*\\*sufficient to ensure regulatory compliance\\*\\* without the need for active B2C sales.   - \\*\\*IATA holder implications\\*\\*: The change of data controller will not result in any impact on the IATA side."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "The \\[lastminute.es\\](http://lastminute.es) \\*\\*website\\*\\* is \\*\\*not\\*\\* a \\*\\*fiscally or accounting-relevant asset\\*\\*, despite being owned by Bravoventure Spain, as it operates under a white-label model.    - There are \\*\\*no tax impacts\\*\\* if the ownership of the domain and cookies were to be modified.   - \\*\\*ICO Framework\\*\\*: No changes to existing intercompany agreements are necessary. The remuneration for Bravoventure Spain is already guaranteed by the existing White Label contract with Bravonext."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "- DB consents check conducted by the DPO with the marketing team highlighted that:   - \\*\\*No consents\\*\\* are \\*\\*registered\\*\\* for Bravoventure Spain \\*\\*in\\*\\* the \\*\\*Consent Hub\\*\\*.   - Checked \\*\\*also Emarsys\\*\\*, and received confirmation that there are zero consents associated with that data controller.   - The current fragmentation of the data controller hinders marketing activities, preventing the correct crossing of cookie data with other corporate databases. The opportunity to align the Spanish market with \\*\\*Rumbo as the data controller\\*\\* will rectify these marketing processing limits."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "Cross-departmental agreement in switching the data controller from Bravoventure Spain to Rumbo aligning with the Ã¢â‚¬Å“Country logicÃ¢â‚¬Â.Legal documents and technical set-up will take place close to the end of the month, to ensure the switch for March 2nd."
+                                     },
+                                     {
+                                         "label":  "Marketing Risk Taking",
+                                         "text":  "Here are the two main risks the marketing team is taking by adopting this hybrid approach (\\*\\*resetting the front-end consent but keeping the back-end database intact):\\*\\*   - \\*\\*Burden of Justification\\*\\*: The marketing team assumes the difficult task of finding and defending a \"borderline\" legal justification - such as claiming the data is necessary for other group entities - to explain why historical customer data remains in their database despite the consent reset.   - \\*\\*Data Retention Liability\\*\\*: By choosing not to clean up the database (relying on the claim that it is technically infeasible), the team accepts the ongoing GDPR compliance risk of holding onto legacy data that may lack valid, up-to-date user consent."
+                                     },
+                                     {
+                                         "label":  "Go-live date",
+                                         "text":  "02/03/2026"
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "New ICO Service Activation",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "With a view to simplifying risk management, the Finance team conducted an assessment to introduce this new ICO service. This service aims to define the roles and responsibilities of the Parent Company within the group, along with related indemnification processes, thereby optimising resources, strengthening the group structure, and making access to credit and contracts more efficient.",
+                        "need":  "The primary needs behind an intercompany service is  proper documentation for tax compliance (transfer pricing) and clear legal formalisation of the relationship.In this specific case, it protects the group\u0027s core assets from subsidiary risks while using the parent\u0027s backing.",
+                        "conclusion":  "Considering the benefits this initiative will bring, and the virtually negligible cost of implementation (aside from the required fiscal set-up and bespoke legal T\\\\\\\u0026Cs agreement), the decision has been made to activate the service across the parent company and all subsidiary companies that hold IATA or DP licenses, along with all seller companies as below: \\|  \\|  \\|\u0026#10;\\| :-: \\| :-: \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| Viaggiare s.r.l. \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| Pigi s.r.l. \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| LMNext FR S.A.S.U. \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| Bravonext SA \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| LMNext (UK) Service Ltd  \\|\u0026#10;",
+                        "effectiveDate":  "11/12/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "From a pure legal meaning, the parent company guarantee (PCG) is a common, legally recognised agreement used to ensure a subsidiary meets its obligations. It creates a secondary obligation, contingent on the subsidiary\u0027s default, and is typically co-extensive with the subsidiary\u0027s liability."
+                                     },
+                                     {
+                                         "label":  "Finance \u0026 Fiscal:",
+                                         "text":  "The activation of this ICO service inside the Group brings various benefits in terms of: \\*\\*Client Risk Reductio\\*\\*n: Should the subsidiary default - for instance, through insolvency - the client may exercise the guarantee, obligating the parent company to intervene and either complete the contractual work or provide monetary compensation. \\*\\*Cost Efficiency\\*\\*: Leveraging the parent companyÃ¢â‚¬â„¢s guarantee often secures more favorable terms, leading to reduced financing and procurement costs. \\*\\*Balance Sheet Protection\\*\\*: The PCG serves as a financial buffer, insulating the parent company\u0027s principal assets from the direct trading risks inherent in the subsidiary\u0027s operations, while simultaneously offering necessary external assurance."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "No Data processing or GDPR tasks involving this new service."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "Considering the benefits this initiative will bring, and the virtually negligible cost of implementation (aside from the required fiscal set-up and bespoke legal T\\\\\\\u0026Cs agreement), the decision has been made to activate the service across the parent company and all subsidiary companies that hold IATA or DP licenses, along with all seller companies as below: \\|  \\|  \\|\u0026#10;\\| :-: \\| :-: \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| Viaggiare s.r.l. \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| Pigi s.r.l. \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| LMNext FR S.A.S.U. \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| Bravonext SA \\|\u0026#10;\\| \\\\\\[lastminute.com\\\\\\](http://lastminute.com) NV \\| LMNext (UK) Service Ltd  \\|\u0026#10;"
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Hotel FR: Potential Switch",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM EFFICIENCY",
+                        "status":  "DONE",
+                        "context":  "Starting from an analysis conducted with a focus on improving cost efficiency in terms of insolvency, the legal team raised this as a possible option.",
+                        "need":  "To identify pros \u0026 cons of this proposal on the rest, if applied.",
+                        "conclusion":  "",
+                        "effectiveDate":  "10/12/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Background",
+                                         "text":  "Evolution of the French Market Structure and Licensing FrameworkTo understand the current operational landscape in France, it is essential to trace the strategic shift that led to the present fragmentation of legal entities and responsibilities.\\*\\*1. Pre-2022 Baseline\\*\\*Historically, the French market was managed by a single local \\*\\*Seller Company\\*\\*. This entity acted as the sole \\*\\*Agent and Principal\\*\\*, handling all invoicing and operations for the entire product portfolio.\\*\\*2. Strategic Reorganisation (2022)\\*\\*In 2022, the group restructured to accommodate specific licensing requirements for Ryanair flights. This necessitated isolating flight-related operations under a dedicated legal entity (\\*\\*Viaggiare\\*\\*) capable of managing the necessary regulatory framework.This transition was executed through a series of \\*\\*Intercompany White Label Agreements (ICO)\\*\\*, migrating the \"Flights\" and \"Dynamic Packaging\" (DP) tabs of the main brands to Viaggiare.These contracts empowered \\*\\*Viaggiare\\*\\* to take over the operational management and invoicing of flight-related products across all group brands on the market:  - \\*\\*Rumbo - Viaggiare Agreement (Effective June 1, 2022):\\*\\*\\*\\*  \u0026#10;    \\*\\*Covers both \"Flight Only\" and \"Dynamic Packaging\" (DP) for the \\*\\*Rumbo.fr\\*\\* domain.\u0026#10;  - \\*\\*Bravonext - Viaggiare Agreement:\\*\\*\\*\\*  \u0026#10;    \\*\\*This overarching agreement manages multiple touchpoints across different timelines:\u0026#10;      \u0026#10;      - \\*\\*Bravofly.fr:\\*\\* Managed \"Flight Only\" starting June 1, 2022, with \"Dynamic Packaging\" (DP) added on October 1, 2022.\u0026#10;      - \\*\\*fr.lastminute.com:\\*\\* Managed both \"Flight Only\" and \"Dynamic Packaging\" (DP) starting August 1, 2022.\\*\\*3. Current Perimeter of the French Entity\\*\\*Following this fragmentation, the French legal entityÃ¢â‚¬â„¢s scope as Agent, Principal, and Invoicing company is now strictly limited to:  - \\*\\*Hotel Only\\*\\* (both Net and Commissionable).\u0026#10;  - \\*\\*Tour Operator (TO)\\*\\* products.\u0026#10;  - A tiny \\*\\*DP\\*\\* segment  (having the \\*\\*train\\*\\* component + hotel)\\*\\*4. Critical Regulatory Impact: Insolvency Costs\\*\\*The French market presents a unique challenge regarding \\*\\*Insolvency Protection costs\\*\\* due to the local transposition of the EU Package Travel Directive:  - \\*\\*Strict Interpretation:\\*\\* Unlike other markets, French law adopts a \"pro-consumer\" stance that extends package-like protections to \\*\\*Hotel Only\\*\\* bookings.\u0026#10;  - \\*\\*Joint and Several Liability (ResponsabilitÃƒÂ© Solidale):\\*\\* Under French regulations, Hotel Only products are treated with the same liability standards as Dynamic Packages.\u0026#10;  - \\*\\*Financial Impact:\\*\\* This regulatory framework significantly inflates insolvency costs. However, maintaining this level of protection is mandatory for \\*\\*Lmnext FR\\*\\* (and any potential future seller entity) to operate legally in the French territory."
+                                     },
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "\\*\\*Feasibility of Business Model\\*\\*: \\*\\*EU Seller Company:\\*\\*After checking with the local consultant, it became clear that operating with \\*\\*Viaggiare\\*\\* as an intermediary/reseller for hotels invoiced by LMNext FR is \\*\\*not feasible\\*\\* in France.  \\*\\*Non\\\\\\_EU Seller Company:\\*\\*There is a \\*\\*potential alternative\\*\\* through \\*\\*BravoNext\\*\\* (the Swiss Company), which does not require the same mutual recognition registration process but implies to set up  insolvency protection under the French law.  \\*\\*Legal Obstacle\\*\\*:A key legal challenge for BravoNext in France is joint liability for \"ruined holiday\" damages. This would \\*\\*necessitate insolvency protection\\*\\*, which is a significant hurdle for the operation. \\*\\*Insolvency Coverage\\*\\*:The only insolvency protection available for BravoNext under mutual recognition is the \"Fondo Vacanze Felici,\" which covers tourism packages. There was a discussion on possibly extending this coverage to standalone hotel sales in France, \\*\\*potentially at a higher insurance premium\\*\\*."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "\\*\\*Tax Implications:\\*\\*\\*\\*  \u0026#10;\\*\\* The Tax team emphasised that while savings from reduced bank guarantees would free up financial capacity for other markets, they would not result in direct monetary savings on the P\\\\\\\u0026L. The real cost arises from the \\*\\*potential exit tax\\*\\* for moving volumes out of France, which \\*\\*would result in actual and immediate cash payments\\*\\*.  \u0026#10;  \\*\\*Risks in France:\\*\\*\\*\\*  \u0026#10;\\*\\*Two critical concerns:  \u0026#10;  1\\.  The company is currently under fiscal inspection in France since December 16.  \u0026#10;      \u0026#10;2.  The proposed move would shift revenue away from LMNext FR, \\*\\*potentially\\*\\* triggering \\*\\*disputes with the French tax authorities\\*\\* and leading to a substantial, \\*\\*possibly catastrophic, exit tax\\*\\*.  \u0026#10;      \\*\\*Potential Legal and Fiscal Fallout:\\*\\*\\*\\*  \u0026#10;\\*\\*Shifting hotel volumes could lead to a dramatic \\*\\*reduction in revenues for LMNext FR\\*\\*, triggering potential litigation with the French tax authorities and resulting in an undefined but potentially \\*\\*severe exit tax\\*\\*."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "From a DPO perspective, there are \\*\\*no\\*\\* specific data protection aspects or \\*\\*constraints\\*\\* related to the move. In this scenario, the DPO would simply implement the result as a business decision."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "Given the fiscal obstacle to any operational changes in the market, specifically the exit tax and potential compensation to LMNext FR, it is \\*\\*not recommendable\\*\\* to perform \\*\\*any switch\\*\\* which does not bring a wider and concrete profitability."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Momorooms - OM Assessment",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "To ensure proper operating-model governance, compliance, and alignment ahead of the Momo Rooms launch, we held an OM Table session to consolidate the different perspectives across teams. The objective was to synchronise on the projectÃ¢â‚¬â„¢s current setup and assess whether any material red flags or risks should be highlighted at this stage.",
+                        "need":  "Assessing whether distributing hotel content via the new B2B2C model, could create unforeseen regulatory, fiscal or operational risks.",
+                        "conclusion":  "The OM table group acknowledged the points raised on operating model, legal, tax, and privacy risks, and no blockers to the project were identified.",
+                        "effectiveDate":  "17/11/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "From a legal compliance perspective, it was identified a possible risk which can be mitigated as below:   - \\*\\*Competition law risk:\\*\\* Single entity (Bravonext) handling both B2B and B2C could create issues.\u0026#10;  - \\*\\*Mitigation:\\*\\* Ã¢â‚¬Å“Chinese WallsÃ¢â‚¬Â Ã¢â€ â€™ separate processes, controlled access, signed documents to prevent misuse of information."
+                                     },
+                                     {
+                                         "label":  "Finance:",
+                                         "text":  "The payment flow implemented brings a possible credit exposure risk. The PM group already raised the topic to the Finance team to adopt mitigation measures:  \u0026#10;  \u0026#10;\\*\\*Credit Exposure \u0026 Risk Management\\*\\*  - Collecting process: payment to hotels occurs at booking; invoicing to clients at check-in Ã¢â€ â€™ temporary credit exposure.\u0026#10;  - Mitigation: initial credit checks by the finance team, in addition to continuous monitoring via Business Central reports and alerts.\u0026#10;  - Action: defined credit thresholds and monitoring procedures in development with teams Anastasia, Matteo Zavaglia and Diego Fiorentini."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "From a tax perspective, there is no need to create any new ICO agreements as the sales are addressed to third parties and not inside the group."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "- From a privacy standpoint, our operational role as data controller does not change substantially, and our obligations remain broadly the same. \u0026#10;  - However, we will need to update the Record of Processing Activities. \u0026#10;  - Additionally, since the data we manage ultimately relates to a third party, it would be advisable not to mix these data flows and to maintain clear controls over who processes them. Otherwise, in the event of a data breach, having intertwined B2B and B2C data could significantly complicate incident management."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "The OM table group acknowledged the points raised on operating model, legal, tax, and privacy risks, and no blockers to the project were identified."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Greece VAT Representative Activation",
+                        "initCode":  "INIT-840",
+                        "initLink":  "https://lastminute.atlassian.net/browse/INIT-840",
+                        "initCodeNote":  "Shared with \u0027GR VAT Representative Implementation\u0027 â€” confirmed by Diane 3 Aug 2026: not a duplication error, these are 2 separate streams (activation, implementation) that happened at different times and were managed individually under the same Jira init code.",
+                        "category":  "OM MARKET EXPANSION",
+                        "status":  "DONE",
+                        "context":  "Following the market launch plan structured in 2 phases, the Tax team is working toward the activation of the VAT representative, which is the core activity of phase II.",
+                        "need":  "Ensure tax compliance and mitigate risk in Greece, especially on domestic flights.With the local VAT representative, the group is able to apply the proper local VAT %.",
+                        "conclusion":  "",
+                        "effectiveDate":  "01/12/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "From a legal standpoint, there is no constraint or need on that activity, it is pure fiscal compliance."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "As legal, there is no constraint or added value arising from that as the context (GDPR perimeter) is unchanged."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "Upon activation of the local VAT representative, we will initiate a new workstream for the technical implementation in our Order Accounting system.  As our team\u0027s capacity is currently focused solely on the main priority (PT invoicing for DP), the agreed strategy is to \\*\\*complete the PT stream first, and then begin the GR implementation\\*\\*."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "LMNext US: Telesales Configuration",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM  MARKET EXPANSION",
+                        "status":  "DONE",
+                        "context":  "- The activation of telesales operations in the US requires alignment with both local and international frameworks to ensure legal, fiscal, and data protection compliance. \u0026#10;  - The initiative aims to define the correct entity setup and operating structure for telesales directed toward US consumers, balancing group consistency with regulatory specificity.",
+                        "need":  "- A detailed assessment is required to determine whether telesales targeting US customers can be lawfully executed by a European-registered company or whether activities must be localised under a US-registered entity. \u0026#10;  - The analysis must address implications across legal, tax, and data protection domains to identify the most compliant and operationally efficient setup.",
+                        "conclusion":  "",
+                        "effectiveDate":  "30/10/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "- U.S. telesales must be operated under \\*\\*LMNext US\\*\\*, consistent with the groupÃ¢â‚¬â„¢s prior decision that all U.S. sales flow through this entity.  \u0026#10;      \u0026#10;  - \\*\\*Rumbo\\*\\* may support LMNext US under an \\*\\*intercompany service agreement\\*\\*, providing operational support.  \u0026#10;      \u0026#10;  - All \\*\\*invoicing, licensing, and customer relationships\\*\\* must remain \\*\\*in the name and on behalf of LMNext US\\*\\*."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "- Telesales generate \\*\\*US-source revenue\\*\\*, which triggers US tax obligations. From \\*\\*transfer pricing, local taxation, and reporting duties\\*\\* the suitable fiscal solution is to use LMNext US to issue invoices and receipts. This to maintain fiscal compliance and consistency with the groupÃ¢â‚¬â„¢s broader intercompany model."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "- alignment with Legal: \\*\\*Rumbo acts solely as a data processor\\*\\* for LMNext US, offering people, tools, and systems to complete sales \\*\\*on behalf of the U.S. entity\\*\\*.  \u0026#10;      \u0026#10;  - Recommends \\*\\*dedicated data-handling resources\\*\\* for U.S. customers to reduce compliance risks and prevent potential \\*\\*cross-border data exposure\\*\\* caused by human error."
+                                     },
+                                     {
+                                         "label":  "Conclusion",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "- The outcome of the \\*\\*legal \u0026 fiscal assessment\\*\\* was pivotal in shaping the compliant structure for the US telesales framework:  \u0026#10;      \u0026#10;    AGENT: LMNext US  \u0026#10;    PRINCIPAL: providerINVOICING COMPANY: LMNext US on marginsRECEIPT ISSUER: LMNext US This set-up ensures alignment across Legal, Tax, and DPO perspectives."
+                                     },
+                                     {
+                                         "label":  "Go-live date",
+                                         "text":  "17/11/2025"
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "Hotelscan: Data Controller Structure Review",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "Following the \\*\\*merger of Bravometa CH into Bravonext\\*\\*, the \\*\\*discontinuation of HotelscanÃ¢â‚¬â„¢s meta business unit segregation\\*\\*, and the \\*\\*recent launch of the whitelabel model managed via the OTA\\*\\*, a review is required to reassess \\*\\*HotelscanÃ¢â‚¬â„¢s corporate and operational positioning\\*\\*. The goal is to ensure full alignment with the current \\*\\*group structure and Operating Model\\*\\*, reflecting both intercompany and third-party frameworks",
+                        "need":  "The review focuses on identifying and implementing the necessary actions to align HotelscanÃ¢â‚¬â„¢s setup with recent business evolutions Ã¢â‚¬â€ maintaining coherence across the \\*\\*third-party and intragroup operating model\\*\\* while ensuring legal, fiscal, and privacy compliance throughout.",
+                        "conclusion":  "\\*\\*B2B Scope\\*\\*\\*\\*  \u0026#10;\\*\\*The result of this review has highlighted the need of activating 2 new intercompany agreements (Ã¢â‚¬Å“ WhitelabelÃ¢â‚¬Â agreements between Blue SAS owner of the website and the seller companies LMNext FR SASU \u0026 Bravonext SA both seller companies of this product) to ensure Hotelscan operates consistently within the updated group structure and contractual framework.\\*\\*B2C Scope\\*\\*  - Achieved \\*\\*near-complete harmonisation\\*\\* (with two remaining exceptions in DE and ES) between domains, data controllers, Privacy Policies, and consent management.  \u0026#10;      \u0026#10;  - \\*\\*Activation of updated Cookie Policies\\*\\* across all markets, reflecting the correct data controller information.  \u0026#10;      \u0026#10;  - \\*\\*Reset of legacy cookie consents\\*\\* to ensure compliance with the latest privacy framework and group standards.",
+                        "effectiveDate":  "13/11/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Legal:",
+                                         "text":  "Two main legal areas have been identified for clarification:1\\.  \\*\\*Intercompany Structure:\\*\\* Determining the appropriate counterparties for intercompany arrangements. The discussion involved assessing whether \\*\\*Bravoventure Spain\\*\\* and \\*\\*Comvel\\*\\* should remain domain owners for Spain and Germany, respectively, as per the operating model framework.  \u0026#10;      \u0026#10;2.  \\*\\*Privacy \u0026 Controller Setup:\\*\\* A potential overlap was raised concerning \\*\\*data controller responsibilities\\*\\*, as the Hotelscan domain is under \\*\\*Bravonext (formerly Bravometa)\\*\\*, while cookie data controllers for Spain and Germany are \\*\\*Bravoventure Spain\\*\\* and \\*\\*Comvel\\*\\*. The question is whether this dual setup could create privacy inconsistencies or conflict under the same national scope."
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "No specific tax requirements or compliance issues have been identified. The \\*\\*Tax team\\*\\* acts as an informed stakeholder, contributing contextual insights related to the \\*\\*BravometaÃ¢â‚¬â€œBravonext merger\\*\\* and supporting alignment with the overall \\*\\*strategic and structural rationale\\*\\* of the initiative."
+                                     },
+                                     {
+                                         "label":  "DPO:",
+                                         "text":  "No restrictions have been raised from a data protection standpoint. The \\*\\*DPO function\\*\\* will follow the strategic direction jointly defined by \\*\\*Legal and Tax\\*\\*, ensuring coherence of data handling practices once the structural decision is finalised."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  "\\*\\*B2B Scope\\*\\*\\*\\*  \u0026#10;\\*\\*The result of this review has highlighted the need of activating 2 new intercompany agreements (Ã¢â‚¬Å“ WhitelabelÃ¢â‚¬Â agreements between Blue SAS owner of the website and the seller companies LMNext FR SASU \u0026 Bravonext SA both seller companies of this product) to ensure Hotelscan operates consistently within the updated group structure and contractual framework.\\*\\*B2C Scope\\*\\*  - Achieved \\*\\*near-complete harmonisation\\*\\* (with two remaining exceptions in DE and ES) between domains, data controllers, Privacy Policies, and consent management.  \u0026#10;      \u0026#10;  - \\*\\*Activation of updated Cookie Policies\\*\\* across all markets, reflecting the correct data controller information.  \u0026#10;      \u0026#10;  - \\*\\*Reset of legacy cookie consents\\*\\* to ensure compliance with the latest privacy framework and group standards."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "HR Guidelines: Matrix Evolution",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM GOVERNANCE",
+                        "status":  "DONE",
+                        "context":  "Following the initial cross-functional discussions, this stream was launched to ensure that HR-related processes - particularly those involving hiring and relocation - are fully aligned with the groupÃ¢â‚¬â„¢s fiscal and organisational framework.  The work completed so far has focused on mapping the current state. The objective will be focused on identifying structural gaps, and setting the analytical foundation required to evolve both the process and underlying data models in a compliant and business-driven way.",
+                        "need":  "Preliminary observations highlighted the necessity of a \\*\\*baseline data analysis\\*\\* to establish a clear Ã¢â‚¬Å“as-isÃ¢â‚¬Â view of the current HR setup. This foundation will allow the team to identify any misalignments between existing practices and the companyÃ¢â‚¬â„¢s present operational and fiscal needs, particularly concerning \\*\\*Permanent Establishment (PE)\\*\\* considerations.",
+                        "conclusion":  "",
+                        "effectiveDate":  "05/11/2025",
+                        "rows":  [
+                                     {
+                                         "label":  "Qualitative \u0026 Quantitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Fiscal:",
+                                         "text":  "From a fiscal standpoint, the review is essential to ensure that HR-related movements, especially \\*\\*cross-border relocations (CHÃ¢â‚¬â€œIT)\\*\\*, are properly framed within the groupÃ¢â‚¬â„¢s \\*\\*tax and PE compliance model\\*\\*. The objective is to verify whether current staffing and assignment structures align with tax expectations and to address any accumulated discrepancies. This effort will also strengthen consistency and transparency across entities, reducing audit exposure and facilitating coordinated reporting."
+                                     },
+                                     {
+                                         "label":  "Conclusion:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "- Following the data analysis conducted by the Tax team, the HR team was able to receive guidelines on how to manage employees relocation from CH to IT in compliance with our current OM structure.\u0026#10;  - This steam was focused on the most quantitative side of the topic: \u0026#10;      \u0026#10;      - Capacity status per each IT company\u0026#10;      - Year trend study (last 3 years)\u0026#10;      - Identified companies at almost full capacity (to remain untouched) and those where movements can be centralised. In the other stream (phase II) starting in January, we will focus on the qualitative aspects in the scope of detailing per each company, the job families and roles applicable for relocations."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    },
+                    {
+                        "number":  null,
+                        "name":  "LMNext US: B2B Configuration",
+                        "initCode":  null,
+                        "initLink":  null,
+                        "category":  "OM  MARKET EXPANSION",
+                        "status":  "DONE",
+                        "context":  "- The initiative aims to position the US entity within the broader group framework to enable the activation of underlying agreements governing the exchange of ICO services. \u0026#10;  - This alignment is essential to ensure the US company can operate effectively and compliantly within the existing intercompany model.",
+                        "need":  "- A detailed analysis of the current B2B configuration was required, as the US case introduces specific operational and legal nuances tied to its Ã¢â‚¬Å“full serviceÃ¢â‚¬Â model. \u0026#10;  - While fiscal aspects are already aligned and compliant, adjustments are needed to reflect US-specific requirements from both \\*\\*Legal\\*\\* and \\*\\*DPO\\*\\* perspectives, ensuring the service structure remains coherent yet locally adaptable.",
+                        "conclusion":  "",
+                        "effectiveDate":  "31/10/2025",
+                        "extractionNote":  "Corrected 3 Aug 2026: the source-doc export used to build this file was capped at ~108,000 characters and cut off mid-row for this stream (the last one in the doc). Diane checked the live Google Doc directly â€” this stream is NOT truncated in the source; the real Effective date (31/10/2025) is filled in normally.",
+                        "rows":  [
+                                     {
+                                         "label":  "Key assessments",
+                                         "text":  "\\*\\*ICO Services:\\*\\*   - \\*\\*\\\\\\*\\\\\\*Sales Platform\\\\\\*\\\\\\*\\*\\*  \u0026#10;      - The service continues to be treated as a \\*royalty\\* for tax purposes, primarily due to withholding implications, maintaining consistency across entities.\u0026#10;      - It was agreed to introduce a \\*\\*US-specific clause\\*\\* within the main ICO contract of the US entity rather than altering group-wide Terms \u0026 Conditions. This approach safeguards contractual flexibility while preserving global standardisation.  \u0026#10;          \u0026#10;  - \\*\\*Call Center\\*\\*\u0026#10;      \u0026#10;      - The existing call center framework with Rumbo - currently acting as the group focal point - was assessed for its applicability to the US market.\u0026#10;      - To mitigate triangulation and compliance risks, the preferred model foresees The initial approach considered a triangulated setup to manage telesales operations for the US market. \u0026#10;      - However, following further assessment, the team converged toward a \\*\\*simpler and more transparent bilateral structure\\*\\* directly between \\*\\*Rumbo and the US entity\\*\\*. This configuration offers a \\*\\*cleaner fiscal framework\\*\\*, reduces structural complexity, and ensures \\*\\*greater clarity and traceability\\*\\* in the event of an audit or regulatory review.  \u0026#10;          \u0026#10;  - \\*\\*Fiscal Uniformity and Transfer Pricing\\*\\*\u0026#10;      \u0026#10;      - The Tax team reinforced the importance of maintaining \\*\\*service and fiscal consistency\\*\\* across jurisdictions to minimise audit exposure and ensure predictability.\u0026#10;      - The existing \\*\\*modular service structure\\*\\* remains the most solid, compliant, and scalable model for future US operations."
+                                     },
+                                     {
+                                         "label":  "Qualitative aspects:",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "Fiscal and Legal:",
+                                         "text":  "- To issue the US ICO agreements, it is necessary to to draft a specific wording to be placed on top of the cover agreements."
+                                     },
+                                     {
+                                         "label":  "DPO",
+                                         "text":  "- To assess required evolution and customisation based on the specific US scenario, the DPO with the legal team analysed the data processing and GDPR tasks related to ICO services in scope.\u0026#10;  - The result highlighted that some GDPR tasks are not applicable, therefore we need to create an ad hoc Ã¢â‚¬Å“US serviceÃ¢â‚¬Â to manage the Sales Platform one.\u0026#10;  - This requires a configuration activity, which is manageable internally by the OM Office."
+                                     },
+                                     {
+                                         "label":  "Conclusion",
+                                         "text":  ""
+                                     },
+                                     {
+                                         "label":  "",
+                                         "text":  "As a result of cross-functional team study, we defined 2 actions to be performed to ensure a proper US ICO contract:   - Contract customisation: integration of ad hoc statement in the agreement cover letter to detail where and how this contract diverges from the other ones.\u0026#10;  - Review and definition of Data Processing and related GDPR tasks in the US context: the analysis showed that some are out of scope.\u0026#10;  - Service exchange definition: the group validated the list of ICO services to be formalised in the ICO agreements for the US.\u0026#10;  - The result of this activity will be reflected in the upcoming half-yearly review where the contract will be physically issued."
+                                     }
+                                 ],
+                        "statusHypothesis":  "DONE",
+                        "statusNote":  "Confirmed DONE by Diane, 3 Aug 2026: her real Kanban board of active work shows only 9 streams as TO DO/IN PROGRESS/PAUSED (matching exactly the 9 in the source doc\u0027s own overview table) plus 1 DONE (Cruise Decommissioning) - by her own rule, everything else not on that board is closed."
+                    }
+                ]
+}
